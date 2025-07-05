@@ -23,7 +23,8 @@ import {
   vShow,
   withCtx,
   withDirectives
-} from "./chunk-ENW5NIGM.js";
+} from "./chunk-J73S6P2D.js";
+import "./chunk-5WRI5ZAA.js";
 
 // ../node_modules/.pnpm/@vitepress-code-preview+container@1.0.8_vue@3.5.17_typescript@5.8.2_/node_modules/@vitepress-code-preview/container/dist/index.js
 function useComponents(app, component, name = "DemoPreview") {

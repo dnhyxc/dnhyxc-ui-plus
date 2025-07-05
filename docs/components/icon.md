@@ -18,12 +18,9 @@ import { Earth } from '@vicons/ionicons5';
 </script>
 
 <template>
-  <n-icon :size="20" color="red">
-    <Earth />
-  </n-icon>
-  <n-icon :size="20" color="green">
-    <Earth />
-  </n-icon>
+  <el-button>element-plus button</el-button>
+  <br />
+  <n-button>dnhyxc-ui-plus button</n-button>
 </template>
 ```
 

@@ -2,8 +2,9 @@
 import { h } from 'vue';
 import type { Theme } from 'vitepress';
 import DefaultTheme from 'vitepress/theme';
-import { NIcon } from 'dnhyxc-ui';
-import '@dnhyxc-ui/theme-chalk/src/index.scss';
+import { NIcon, NButton, NInput } from 'dnhyxc-ui';
+import ElementPlus from 'element-plus';
+import 'dnhyxc-ui-plus/dist/index.css';
 import DemoPreview, { useComponents } from '@vitepress-code-preview/container';
 // import { demoBlockPlugin } from 'vitepress-theme-demoblock';
 // import 'vitepress-theme-demoblock/dist/theme/styles/index.css';
@@ -22,5 +23,8 @@ export default {
     useComponents(app, DemoPreview);
     DefaultTheme.enhanceApp({ app, router, siteData });
     app.component('NIcon', NIcon);
+    app.component('NButton', NButton);
+    app.component('NInput', NInput);
+    app.use(ElementPlus);
   }
 } satisfies Theme;
