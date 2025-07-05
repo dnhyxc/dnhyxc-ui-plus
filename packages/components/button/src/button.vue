@@ -5,16 +5,8 @@
  * index.vue
 -->
 <template>
-  <div :class="bem.b()">
-    <el-button
-      type="primary"
-      :link="link"
-      size="large"
-      :disabled="disabled"
-      :loading="loading"
-      :style="styles"
-      v-bind="$attrs"
-    >
+  <div :class="bem.b()" v-bind="$attrs">
+    <el-button type="primary" :link="link" :size="size" :disabled="disabled" :loading="loading" :style="styles">
       <slot></slot>
     </el-button>
   </div>

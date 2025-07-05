@@ -5,8 +5,8 @@
  * index.vue
 -->
 <template>
-  <div :class="bem.b()">
-    <el-input size="large" :disabled="disabled" :style="styles" v-bind="$attrs">
+  <div :class="bem.b()" v-bind="$attrs">
+    <el-input v-model="keyword" :size="size" :style="styles" :disabled="disabled" :placeholder="placeholder">
       <slot></slot>
     </el-input>
   </div>
@@ -27,7 +27,18 @@ defineOptions({
 
 const bem = createNamespace('input');
 
+const emit = defineEmits(['update:value']);
+
 const props = defineProps(inputProps);
+
+const keyword = computed({
+  get() {
+    return props.value;
+  },
+  set(val) {
+    emit('update:value', val);
+  }
+});
 
 const styles = computed<CSSProperties>(() => {
   if (!props.size && !props.color) return {};

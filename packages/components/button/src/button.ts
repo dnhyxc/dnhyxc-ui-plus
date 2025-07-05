@@ -1,7 +1,7 @@
 import { type ExtractPropTypes, type PropType } from 'vue';
 import type Button from './button.vue';
 export const buttonProps = {
-  size: String as PropType<'large' | 'middle' | 'small'>,
+  size: String as PropType<'large' | 'default' | 'small'>,
   color: String,
   disabled: Boolean,
   loading: Boolean,

@@ -41,22 +41,24 @@ export default defineConfig({
           // 输出格式为 ES Module
           format: 'es',
           // ES Module 格式文件的输出目录
-          dir: '../../dist/es',
+          dir: './es',
           // 保持目录结构
           preserveModules: true,
           // 指定输出文件的根目录，将所有模块放在 components 目录下，这样可以保持更清晰的目录结构
-          preserveModulesRoot: 'src'
+          preserveModulesRoot: 'src',
+          assetFileNames: 'index.[ext]'
         },
         {
           entryFileNames: '[name].js',
           format: 'cjs',
           name: 'dnhyxc-ui-plus',
           // 输出文件夹
-          dir: '../../dist/lib',
+          dir: './lib',
           // 保持目录结构
           preserveModules: true,
           // 输出目录
-          preserveModulesRoot: 'src'
+          preserveModulesRoot: 'src',
+          assetFileNames: 'index.[ext]'
           // UMD格式下需要指定全局变量名， 这样在浏览器中通过 <script> 标签引入时，就会从 window.Vue 获取 Vue 依赖
           // globals: {
           //   vue: 'Vue'
@@ -76,7 +78,7 @@ export default defineConfig({
     // 生成组件的类型声明文件
     dts({
       include: ['./**/*'],
-      outDir: ['../../dist/es', '../../dist/lib']
+      outDir: ['./es', './lib']
     })
   ]
   // resolve: {

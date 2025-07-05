@@ -29,6 +29,6 @@
     //   "@/*": ["../components/*"]
     // }
   },
-  "include": ["../components/**/*"],
+  "include": ["../components/**/*", "../script/build/build.ts"],
   "exclude": ["node_modules", "dist/**"]
 }

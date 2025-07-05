@@ -1,11 +1,13 @@
 import { type ExtractPropTypes, type PropType } from 'vue';
 import type Input from './input.vue';
 export const inputProps = {
-  size: String as PropType<'large' | 'middle' | 'small'>,
+  size: String as PropType<'large' | 'default' | 'small'>,
   color: String,
+  placeholder: String,
   disabled: Boolean,
   loading: Boolean,
   link: Boolean,
+  value: String,
   type: String as PropType<'primary' | 'success' | 'warning' | 'danger' | 'info' | 'text' | 'never'>
 } as const;
 
