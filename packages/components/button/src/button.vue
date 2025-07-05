@@ -26,7 +26,7 @@ import { ElButton } from 'element-plus';
 import type { CSSProperties } from 'vue';
 import { createNamespace } from '@dnhyxc-ui/utils';
 import { buttonProps } from './button';
-import './style/index.scss';
+import './index.scss';
 
 defineOptions({
   name: 'NIcon',

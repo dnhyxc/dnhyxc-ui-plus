@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite';
-import { rmSync } from 'fs';
+// import { rmSync } from 'fs';
 import vue from '@vitejs/plugin-vue';
 // import AutoImport from 'unplugin-auto-import/vite';
 // import Components from 'unplugin-vue-components/vite';
@@ -8,7 +8,7 @@ import vue from '@vitejs/plugin-vue';
 import dts from 'vite-plugin-dts';
 
 // 打包前先删除 dist 目录
-rmSync('dist', { recursive: true, force: true });
+// rmSync('dist', { recursive: true, force: true });
 
 // 组件库打包配置
 export default defineConfig({
@@ -41,7 +41,7 @@ export default defineConfig({
           // 输出格式为 ES Module
           format: 'es',
           // ES Module 格式文件的输出目录
-          dir: 'dist/es',
+          dir: '../../dist/es',
           // 保持目录结构
           preserveModules: true,
           // 指定输出文件的根目录，将所有模块放在 components 目录下，这样可以保持更清晰的目录结构
@@ -52,7 +52,7 @@ export default defineConfig({
           format: 'cjs',
           name: 'dnhyxc-ui-plus',
           // 输出文件夹
-          dir: 'dist/lib',
+          dir: '../../dist/lib',
           // 保持目录结构
           preserveModules: true,
           // 输出目录
@@ -76,7 +76,7 @@ export default defineConfig({
     // 生成组件的类型声明文件
     dts({
       include: ['./**/*'],
-      outDir: ['dist/es', 'dist/lib']
+      outDir: ['../../dist/es', '../../dist/lib']
     })
   ]
   // resolve: {

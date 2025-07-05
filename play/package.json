@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@dnhyxc-ui/theme-chalk": "workspace:^",
+    "@dnhyxc-ui/theme": "workspace:^",
     "@vicons/ionicons5": "^0.13.0",
     "dnhyxc-ui-plus": "workspace:^",
     "element-plus": "^2.10.3",

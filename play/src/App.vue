@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { NButton, NInput } from 'dnhyxc-ui-plus';
 import { Earth } from '@vicons/ionicons5';
+import 'dnhyxc-ui-plus/dist/es/button/src/style/index.css';
+import 'dnhyxc-ui-plus/dist/es/input/src/style/index.css';
 </script>
 
 <template>

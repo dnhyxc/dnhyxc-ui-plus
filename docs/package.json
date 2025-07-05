@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "dnhyxc-ui-plus": "workspace:^",
-    "@dnhyxc-ui/theme-chalk": "workspace:^",
+    "@dnhyxc-ui/theme": "workspace:^",
     "@vicons/ionicons5": "^0.13.0"
   }
 }

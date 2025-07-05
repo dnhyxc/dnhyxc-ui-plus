@@ -18,7 +18,7 @@ import { ElInput } from 'element-plus';
 import type { CSSProperties } from 'vue';
 import { createNamespace } from '@dnhyxc-ui/utils';
 import { inputProps } from './input';
-import './style/index.scss';
+import './index.scss';
 
 defineOptions({
   name: 'NInput',
