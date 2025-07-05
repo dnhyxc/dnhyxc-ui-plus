@@ -1,0 +1,16 @@
+{
+  "name": "@dnhyxc-ui/theme-chalk",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "gulp sass"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "browserslist": [
+    "last 2 versions",
+    "ie >= 9"
+  ]
+}

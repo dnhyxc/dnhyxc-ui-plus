@@ -1,0 +1,80 @@
+@use 'config' as *;
+@forward 'config';
+
+/**
+ * 用于定义组件的基础样式
+ * @param {string} $block - 组件名称
+ * @example
+ *   @include b(button) {
+ *     color: red;
+ *   }
+ * 编译后:
+ *   .el-button {
+ *     color: red;
+ *   }
+ */
+@mixin b($block) {
+  $B: $namespace + '-' + $block;
+  .#{$B} {
+    @content;
+  }
+}
+/**
+ * 用于定义组件的状态样式
+ * @param {string} $state - 状态名称
+ * @example
+ *   @include when(active) {
+ *     color: red;
+ *   }
+ * 编译后:
+ *   &.is-active {
+ *     color: red;
+ *   }
+ */
+@mixin when($state) {
+  @at-root {
+    &.#{$state-prefix + $state} {
+      @content;
+    }
+  }
+}
+
+/**
+ * 用于定义组件的修饰符样式
+ * @param {string} $modifier - 修饰符名称
+ * @example
+ *   @include m(primary) {
+ *     color: red;
+ *   }
+ * 编译后:
+ *   .el-button--primary {
+ *     color: red;
+ *   }
+ */
+@mixin m($modifier) {
+  @at-root {
+    #{& + $modifier-separator + $modifier} {
+      @content;
+    }
+  }
+}
+
+/**
+ * 用于定义组件的元素样式
+ * @param {string} $element - 元素名称
+ * @example
+ *   @include e(header) {
+ *     color: red;
+ *   }
+ * 编译后:
+ *   .el-button__header {
+ *     color: red;
+ *   }
+ */
+@mixin e($element) {
+  @at-root {
+    #{& + $element-separator + $element} {
+      @content;
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "dnhyxc-ui-plus",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "vue-tsc -b && vite build"
+  },
+  "main": "dist/lib/index.js",
+  "module": "dist/es/index.js",
+  "types": "dist/es/index.d.ts",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/node": "^24.0.10",
+    "vue-tsc": "^2.2.0"
+  },
+  "dependencies": {
+    "@dnhyxc-ui/utils": "workspace:^"
+  }
+}
