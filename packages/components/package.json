@@ -2,7 +2,8 @@
   "name": "dnhyxc-ui-plus",
   "version": "1.0.0",
   "scripts": {
-    "build": "vite build --config ../script/build/build.ts"
+    "build": "rimraf lib es dist && vite build --config ../script/build/build.ts",
+    "build:full": "vite build --config ../script/build/buildfull.ts"
   },
   "main": "./lib/index.js",
   "module": "./es/index.js",
