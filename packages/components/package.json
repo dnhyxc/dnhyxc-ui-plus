@@ -1,6 +1,6 @@
 {
   "name": "dnhyxc-ui-plus",
-  "version": "1.0.0",
+  "version": "0.0.1-beta.0",
   "scripts": {
     "build": "rimraf lib es dist && vite build --config ../script/build/build.ts",
     "build:full": "vite build --config ../script/build/buildfull.ts"
