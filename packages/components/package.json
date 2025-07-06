@@ -1,6 +1,6 @@
 {
   "name": "dnhyxc-ui-plus-beta",
-  "version": "0.0.1-beta.1",
+  "version": "0.0.1-beta.3",
   "scripts": {
     "build": "rimraf lib es dist && vite build --config ../script/build/build.ts",
     "build:full": "vite build --config ../script/build/buildfull.ts"
@@ -17,11 +17,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@dnhyxc-ui/utils": "workspace:^",
-    "monaco-editor": "^0.52.2",
-    "prettier": "^2.8.3"
-  },
-  "peerDependencies": {
+    "@dnhyxc/utils_beta": "0.0.1-beta.0",
     "monaco-editor": "^0.52.2",
     "prettier": "^2.8.3"
   }

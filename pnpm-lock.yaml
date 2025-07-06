@@ -8,9 +8,9 @@ importers:
 
   .:
     dependencies:
-      '@dnhyxc-ui/utils':
-        specifier: workspace:^
-        version: link:packages/utils
+      '@dnhyxc/utils_beta':
+        specifier: 0.0.1-beta.0
+        version: 0.0.1-beta.0
       element-plus:
         specifier: ^2.10.3
         version: 2.10.3(vue@3.5.17(typescript@5.3.3))
@@ -163,9 +163,9 @@ importers:
 
   packages/components:
     dependencies:
-      '@dnhyxc-ui/utils':
-        specifier: workspace:^
-        version: link:../utils
+      '@dnhyxc/utils_beta':
+        specifier: 0.0.1-beta.0
+        version: 0.0.1-beta.0
       monaco-editor:
         specifier: ^0.52.2
         version: 0.52.2
@@ -186,8 +186,8 @@ importers:
         specifier: ^0.13.0
         version: 0.13.0
       dnhyxc-ui-plus-beta:
-        specifier: workspace:0.0.1-beta.0
-        version: link:../packages/components
+        specifier: 0.0.1-beta.3
+        version: 0.0.1-beta.3
       element-plus:
         specifier: ^2.10.3
         version: 2.10.3(vue@3.5.17(typescript@5.7.3))
@@ -801,6 +801,9 @@ packages:
   '@ctrl/tinycolor@3.6.1':
     resolution: {integrity: sha512-SITSV6aIXsuVNV3f3O0f2n/cgyEDWoSqtZMYiAmcsYHydcKrOz3gUxB/iXd/Qf08+IZX4KpgNbvUdMBmWz+kcA==}
     engines: {node: '>=10'}
+
+  '@dnhyxc/utils_beta@0.0.1-beta.0':
+    resolution: {integrity: sha512-R6lVR4+rhHkQuTLq2RGHtCuedRh+Sb6auDnVtaXs9aAvJAn6qKwL5cehXsWTjoXaiX6sG9UYH+fwA4JTycHNhQ==}
 
   '@docsearch/css@3.8.2':
     resolution: {integrity: sha512-y05ayQFyUmCXze79+56v/4HpycYF3uFqB78pLPrSV5ZKAlDuIAAJNhaRi8tTdRNXh05yxX/TyNnzD6LwSM89vQ==}
@@ -2198,6 +2201,9 @@ packages:
 
   devlop@1.1.0:
     resolution: {integrity: sha512-RWmIqhcFf1lRYBvNmr7qTNuyCt/7/ns2jbpp1+PalgE/rDQcBT0fioSMUpJ93irlUhC5hrg4cYqe6U+0ImW0rA==}
+
+  dnhyxc-ui-plus-beta@0.0.1-beta.3:
+    resolution: {integrity: sha512-CYvVObIv+zTAYDzkV0ScOsiIPN2S2oKpv6lTj5IEErbRWaH43c3eBZ01ltEtl/jkL9X1VJcvfKIsH9AL0EVNFg==}
 
   each-props@3.0.0:
     resolution: {integrity: sha512-IYf1hpuWrdzse/s/YJOrFmU15lyhSzxelNVAHTEG3DtP4QsLTWZUzcUL3HMXmKQxXpa4EIrBPpwRgj0aehdvAw==}
@@ -4846,6 +4852,8 @@ snapshots:
 
   '@ctrl/tinycolor@3.6.1': {}
 
+  '@dnhyxc/utils_beta@0.0.1-beta.0': {}
+
   '@docsearch/css@3.8.2': {}
 
   '@docsearch/js@3.8.2(@algolia/client-search@5.30.0)(search-insights@2.17.3)':
@@ -6287,6 +6295,12 @@ snapshots:
   devlop@1.1.0:
     dependencies:
       dequal: 2.0.3
+
+  dnhyxc-ui-plus-beta@0.0.1-beta.3:
+    dependencies:
+      '@dnhyxc/utils_beta': 0.0.1-beta.0
+      monaco-editor: 0.52.2
+      prettier: 2.8.8
 
   each-props@3.0.0:
     dependencies:
