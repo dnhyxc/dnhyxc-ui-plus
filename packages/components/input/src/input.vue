@@ -16,7 +16,7 @@
 import { computed } from 'vue';
 import { ElInput } from 'element-plus';
 import type { CSSProperties } from 'vue';
-import { createNamespace } from '@dnhyxc-ui/utils';
+import { createNamespace } from '@dnhyxc/utils_beta';
 import { inputProps } from './input';
 import './index.scss';
 

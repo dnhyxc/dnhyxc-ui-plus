@@ -1,4 +1,4 @@
-import { withInstall, type SFCWithInstall } from '@dnhyxc-ui/utils';
+import { withInstall, type SFCWithInstall } from '@dnhyxc/utils_beta';
 import Input from './src/input.vue';
 
 export const NInput: SFCWithInstall<typeof Input> = withInstall(Input);

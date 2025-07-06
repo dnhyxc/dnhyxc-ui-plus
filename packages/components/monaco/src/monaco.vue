@@ -128,7 +128,7 @@
 <script setup lang="ts">
 // import type { CSSProperties } from 'vue';
 import { ref, onMounted, nextTick, onDeactivated, computed, watchEffect, watch, onUnmounted } from 'vue';
-import { createNamespace } from '@dnhyxc-ui/utils';
+import { createNamespace } from '@dnhyxc/utils_beta';
 import { ElTooltip } from 'element-plus';
 import { monacoProps } from './monaco';
 import * as monaco from 'monaco-editor';

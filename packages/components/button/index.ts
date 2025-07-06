@@ -1,4 +1,4 @@
-import { withInstall, type SFCWithInstall } from '@dnhyxc-ui/utils';
+import { withInstall, type SFCWithInstall } from '@dnhyxc/utils_beta';
 import Button from './src/button.vue';
 
 export const NButton: SFCWithInstall<typeof Button> = withInstall(Button);
