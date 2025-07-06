@@ -1,0 +1,8 @@
+import { withInstall, type SFCWithInstall } from '@dnhyxc-ui/utils';
+import Monaco from './src/monaco.vue';
+
+export const NMonaco: SFCWithInstall<typeof Monaco> = withInstall(Monaco);
+
+export default NMonaco;
+
+export * from './src/monaco';

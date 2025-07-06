@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { NButton } from 'dnhyxc-ui-plus';
+import { NButton, NMonaco } from 'dnhyxc-ui-plus';
 import { Earth } from '@vicons/ionicons5';
 import MyInput from './components/MyInput.vue';
 // import 'dnhyxc-ui-plus/es/button/src/index.css';
@@ -11,6 +11,7 @@ import MyInput from './components/MyInput.vue';
     <h1>test play</h1>
     <NButton type="primary" size="large" :disabled="false" class="my-inp">这是自定义按钮</NButton>
     <MyInput />
+    <NMonaco code="测试输入内容" theme="vs" />
     <!-- <el-button>这是 element-plus button</el-button> -->
     <n-icon :size="20" color="red">
       <Earth />

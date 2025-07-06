@@ -6,6 +6,7 @@ import vue from '@vitejs/plugin-vue';
 // import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
 // import path from 'path';
 import dts from 'vite-plugin-dts';
+import { external } from './external';
 
 // 打包前先删除 dist 目录
 // rmSync('dist', { recursive: true, force: true });
@@ -32,7 +33,7 @@ export default defineConfig({
     },
     rollupOptions: {
       // 外部化处理依赖
-      external: ['vue', 'node_modules', '@dnhyxc-ui/utils', 'element-plus', 'element-plus/dist/index.css'],
+      external,
       input: ['./index.ts'],
       output: [
         {
