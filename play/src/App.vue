@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { NButton, NMonaco } from 'dnhyxc-ui-plus';
+import { NButton, NMonaco } from 'dnhyxc-ui-plus-beta';
 import { Earth } from '@vicons/ionicons5';
 import MyInput from './components/MyInput.vue';
 // import 'dnhyxc-ui-plus/es/button/src/index.css';

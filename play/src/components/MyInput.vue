@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
-import { NInput } from 'dnhyxc-ui-plus';
+import { NInput } from 'dnhyxc-ui-plus-beta';
 // import 'dnhyxc-ui-plus/es/button/src/index.css';
 // import 'dnhyxc-ui-plus/es/input/src/index.css';
 

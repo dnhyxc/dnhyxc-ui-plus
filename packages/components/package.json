@@ -1,6 +1,6 @@
 {
-  "name": "dnhyxc-ui-plus",
-  "version": "0.0.1-beta.0",
+  "name": "dnhyxc-ui-plus-beta",
+  "version": "0.0.1-beta.1",
   "scripts": {
     "build": "rimraf lib es dist && vite build --config ../script/build/build.ts",
     "build:full": "vite build --config ../script/build/buildfull.ts"
@@ -11,8 +11,7 @@
   "keywords": [],
   "files": [
     "es",
-    "lib",
-    "package.json"
+    "lib"
   ],
   "author": "",
   "license": "ISC",
