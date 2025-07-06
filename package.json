@@ -2,7 +2,6 @@
   "name": "dnhyxc-ui-vue",
   "version": "1.0.0",
   "main": "index.js",
-  "private": true,
   "type": "module",
   "scripts": {
     "dev:play": "pnpm -C play dev",
