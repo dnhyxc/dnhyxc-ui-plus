@@ -1,6 +1,6 @@
 {
   "name": "dnhyxc-ui-plus-beta",
-  "version": "0.0.1-beta.7",
+  "version": "0.0.1-beta.14",
   "scripts": {
     "build": "rimraf lib es dist && vite build --config ../script/build/build.ts",
     "build:full": "vite build --config ../script/build/buildfull.ts"
@@ -8,17 +8,21 @@
   "main": "./lib/index.js",
   "module": "./es/index.js",
   "types": "./es/index.d.ts",
-  "keywords": [],
+  "keywords": [
+    "vue3",
+    "ui",
+    "library"
+  ],
   "files": [
     "es",
     "lib"
   ],
-  "author": "",
+  "author": "@dnhyxc",
   "license": "ISC",
-  "description": "",
+  "description": "a ui library for vue3",
   "dependencies": {
     "@dnhyxc/utils_beta": "0.0.1-beta.0",
-    "element-plus": "2.10.3",
+    "element-plus": "^2.10.3",
     "monaco-editor": "^0.52.2"
   }
 }

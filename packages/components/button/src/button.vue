@@ -14,7 +14,6 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { ElButton } from 'element-plus';
 import type { CSSProperties } from 'vue';
 import { createNamespace } from '@dnhyxc/utils_beta';
 import { buttonProps } from './button';

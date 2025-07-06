@@ -11,9 +11,6 @@ importers:
       '@dnhyxc/utils_beta':
         specifier: 0.0.1-beta.0
         version: 0.0.1-beta.0
-      element-plus:
-        specifier: ^2.10.3
-        version: 2.10.3(vue@3.5.17(typescript@5.3.3))
       vue:
         specifier: ^3.5.17
         version: 3.5.17(typescript@5.3.3)
@@ -166,12 +163,12 @@ importers:
       '@dnhyxc/utils_beta':
         specifier: 0.0.1-beta.0
         version: 0.0.1-beta.0
+      element-plus:
+        specifier: ^2.10.3
+        version: 2.10.3(vue@3.5.17(typescript@5.8.2))
       monaco-editor:
         specifier: ^0.52.2
         version: 0.52.2
-      prettier:
-        specifier: ^2.8.3
-        version: 2.8.8
 
   packages/theme: {}
 
@@ -179,15 +176,12 @@ importers:
 
   play:
     dependencies:
-      '@dnhyxc-ui/theme':
-        specifier: workspace:^
-        version: link:../packages/theme
       '@vicons/ionicons5':
         specifier: ^0.13.0
         version: 0.13.0
       dnhyxc-ui-plus-beta:
-        specifier: 0.0.1-beta.3
-        version: 0.0.1-beta.3
+        specifier: 0.0.1-beta.14
+        version: 0.0.1-beta.14(vue@3.5.17(typescript@5.7.3))
       element-plus:
         specifier: ^2.10.3
         version: 2.10.3(vue@3.5.17(typescript@5.7.3))
@@ -227,7 +221,7 @@ importers:
         version: 7.0.0(@types/node@24.0.10)(sass-embedded@1.89.2)(sass@1.89.2)(yaml@2.8.0)
       vue-tsc:
         specifier: ^2.2.0
-        version: 2.2.10(typescript@5.7.3)
+        version: 2.2.12(typescript@5.7.3)
 
 packages:
 
@@ -1761,8 +1755,8 @@ packages:
       typescript:
         optional: true
 
-  '@vue/language-core@2.2.10':
-    resolution: {integrity: sha512-+yNoYx6XIKuAO8Mqh1vGytu8jkFEOH5C8iOv3i8Z/65A7x9iAOXA97Q+PqZ3nlm2lxf5rOJuIGI/wDtx/riNYw==}
+  '@vue/language-core@2.2.12':
+    resolution: {integrity: sha512-IsGljWbKGU1MZpBPN+BvPAdr55YPkj2nB/TBNGNC32Vy2qLG25DYu/NBN2vNtZqdRbTRjaoYrahLrToim2NanA==}
     peerDependencies:
       typescript: '*'
     peerDependenciesMeta:
@@ -2202,8 +2196,8 @@ packages:
   devlop@1.1.0:
     resolution: {integrity: sha512-RWmIqhcFf1lRYBvNmr7qTNuyCt/7/ns2jbpp1+PalgE/rDQcBT0fioSMUpJ93irlUhC5hrg4cYqe6U+0ImW0rA==}
 
-  dnhyxc-ui-plus-beta@0.0.1-beta.3:
-    resolution: {integrity: sha512-CYvVObIv+zTAYDzkV0ScOsiIPN2S2oKpv6lTj5IEErbRWaH43c3eBZ01ltEtl/jkL9X1VJcvfKIsH9AL0EVNFg==}
+  dnhyxc-ui-plus-beta@0.0.1-beta.14:
+    resolution: {integrity: sha512-2ElsoSoLj9x86UAnMrVmOjPwM1jh1pxSWuDP4O3nxvPR08gvfJdKYlIfbrcqvXLVJIxG5epORI3aKH8/q7/28Q==}
 
   each-props@3.0.0:
     resolution: {integrity: sha512-IYf1hpuWrdzse/s/YJOrFmU15lyhSzxelNVAHTEG3DtP4QsLTWZUzcUL3HMXmKQxXpa4EIrBPpwRgj0aehdvAw==}
@@ -3236,11 +3230,6 @@ packages:
     resolution: {integrity: sha512-GbK2cP9nraSSUF9N2XwUwqfzlAFlMNYYl+ShE/V+H8a9uNl/oUqB1w2EL54Jh0OlyRSd8RfWYJ3coVS4TROP2w==}
     engines: {node: '>=6.0.0'}
 
-  prettier@2.8.8:
-    resolution: {integrity: sha512-tdN8qQGvNjw4CHbY+XXk0JgCXn9QiF21a55rBe5LJAU+kDyC4WQn4+awm2Xfk2lQMk5fKup9XgzTZtGkjBdP9Q==}
-    engines: {node: '>=10.13.0'}
-    hasBin: true
-
   prettier@3.6.2:
     resolution: {integrity: sha512-I7AIg5boAr5R0FFtJ6rCfD+LFsWHp81dolrFD8S79U9tb8Az2nGrJncnMSnys+bpQJfRUzqs9hnA81OAA3hCuQ==}
     engines: {node: '>=14'}
@@ -4012,8 +4001,8 @@ packages:
     peerDependencies:
       eslint: '>=6.0.0'
 
-  vue-tsc@2.2.10:
-    resolution: {integrity: sha512-jWZ1xSaNbabEV3whpIDMbjVSVawjAyW+x1n3JeGQo7S0uv2n9F/JMgWW90tGWNFRKya4YwKMZgCtr0vRAM7DeQ==}
+  vue-tsc@2.2.12:
+    resolution: {integrity: sha512-P7OP77b2h/Pmk+lZdJ0YWs+5tJ6J2+uOQPo7tlBnY44QqQSPYvS0qVT4wqDJgwrZaLe47etJLLQRFia71GYITw==}
     hasBin: true
     peerDependencies:
       typescript: '>=5.0.0'
@@ -4877,10 +4866,6 @@ snapshots:
       search-insights: 2.17.3
     transitivePeerDependencies:
       - '@algolia/client-search'
-
-  '@element-plus/icons-vue@2.3.1(vue@3.5.17(typescript@5.3.3))':
-    dependencies:
-      vue: 3.5.17(typescript@5.3.3)
 
   '@element-plus/icons-vue@2.3.1(vue@3.5.17(typescript@5.7.3))':
     dependencies:
@@ -5784,7 +5769,7 @@ snapshots:
     optionalDependencies:
       typescript: 5.3.3
 
-  '@vue/language-core@2.2.10(typescript@5.7.3)':
+  '@vue/language-core@2.2.12(typescript@5.7.3)':
     dependencies:
       '@volar/language-core': 2.4.15
       '@vue/compiler-dom': 3.5.17
@@ -5877,16 +5862,6 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  '@vueuse/core@9.13.0(vue@3.5.17(typescript@5.3.3))':
-    dependencies:
-      '@types/web-bluetooth': 0.0.16
-      '@vueuse/metadata': 9.13.0
-      '@vueuse/shared': 9.13.0(vue@3.5.17(typescript@5.3.3))
-      vue-demi: 0.14.10(vue@3.5.17(typescript@5.3.3))
-    transitivePeerDependencies:
-      - '@vue/composition-api'
-      - vue
-
   '@vueuse/core@9.13.0(vue@3.5.17(typescript@5.7.3))':
     dependencies:
       '@types/web-bluetooth': 0.0.16
@@ -5950,13 +5925,6 @@ snapshots:
       vue: 3.5.17(typescript@5.8.2)
     transitivePeerDependencies:
       - typescript
-
-  '@vueuse/shared@9.13.0(vue@3.5.17(typescript@5.3.3))':
-    dependencies:
-      vue-demi: 0.14.10(vue@3.5.17(typescript@5.3.3))
-    transitivePeerDependencies:
-      - '@vue/composition-api'
-      - vue
 
   '@vueuse/shared@9.13.0(vue@3.5.17(typescript@5.7.3))':
     dependencies:
@@ -6296,11 +6264,14 @@ snapshots:
     dependencies:
       dequal: 2.0.3
 
-  dnhyxc-ui-plus-beta@0.0.1-beta.3:
+  dnhyxc-ui-plus-beta@0.0.1-beta.14(vue@3.5.17(typescript@5.7.3)):
     dependencies:
       '@dnhyxc/utils_beta': 0.0.1-beta.0
+      element-plus: 2.10.3(vue@3.5.17(typescript@5.7.3))
       monaco-editor: 0.52.2
-      prettier: 2.8.8
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - vue
 
   each-props@3.0.0:
     dependencies:
@@ -6312,27 +6283,6 @@ snapshots:
   easy-transform-stream@1.0.1: {}
 
   electron-to-chromium@1.5.178: {}
-
-  element-plus@2.10.3(vue@3.5.17(typescript@5.3.3)):
-    dependencies:
-      '@ctrl/tinycolor': 3.6.1
-      '@element-plus/icons-vue': 2.3.1(vue@3.5.17(typescript@5.3.3))
-      '@floating-ui/dom': 1.7.2
-      '@popperjs/core': '@sxzz/popperjs-es@2.11.7'
-      '@types/lodash': 4.17.20
-      '@types/lodash-es': 4.17.12
-      '@vueuse/core': 9.13.0(vue@3.5.17(typescript@5.3.3))
-      async-validator: 4.2.5
-      dayjs: 1.11.13
-      escape-html: 1.0.3
-      lodash: 4.17.21
-      lodash-es: 4.17.21
-      lodash-unified: 1.0.3(@types/lodash-es@4.17.12)(lodash-es@4.17.21)(lodash@4.17.21)
-      memoize-one: 6.0.0
-      normalize-wheel-es: 1.2.0
-      vue: 3.5.17(typescript@5.3.3)
-    transitivePeerDependencies:
-      - '@vue/composition-api'
 
   element-plus@2.10.3(vue@3.5.17(typescript@5.7.3)):
     dependencies:
@@ -7570,8 +7520,6 @@ snapshots:
     dependencies:
       fast-diff: 1.3.0
 
-  prettier@2.8.8: {}
-
   prettier@3.6.2: {}
 
   process-nextick-args@2.0.1: {}
@@ -8470,10 +8418,6 @@ snapshots:
 
   vscode-uri@3.1.0: {}
 
-  vue-demi@0.14.10(vue@3.5.17(typescript@5.3.3)):
-    dependencies:
-      vue: 3.5.17(typescript@5.3.3)
-
   vue-demi@0.14.10(vue@3.5.17(typescript@5.7.3)):
     dependencies:
       vue: 3.5.17(typescript@5.7.3)
@@ -8507,10 +8451,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  vue-tsc@2.2.10(typescript@5.7.3):
+  vue-tsc@2.2.12(typescript@5.7.3):
     dependencies:
       '@volar/typescript': 2.4.15
-      '@vue/language-core': 2.2.10(typescript@5.7.3)
+      '@vue/language-core': 2.2.12(typescript@5.7.3)
       typescript: 5.7.3
 
   vue@3.5.17(typescript@5.3.3):

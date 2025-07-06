@@ -10,10 +10,22 @@ export default defineConfig({
   plugins: [
     vue(),
     AutoImport({
-      resolvers: [ElementPlusResolver()]
+      resolvers: [
+        ElementPlusResolver({
+          importStyle: 'sass', // 使用 sass 原始样式
+          directives: true, // 指令按需导入
+          version: '2.3.4' // 指定 Element-Plus 版本
+        })
+      ]
     }),
     Components({
-      resolvers: [ElementPlusResolver()]
+      resolvers: [
+        ElementPlusResolver({
+          importStyle: 'sass', // 使用 sass 原始样式
+          directives: true, // 指令按需导入
+          version: '2.3.4' // 指定 Element-Plus 版本
+        })
+      ]
     }),
     ElementPlus({})
   ]

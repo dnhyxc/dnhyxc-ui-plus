@@ -1,7 +1,7 @@
 export const external = [
   'vue',
   'node_modules',
-  '@dnhyxc-ui/utils',
+  '@dnhyxc/utils_beta',
   'element-plus',
   'element-plus/dist/index.css',
   'monaco-editor',

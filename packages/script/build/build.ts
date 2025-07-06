@@ -47,7 +47,11 @@ export default defineConfig({
           preserveModules: true,
           // 指定输出文件的根目录，将所有模块放在 components 目录下，这样可以保持更清晰的目录结构
           preserveModulesRoot: 'src',
-          assetFileNames: 'index.[ext]'
+          assetFileNames: 'index.[ext]',
+          globals: {
+            vue: 'Vue',
+            'element-plus': 'ElementPlus'
+          }
         },
         {
           entryFileNames: '[name].js',
@@ -59,7 +63,12 @@ export default defineConfig({
           preserveModules: true,
           // 输出目录
           preserveModulesRoot: 'src',
-          assetFileNames: 'index.[ext]'
+          assetFileNames: 'index.[ext]',
+          // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
+          globals: {
+            vue: 'Vue',
+            'element-plus': 'ElementPlus'
+          }
           // UMD格式下需要指定全局变量名， 这样在浏览器中通过 <script> 标签引入时，就会从 window.Vue 获取 Vue 依赖
           // globals: {
           //   vue: 'Vue'
@@ -70,6 +79,10 @@ export default defineConfig({
   },
   plugins: [
     vue(),
+    // Components({
+    //   // 关键配置：禁止自动导入样式
+    //   resolvers: [ElementPlusResolver({})]
+    // }),
     // AutoImport({
     //   resolvers: [ElementPlusResolver()]
     // }),
