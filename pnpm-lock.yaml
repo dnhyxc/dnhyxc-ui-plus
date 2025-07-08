@@ -11,6 +11,9 @@ importers:
       '@dnhyxc/utils_beta':
         specifier: 0.0.1-beta.0
         version: 0.0.1-beta.0
+      element-plus:
+        specifier: ^2.10.3
+        version: 2.10.3(vue@3.5.17(typescript@5.3.3))
       vue:
         specifier: ^3.5.17
         version: 3.5.17(typescript@5.3.3)
@@ -169,6 +172,10 @@ importers:
       monaco-editor:
         specifier: ^0.52.2
         version: 0.52.2
+    devDependencies:
+      unplugin-element-plus:
+        specifier: ^0.10.0
+        version: 0.10.0
 
   packages/theme: {}
 
@@ -180,8 +187,8 @@ importers:
         specifier: ^0.13.0
         version: 0.13.0
       dnhyxc-ui-plus-beta:
-        specifier: 0.0.1-beta.14
-        version: 0.0.1-beta.14(vue@3.5.17(typescript@5.7.3))
+        specifier: 0.0.1-beta.17
+        version: 0.0.1-beta.17(@dnhyxc/utils_beta@0.0.1-beta.0)(element-plus@2.10.3(vue@3.5.17(typescript@5.7.3)))(monaco-editor@0.52.2)
       element-plus:
         specifier: ^2.10.3
         version: 2.10.3(vue@3.5.17(typescript@5.7.3))
@@ -2196,8 +2203,12 @@ packages:
   devlop@1.1.0:
     resolution: {integrity: sha512-RWmIqhcFf1lRYBvNmr7qTNuyCt/7/ns2jbpp1+PalgE/rDQcBT0fioSMUpJ93irlUhC5hrg4cYqe6U+0ImW0rA==}
 
-  dnhyxc-ui-plus-beta@0.0.1-beta.14:
-    resolution: {integrity: sha512-2ElsoSoLj9x86UAnMrVmOjPwM1jh1pxSWuDP4O3nxvPR08gvfJdKYlIfbrcqvXLVJIxG5epORI3aKH8/q7/28Q==}
+  dnhyxc-ui-plus-beta@0.0.1-beta.17:
+    resolution: {integrity: sha512-W6ZivxDTsBa8bAZ32djQoBgBzHDWX815vUEqjcgFnwJROvwoJ3EJ04aHujS6rcwGxqW6DZK353BjvDX1rUm4pw==}
+    peerDependencies:
+      '@dnhyxc/utils_beta': 0.0.1-beta.0
+      element-plus: ^2.10.3
+      monaco-editor: ^0.52.2
 
   each-props@3.0.0:
     resolution: {integrity: sha512-IYf1hpuWrdzse/s/YJOrFmU15lyhSzxelNVAHTEG3DtP4QsLTWZUzcUL3HMXmKQxXpa4EIrBPpwRgj0aehdvAw==}
@@ -4867,6 +4878,10 @@ snapshots:
     transitivePeerDependencies:
       - '@algolia/client-search'
 
+  '@element-plus/icons-vue@2.3.1(vue@3.5.17(typescript@5.3.3))':
+    dependencies:
+      vue: 3.5.17(typescript@5.3.3)
+
   '@element-plus/icons-vue@2.3.1(vue@3.5.17(typescript@5.7.3))':
     dependencies:
       vue: 3.5.17(typescript@5.7.3)
@@ -5862,6 +5877,16 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
+  '@vueuse/core@9.13.0(vue@3.5.17(typescript@5.3.3))':
+    dependencies:
+      '@types/web-bluetooth': 0.0.16
+      '@vueuse/metadata': 9.13.0
+      '@vueuse/shared': 9.13.0(vue@3.5.17(typescript@5.3.3))
+      vue-demi: 0.14.10(vue@3.5.17(typescript@5.3.3))
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - vue
+
   '@vueuse/core@9.13.0(vue@3.5.17(typescript@5.7.3))':
     dependencies:
       '@types/web-bluetooth': 0.0.16
@@ -5925,6 +5950,13 @@ snapshots:
       vue: 3.5.17(typescript@5.8.2)
     transitivePeerDependencies:
       - typescript
+
+  '@vueuse/shared@9.13.0(vue@3.5.17(typescript@5.3.3))':
+    dependencies:
+      vue-demi: 0.14.10(vue@3.5.17(typescript@5.3.3))
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - vue
 
   '@vueuse/shared@9.13.0(vue@3.5.17(typescript@5.7.3))':
     dependencies:
@@ -6264,14 +6296,11 @@ snapshots:
     dependencies:
       dequal: 2.0.3
 
-  dnhyxc-ui-plus-beta@0.0.1-beta.14(vue@3.5.17(typescript@5.7.3)):
+  dnhyxc-ui-plus-beta@0.0.1-beta.17(@dnhyxc/utils_beta@0.0.1-beta.0)(element-plus@2.10.3(vue@3.5.17(typescript@5.7.3)))(monaco-editor@0.52.2):
     dependencies:
       '@dnhyxc/utils_beta': 0.0.1-beta.0
       element-plus: 2.10.3(vue@3.5.17(typescript@5.7.3))
       monaco-editor: 0.52.2
-    transitivePeerDependencies:
-      - '@vue/composition-api'
-      - vue
 
   each-props@3.0.0:
     dependencies:
@@ -6283,6 +6312,27 @@ snapshots:
   easy-transform-stream@1.0.1: {}
 
   electron-to-chromium@1.5.178: {}
+
+  element-plus@2.10.3(vue@3.5.17(typescript@5.3.3)):
+    dependencies:
+      '@ctrl/tinycolor': 3.6.1
+      '@element-plus/icons-vue': 2.3.1(vue@3.5.17(typescript@5.3.3))
+      '@floating-ui/dom': 1.7.2
+      '@popperjs/core': '@sxzz/popperjs-es@2.11.7'
+      '@types/lodash': 4.17.20
+      '@types/lodash-es': 4.17.12
+      '@vueuse/core': 9.13.0(vue@3.5.17(typescript@5.3.3))
+      async-validator: 4.2.5
+      dayjs: 1.11.13
+      escape-html: 1.0.3
+      lodash: 4.17.21
+      lodash-es: 4.17.21
+      lodash-unified: 1.0.3(@types/lodash-es@4.17.12)(lodash-es@4.17.21)(lodash@4.17.21)
+      memoize-one: 6.0.0
+      normalize-wheel-es: 1.2.0
+      vue: 3.5.17(typescript@5.3.3)
+    transitivePeerDependencies:
+      - '@vue/composition-api'
 
   element-plus@2.10.3(vue@3.5.17(typescript@5.7.3)):
     dependencies:
@@ -8417,6 +8467,10 @@ snapshots:
       - universal-cookie
 
   vscode-uri@3.1.0: {}
+
+  vue-demi@0.14.10(vue@3.5.17(typescript@5.3.3)):
+    dependencies:
+      vue: 3.5.17(typescript@5.3.3)
 
   vue-demi@0.14.10(vue@3.5.17(typescript@5.7.3)):
     dependencies:

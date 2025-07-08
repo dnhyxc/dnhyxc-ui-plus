@@ -7,7 +7,7 @@
     "dev:play": "pnpm -C play dev",
     "build:scss": "gulp -f packages/script/build/index.ts",
     "build": "pnpm -C packages/components build && pnpm build:scss",
-    "build:full": "pnpm -C packages/components build:full",
+    "build:full": "pnpm -C packages/components build:full && pnpm build:scss",
     "build:ui": "pnpm -C packages/components build",
     "dev:docs": "pnpm -C docs dev",
     "build:docs": "pnpm -C docs build",
@@ -57,6 +57,7 @@
   },
   "dependencies": {
     "@dnhyxc/utils_beta": "0.0.1-beta.0",
+    "element-plus": "^2.10.3",
     "vue": "^3.5.17"
   },
   "lint-staged": {

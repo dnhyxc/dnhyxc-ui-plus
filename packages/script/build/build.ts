@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 // import { rmSync } from 'fs';
 import vue from '@vitejs/plugin-vue';
+// import ElementPlus from 'unplugin-element-plus/vite';
 // import AutoImport from 'unplugin-auto-import/vite';
 // import Components from 'unplugin-vue-components/vite';
 // import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
@@ -79,6 +80,10 @@ export default defineConfig({
   },
   plugins: [
     vue(),
+    // ElementPlus({
+    //   // 导入scss而不是css
+    //   useSource: true
+    // }),
     // Components({
     //   // 关键配置：禁止自动导入样式
     //   resolvers: [ElementPlusResolver({})]

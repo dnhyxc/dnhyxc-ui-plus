@@ -1,5 +1,5 @@
 import { type ExtractPropTypes, type PropType } from 'vue';
-import * as monaco from 'monaco-editor/esm/vs/editor/editor.api.js';
+import * as monaco from 'monaco-editor';
 import type Monaco from './monaco.vue';
 export const monacoProps = {
   editType: Boolean,

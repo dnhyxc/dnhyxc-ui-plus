@@ -8,7 +8,7 @@ import MyInput from './components/MyInput.vue';
 
 <template>
   <div>
-    <!-- <el-button>原本按钮</el-button> -->
+    <el-button>原本按钮</el-button>
     <h1>test play</h1>
     <NButton type="primary" size="large" :disabled="false" class="my-inp">这是自定义按钮</NButton>
     <MyInput />

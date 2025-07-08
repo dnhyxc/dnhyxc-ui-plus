@@ -1,4 +1,4 @@
-import * as monacoEditor from 'monaco-editor/esm/vs/editor/editor.api.js';
+import * as monacoEditor from 'monaco-editor';
 import prettier from 'prettier';
 import parserMarkdown from 'prettier/parser-markdown';
 import parserBabel from 'prettier/parser-babel';

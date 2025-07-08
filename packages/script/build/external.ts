@@ -3,6 +3,7 @@ export const external = [
   'node_modules',
   '@dnhyxc/utils_beta',
   'element-plus',
+  '@element-plus/theme-chalk',
   'element-plus/dist/index.css',
   'monaco-editor',
   'monaco-editor/esm/vs/editor/editor.api.js',
@@ -17,5 +18,7 @@ export const external = [
   'prettier/parser-html',
   'prettier/parser-yaml',
   'prettier/parser-postcss',
-  'prettier'
+  'prettier',
+  'scss',
+  'sass'
 ];

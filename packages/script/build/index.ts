@@ -7,7 +7,7 @@ import cleanCSS from 'gulp-clean-css';
 
 //打包样式
 export const buildStyle = () => {
-  return src(`${componentPath}/**/**.scss`)
+  return src(`${componentPath}/**/**.scss`, { ignore: [`${componentPath}/**/node_modules/**`] })
     .pipe(glupSass(dartSass)())
     .pipe(
       autoprefixer(

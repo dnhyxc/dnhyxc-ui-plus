@@ -1,6 +1,6 @@
 {
   "name": "dnhyxc-ui-plus-beta",
-  "version": "0.0.1-beta.14",
+  "version": "0.0.1-beta.17",
   "scripts": {
     "build1": "rimraf lib es dist && vite build",
     "build": "rimraf lib es dist && vite build --config ../script/build/build.ts",
@@ -30,7 +30,6 @@
   },
   "peerDependencies": {
     "@dnhyxc/utils_beta": "0.0.1-beta.0",
-    "element-plus": "^2.10.3",
     "monaco-editor": "^0.52.2"
   }
 }
