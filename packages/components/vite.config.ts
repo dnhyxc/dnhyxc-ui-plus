@@ -52,7 +52,7 @@ export default defineConfig({
       main: 'lib/index.js',
       module: 'es/index.mjs',
       files: ['es', 'lib'],
-      keywords: ['dnhyxc-ui-plus', 'UI', 'element-plus'],
+      keywords: ['dnhyxc-ui-plus', 'library', 'vue3', 'element-plus'],
       sideEffects: ['**/*.css'],
       typings: 'es/index.d.ts',
       packageJsonPath: path.resolve(__dirname, 'package.json'),
