@@ -1,0 +1,31 @@
+{
+  "name": "dnhyxc-ui-plus",
+  "version": "0.0.13",
+  "scripts": {
+    "build1": "vite build",
+    "build:style": "gulp -f ./script/build/index.ts",
+    "build": "rimraf lib es dist && vite build --config ../script/build/build.ts",
+    "build:full": "rimraf dist && vite build --config ../script/build/buildfull.ts"
+  },
+  "keywords": [
+    "vue3",
+    "ui",
+    "library"
+  ],
+  "files": [
+    "es",
+    "lib"
+  ],
+  "author": "@dnhyxc",
+  "license": "ISC",
+  "description": "a ui library for vue3",
+  "dependencies": {
+    "monaco-editor": "^0.52.2"
+  },
+  "devDependencies": {
+    "unplugin-element-plus": "^0.10.0"
+  },
+  "peerDependencies": {
+    "monaco-editor": "^0.52.2"
+  }
+}

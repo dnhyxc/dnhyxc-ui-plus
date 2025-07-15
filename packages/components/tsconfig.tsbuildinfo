@@ -1,0 +1,1 @@
+{"root":["./components.d.ts","./index.ts","./vite.config.ts","./button/index.ts","./button/src/button.ts","./button/src/button.vue","./icon/index.ts","./icon/src/icon.ts","./icon/src/icon.vue","./icon2/index.ts","./icon2/src/icon2.ts","./icon2/src/icon2.vue","./input/index.ts","./input/src/input.ts","./input/src/input.vue"],"version":"5.8.2"}
