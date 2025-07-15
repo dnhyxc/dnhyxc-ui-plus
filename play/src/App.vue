@@ -2,7 +2,7 @@
   <n-button />
   <NElButton />
   <el-button type="primary">element-plus</el-button>
-  <Input placeholder="请输入" size="small" v-model:value="keyword" ref="inputRef" @keypress.enter="onKeypress" />
+  <Input ref="inputRef" v-model:value="keyword" placeholder="请输入" @keypress.enter="onKeypress" />
 </template>
 
 <script setup lang="ts">

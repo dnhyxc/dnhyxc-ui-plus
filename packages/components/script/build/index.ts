@@ -5,7 +5,7 @@ import glupSass from 'gulp-sass';
 import * as dartSass from 'sass';
 import autoprefixer from 'gulp-autoprefixer';
 import cleanCSS from 'gulp-clean-css';
-import run from '../../utils/run';
+import run from './run';
 
 //删除 dnhyxc-ui-plus
 export const removeDist = () => {
@@ -14,7 +14,7 @@ export const removeDist = () => {
 
 //打包组件
 export const buildComponent = async () => {
-  run('pnpm run build1', componentPath);
+  run('pnpm run build', componentPath);
 };
 
 export const buildStyle = () => {
@@ -31,7 +31,7 @@ export const buildStyle = () => {
 };
 
 export default series(
-  // async () => removeDist(),
+  async () => removeDist(),
   parallel(
     async () => buildStyle(),
     async () => buildComponent()

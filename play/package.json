@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "dnhyxc-ui-plus": "workspace:0.0.1-beta.20",
-    "dnhyxc-ui-plus-beta1": "0.0.1-beta.3",
+    "dnhyxc-ui-plus-beta1": "0.0.1-beta.4",
     "vue": "^3.5.13"
   },
   "devDependencies": {

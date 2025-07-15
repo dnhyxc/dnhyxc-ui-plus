@@ -1,11 +1,8 @@
 {
   "name": "dnhyxc-ui-plus",
-  "version": "0.0.13",
+  "version": "0.0.0",
   "scripts": {
-    "build1": "vite build",
-    "build:style": "gulp -f ./script/build/index.ts",
-    "build": "rimraf lib es dist && vite build --config ../script/build/build.ts",
-    "build:full": "rimraf dist && vite build --config ../script/build/buildfull.ts"
+    "build": "vite build"
   },
   "keywords": [
     "vue3",

@@ -1,16 +1,13 @@
 {
   "name": "dnhyxc-ui",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "main": "index.js",
   "scripts": {
-    "dev:play": "pnpm -C play dev",
-    "build:style": "gulp -f packages/components/script/build/index.ts",
-    "build": "pnpm -C packages/components build && pnpm build:scss",
-    "build:full": "pnpm -C packages/components build:full && pnpm build:scss",
-    "build:ui": "pnpm -C packages/components build",
+    "build": "gulp -f packages/components/script/build/index.ts",
     "dev:docs": "pnpm -C docs dev",
     "build:docs": "pnpm -C docs build",
     "preview:docs": "pnpm -C docs preview",
+    "dev:play": "pnpm -C play dev",
     "prepare": "husky install",
     "test": "npx eslint ./packages  --ext ts,vue,js --fix"
   },

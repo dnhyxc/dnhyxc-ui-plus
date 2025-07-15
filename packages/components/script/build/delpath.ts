@@ -24,7 +24,7 @@ const delPath = async (path: string) => {
       }
     });
 
-    if (path != `${pkgPath}/dnhyxc-ui-plus`) fs.rmdirSync(path);
+    if (path !== `${pkgPath}/dnhyxc-ui-plus`) fs.rmdirSync(path);
   }
 };
 export default delPath;
