@@ -7,12 +7,12 @@ import autoprefixer from 'gulp-autoprefixer';
 import cleanCSS from 'gulp-clean-css';
 import run from './run';
 
-//删除 dnhyxc-ui-plus
+// 删除 dnhyxc-ui-plus
 export const removeDist = () => {
   return delPath(`${pkgPath}/dnhyxc-ui-plus`);
 };
 
-//打包组件
+// 打包组件
 export const buildComponent = async () => {
   run('pnpm run build', componentPath);
 };

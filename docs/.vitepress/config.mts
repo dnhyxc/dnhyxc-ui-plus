@@ -1,6 +1,4 @@
-// import { demoBlockPlugin } from 'vitepress-theme-demoblock';
 import { defineConfig } from 'vitepress';
-// import { fileURLToPath, URL } from 'node:url';
 import { demoPreviewPlugin } from '@vitepress-code-preview/plugin';
 
 export default defineConfig({
