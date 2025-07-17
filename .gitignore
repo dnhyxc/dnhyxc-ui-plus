@@ -12,6 +12,7 @@ dist
 es
 lib
 packages/dnhyxc-ui-plus/**
+packages/components/coverage/**
 
 cache
 dist.zip
