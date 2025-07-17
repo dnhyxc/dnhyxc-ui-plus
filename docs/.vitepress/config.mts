@@ -48,7 +48,7 @@ export default defineConfig({
     socialLinks: [
       {
         icon: 'github',
-        link: 'https://github.com/dnhyxc/dnhyxc-ui-vue'
+        link: 'https://github.com/dnhyxc/dnhyxc-ui-plus'
       }
     ]
   },
