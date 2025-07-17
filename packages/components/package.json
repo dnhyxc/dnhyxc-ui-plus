@@ -1,6 +1,6 @@
 {
   "name": "dnhyxc-ui-plus-beta1",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "scripts": {
     "build": "vite build",
     "test": "vitest run",
