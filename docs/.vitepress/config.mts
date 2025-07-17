@@ -2,7 +2,7 @@ import { defineConfig } from 'vitepress';
 import { demoPreviewPlugin } from '@vitepress-code-preview/plugin';
 
 export default defineConfig({
-  title: 'dnhyxc-ui',
+  title: 'dnhyxc-ui-plus',
   description: 'Vue3 UI Component',
   themeConfig: {
     search: {

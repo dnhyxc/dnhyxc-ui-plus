@@ -329,19 +329,6 @@ app.use(dnhyxcUI);
 app.mount('#app');
 ```
 
-除了上述注册所有组件的方式，还可以使用 `app.use(NButton)` 来注册指定组件。
-
-```ts
-import { createApp } from 'vue';
-import { NButton } from 'dnhyxc-ui-plus';
-import './style.css';
-import App from './App.vue';
-
-const app = createApp(App);
-app.use(NButton);
-app.mount('#app');
-```
-
 通过上述方式，在 `App.vue` 文件中就不需要再导入 `NButton` 组件了，可以直接使用 `n-button` 组件。
 
 ```vue
@@ -367,7 +354,7 @@ pnpm i vite @vitejs/plugin-vue vite-plugin-dts @types/node semver @types/semver 
 
 - replaceStyleExtPlugin.ts 文件用于编写将组件（button/index.vue）中引入的 `scss` 文件后缀替换为 `css` 文件后缀的 `vite plugin`。
 
-!!! info 替换 scss 为 css 的原因
+!!! hint 替换 scss 为 css 的原因
 由于 scss 样式，在下文中会介绍通过 gulp 来将 scss 文件打包成 css 文件，因此在 vite.config.ts 中将不需要处理样式文件，所以需要将代码中引入的样式文件后缀 .scss 手动替换为 .css 文件后缀，这样才能在打包后的组件中正确导入打包后的 css 样式文件。
 !!!
 
@@ -517,7 +504,7 @@ export default defineConfig({
     dts({
       include: ['./**/*'],
       outDir: ['../dnhyxc-ui-plus/es', '../dnhyxc-ui-plus/lib'],
-      exclude: ['vite.config.ts', 'script', 'plugins']
+      exclude: ['vite.config.ts', 'script', 'plugins', 'coverage']
     }),
     // 替换组件中导入的 scss 为 css
     replaceStyleExtPlugin(),

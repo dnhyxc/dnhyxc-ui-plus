@@ -42,9 +42,12 @@ export default defineConfig({
   plugins: [
     vue(),
     dts({
-      include: ['./**/*'],
+      // include: ['./**/*'],
+      // outDir: ['../dnhyxc-ui-plus/es', '../dnhyxc-ui-plus/lib'],
+      // exclude: ['vite.config.ts', 'script', 'plugins', 'coverage']
+      include: ['./src', './utils', './index.ts'],
       outDir: ['../dnhyxc-ui-plus/es', '../dnhyxc-ui-plus/lib'],
-      exclude: ['vite.config.ts', 'script', 'plugins']
+      exclude: ['./src/**/__tests__']
     }),
     replaceStyleExtPlugin(),
     updateVersionPlugin({
