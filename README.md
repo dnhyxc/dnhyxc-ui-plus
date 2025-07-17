@@ -529,7 +529,7 @@ export default defineConfig({
 组件样式打包使用 `gulp` 来辅助实现，在项目根目录下安装 `gulp` 及相关依赖。
 
 ```bash
-pnpm i gulp sass gulp-sass gulp-clean-css gulp-autoprefixer @types/gulp @types/gulp-autoprefixer @types/gulp-clean-css @types/gulp-sass -D
+pnpm i gulp sucrase sass gulp-sass gulp-clean-css gulp-autoprefixer @types/gulp @types/gulp-autoprefixer @types/gulp-clean-css @types/gulp-sass -D
 ```
 
 在 `packages/components` 文件夹下创建 `scripts` 文件夹，同时在 `packages/components/scripts` 文件夹下分别创建 `delpath.ts`、`paths.ts`、`index.ts`、`run.ts` 文件。
@@ -672,3 +672,110 @@ export default series(
 ```
 
 至此，组件打包配置就完成了，接下来就可以在项目根目录下运行 `pnpm run build` 命令来打包组件了。如果中间没有报错，那么就可以在 `packages` 目录下出现打包后的 `dnhyxc-ui-plus` 文件夹了。
+
+## 配置 eslint
+
+在根目录下安装 `eslint` 及相关依赖。
+
+```bash
+pnpm i eslint eslint-plugin-prettier eslint-plugin-vue typescript-eslint vue-eslint-parser prettier @eslint/js @babel/eslint-parser @typescript-eslint/parser @typescript-eslint/eslint-plugin -Dw
+```
+
+上述相关包版本如下：
+
+```json
+{
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.27.5",
+    "@eslint/js": "^9.30.1",
+    "@typescript-eslint/eslint-plugin": "^8.35.1",
+    "@typescript-eslint/parser": "^8.35.1",
+    "eslint": "^9.30.1",
+    "eslint-plugin-prettier": "^5.5.1",
+    "eslint-plugin-vue": "^9.25.0",
+    "typescript-eslint": "^8.35.1",
+    "vue-eslint-parser": "^10.2.0"
+  }
+}
+```
+
+最新版本的 eslint 配置将不再是使用 `.eslintrc.js` 及 `.eslintignore` 进行配置了，而是统一改用 `eslint.config.mjs` 进行配置了。因此需要在项目根目录下创建 `eslint.config.mjs` 文件，具体内容如下：
+
+```js
+import eslint from '@eslint/js';
+import tsEslintPlugin from '@typescript-eslint/eslint-plugin';
+import tsEslintParser from '@typescript-eslint/parser';
+import vuePlugin from 'eslint-plugin-vue';
+import vueParser from 'vue-eslint-parser';
+import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
+import globals from 'globals';
+
+const baseConfig = [
+  // 全局配置
+  {
+    name: 'global config',
+    languageOptions: {
+      globals: {
+        ...globals.es2022,
+        ...globals.browser,
+        ...globals.node
+      },
+      sourceType: 'module' // 确保设置为 module
+    },
+    rules: {
+      'no-dupe-class-members': 0,
+      'no-redeclare': 0,
+      'no-undef': 0,
+      'no-unused-vars': 0
+    }
+  },
+
+  // Vue 文件配置
+  {
+    name: 'vue-eslint',
+    files: ['**/*.vue'],
+    languageOptions: {
+      parser: vueParser,
+      parserOptions: {
+        parser: tsEslintParser, // Vue 文件中使用 TS 解析器
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+        extraFileExtensions: ['.vue'],
+        ecmaFeatures: { jsx: false }
+      }
+    },
+    plugins: {
+      vue: vuePlugin
+    },
+    rules: {
+      ...vuePlugin.configs['vue3-recommended'].rules,
+      'vue/multi-word-component-names': 'off'
+    }
+  },
+  // JS/TS 文件配置
+  {
+    name: 'typescript-eslint/base',
+    files: ['**/*.{js,ts}'],
+    languageOptions: {
+      parser: tsEslintParser,
+      sourceType: 'module',
+      parserOptions: {
+        ecmaFeatures: { jsx: false }
+      }
+    },
+    rules: {
+      ...tsEslintPlugin.configs.recommended.rules,
+      '@typescript-eslint/no-confusing-non-null-assertion': 2
+    },
+    plugins: {
+      '@typescript-eslint': tsEslintPlugin
+    }
+  },
+  // 忽略文件
+  {
+    ignores: ['packages/dnhyxc-ui-plus/**', 'packages/*/dist/**', 'node_modules/**']
+  }
+];
+
+export default [eslint.configs.recommended, eslintPluginPrettierRecommended, ...baseConfig];
+```

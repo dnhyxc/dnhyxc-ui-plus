@@ -13,13 +13,13 @@ es
 lib
 packages/dnhyxc-ui-plus/**
 packages/components/coverage/**
-
 cache
 dist.zip
+docs/cache
+docs/dist
 *.local
 
 # Editor directories and files
-.vscode/*
 !.vscode/extensions.json
 .idea
 .DS_Store
@@ -28,5 +28,3 @@ dist.zip
 *.njsproj
 *.sln
 *.sw?
-docs/cache
-docs/dist
