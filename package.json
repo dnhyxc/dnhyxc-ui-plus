@@ -7,10 +7,10 @@
     "build:docs": "pnpm -C docs build",
     "preview:docs": "pnpm -C docs preview",
     "dev:play": "pnpm -C play dev",
-    "test:ui": "pnpm -C packages/components test",
-    "test:coverage": "pnpm -C packages/components coverage",
+    "vitest": "pnpm -C packages/components test",
+    "coverage": "pnpm -C packages/components coverage",
     "prepare": "husky install",
-    "eslint": "npx eslint ./packages  --ext ts,vue,js --fix"
+    "test": "npx eslint ./packages  --ext ts,vue,js --fix"
   },
   "keywords": [],
   "author": "",
