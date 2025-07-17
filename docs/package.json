@@ -23,8 +23,7 @@
   },
   "dependencies": {
     "@vicons/ionicons5": "^0.13.0",
-    "dnhyxc-ui-plus": "workspace:^",
-    "dnhyxc-ui-plus-beta1": "0.0.1-beta.3",
-    "element-plus": "^2.10.3"
+    "dnhyxc-ui-plus-beta1": "workspace:^",
+    "element-plus": "^2.10.4"
   }
 }

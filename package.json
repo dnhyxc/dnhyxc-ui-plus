@@ -1,7 +1,6 @@
 {
   "name": "dnhyxc-ui",
   "version": "0.0.1",
-  "main": "index.js",
   "scripts": {
     "build": "gulp -f packages/components/script/build/index.ts",
     "dev:docs": "pnpm -C docs dev",
@@ -30,7 +29,6 @@
     "@typescript-eslint/parser": "^8.35.1",
     "@vitejs/plugin-vue": "^5.2.4",
     "eslint": "^9.30.1",
-    "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-prettier": "^5.5.1",
     "eslint-plugin-vue": "^9.25.0",
     "glob": "^11.0.3",
@@ -39,6 +37,7 @@
     "gulp-autoprefixer": "^9.0.0",
     "gulp-clean-css": "^4.3.0",
     "gulp-sass": "^6.0.1",
+    "happy-dom": "^18.0.1",
     "husky": "^8.0.3",
     "prettier": "^3.6.2",
     "rimraf": "^6.0.1",
@@ -49,13 +48,13 @@
     "typescript-eslint": "^8.35.1",
     "unplugin-auto-import": "^19.3.0",
     "unplugin-vue-components": "^28.8.0",
-    "unplugin-vue-define-options": "3.0.0-beta.15",
     "vite": "^7.0.4",
     "vite-plugin-dts": "^4.5.4",
+    "vitest": "^3.2.4",
     "vue-eslint-parser": "^10.2.0"
   },
   "dependencies": {
-    "element-plus": "^2.10.3",
+    "element-plus": "^2.10.4",
     "vue": "^3.5.17"
   }
 }

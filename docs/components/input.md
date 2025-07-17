@@ -15,7 +15,7 @@ const value = ref('');
 </script>
 
 <template>
-  <el-input placeholder="element plus" v-model="inputValue" />
+  <!-- <el-input placeholder="element plus" v-model="inputValue" /> -->
   <br />
   <n-input size="large" placeholder="dnhyxc-ui-plus" v-model:value="value" />
 </template>

@@ -8,9 +8,8 @@
 
 ```vue
 <template>
-  <el-button>element-plus button</el-button>
-  <br />
-  <n-button>dnhyxc-ui-plus button</n-button>
+  <el-button type="primary">element-plus button</el-button>
+  <nel-button>dnhyxc-ui-plus button</nel-button>
 </template>
 ```
 

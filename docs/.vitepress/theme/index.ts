@@ -2,8 +2,11 @@
 import { h } from 'vue';
 import type { Theme } from 'vitepress';
 import DefaultTheme from 'vitepress/theme';
-import { Button, Input } from 'dnhyxc-ui-plus-beta1';
-import ElementPlus from 'element-plus';
+import DnhyxcUI from 'dnhyxc-ui-plus-beta1/es/index.mjs';
+// import ElementPlus from 'element-plus';
+// import 'element-plus/dist/index.css';
+// import { Button, Input } from 'dnhyxc-ui-plus-beta1/es/index.mjs';
+// import ElementPlus from 'element-plus/es/index.mjs';
 import DemoPreview, { useComponents } from '@vitepress-code-preview/container';
 // import { demoBlockPlugin } from 'vitepress-theme-demoblock';
 // import 'vitepress-theme-demoblock/dist/theme/styles/index.css';
@@ -21,8 +24,8 @@ export default {
   enhanceApp({ app, router, siteData }) {
     useComponents(app, DemoPreview);
     DefaultTheme.enhanceApp({ app, router, siteData });
-    app.component('NButton', Button);
-    app.component('NInput', Input);
-    app.use(ElementPlus);
+    // app.component('NButton', Button);
+    // app.component('NInput', Input);
+    app.use(DnhyxcUI);
   }
 } satisfies Theme;
