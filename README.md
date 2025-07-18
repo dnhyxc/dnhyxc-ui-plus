@@ -1101,3 +1101,5 @@ describe('Components Entry Point', () => {
 }
 // ...
 ```
+
+完成上述配置之后，就可以在项目根目录下运行 `pnpm run vitest` 或者 `pnpm run vitest:coverage` 命令来运行测试用例了。
