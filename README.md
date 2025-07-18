@@ -1289,6 +1289,6 @@ module.exports = {
       "path": "cz-customizable"
     }
   }
-  // ...
+  // ...。
 }
 ```
