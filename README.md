@@ -811,6 +811,119 @@ app.mount('#app');
 </template>
 ```
 
+## 配置 vitest
+
+### 依赖安装
+
+在项目根目录下安装 `vitest` 及相关依赖。
+
+```bash
+pnpm i vitest @vue/test-utils @vitest/coverage-v8 happy-dom -Dw
+```
+
+- happy-dom 用于模拟浏览器环境。
+
+- @vue/test-utils 用于测试 Vue 组件。
+
+- @vitest/coverage-v8 用于展示测试覆盖率，通常运行完之后，会在 `packages/components` 下生成一个 `coverage` 文件夹，可在浏览器中运行其中的 `index.html` 文件查看测试覆盖率。
+
+### 创建 test 文件夹及配置文件
+
+在 `packages/components` 文件夹下创建 `test` 文件夹，同时在 `packages/components/test` 文件夹下创建 `setup.ts` 文件，该文件会在 `vitest.config.ts` 中的 `setupFiles` 配置中被引入。具体内容如下：
+
+```ts
+import { config } from '@vue/test-utils'; // 从 Vue Test Utils 导入全局配置
+import ElementPlus from 'element-plus'; // 导入 Element Plus 插件
+import 'element-plus/dist/index.css'; // 引入 Element Plus 样式
+
+// 全局注册 Element Plus 插件
+config.global.plugins = [ElementPlus];
+```
+
+### 配置 vitest.config.ts 文件
+
+在 `packages/components` 文件夹下创建 `vitest.config.ts` 文件，具体内容如下：
+
+```ts
+import { defineConfig } from 'vitest/config';
+import vue from '@vitejs/plugin-vue';
+
+export default defineConfig({
+  plugins: [vue()],
+  test: {
+    environment: 'happy-dom',
+    coverage: {
+      include: ['src/**/*.{ts,tsx,vue}'],
+      exclude: ['src/index.ts', 'src/**/*.test.*']
+    },
+    setupFiles: ['test/setup.ts']
+  }
+});
+```
+
+### 为组件添加测试用例
+
+在 `packages/components/src/button` 文件夹下创建 `__test__` 文件夹，同时在 `__test__` 文件夹下创建 `button.test.ts` 文件，具体的测试用例可以根据自身的情况而定，这里只是简单举个例子：
+
+```ts
+import { mount } from '@vue/test-utils';
+import Button from '../index.vue';
+import { describe, it, expect } from 'vitest'; // Vitest 的测试函数
+import * as Components from '../index'; // 导入 index.ts 中导出的所有组件
+
+describe('Button Component', () => {
+  // 测试组件是否正确渲染默认插槽内容
+  it('renders correctly with default slot content', () => {
+    // 挂载组件
+    const wrapper = mount(Button);
+    // 断言按钮文本是否为默认内容
+    expect(wrapper.text()).toBe('测试按钮');
+  });
+});
+
+// index.ts
+describe('Components Entry Point', () => {
+  // 测试 Button 组件是否被正确导出
+  it('should export Button component', () => {
+    // 断言 Components 对象中是否存在 Button
+    expect(Components.Button).toBeDefined();
+    // 断言 Button 是否具有 install 方法（由 withInstall 添加）
+    expect(typeof Components.Button.install).toBe('function');
+  });
+});
+```
+
+### 配置 package.json 文件
+
+在 `packages/components` 文件夹下的 `package.json` 文件中添加 `test` 及 `coverage` 命令，具体内容如下：
+
+```json
+{
+  //...
+  "scripts": {
+    "build": "vite build",
+    "test": "vitest run",
+    "coverage": "vitest run --coverage"
+  }
+  //...
+}
+```
+
+在根目录下的 `package.json` 文件中添加 `vitest` 及 `vitest:coverage` 命令，方便在全局运行测试用例，具体内容如下：
+
+```json
+// ...
+{
+  "scripts": {
+    "vitest": "pnpm -C packages/components test",
+    "vitest:coverage": "pnpm -C packages/components coverage"
+  }
+}
+// ...
+```
+
+完成上述配置之后，就可以在项目根目录下运行 `pnpm run vitest` 或者 `pnpm run vitest:coverage` 命令来运行测试用例了。
+
 ## 配置 eslint
 
 最新版本的 eslint 配置将不再是使用 `.eslintrc.js` 及 `.eslintignore` 进行配置了，而是统一改用 `eslint.config.mjs` 进行配置了。
@@ -1074,115 +1187,108 @@ npm test
 chmod +x .husky/pre-commit
 ```
 
-## 配置 vitest
+## 配置 commitlint 约定式提交
 
-### 依赖安装
-
-在项目根目录下安装 `vitest` 及相关依赖。
+在项目根目录下安装 `commitlint` 及相关依赖。
 
 ```bash
-pnpm i vitest @vue/test-utils @vitest/coverage-v8 happy-dom -Dw
+pnpm i commitizen cz-customizable @commitlint/cli @commitlint/config-conventional -Dw
 ```
 
-- happy-dom 用于模拟浏览器环境。
+在根目录下新建 `commitlint.config.js` 文件及 `.cz-config.js` 文件：
 
-- @vue/test-utils 用于测试 Vue 组件。
+- commitlint.config.js 文件内容如下，具体可以自主进行更改，详情请参考 [commitlint](https://commitlint.js.org/)。
 
-- @vitest/coverage-v8 用于展示测试覆盖率，通常运行完之后，会在 `packages/components` 下生成一个 `coverage` 文件夹，可在浏览器中运行其中的 `index.html` 文件查看测试覆盖率。
-
-### 创建 test 文件夹及配置文件
-
-在 `packages/components` 文件夹下创建 `test` 文件夹，同时在 `packages/components/test` 文件夹下创建 `setup.ts` 文件，该文件会在 `vitest.config.ts` 中的 `setupFiles` 配置中被引入。具体内容如下：
-
-```ts
-import { config } from '@vue/test-utils'; // 从 Vue Test Utils 导入全局配置
-import ElementPlus from 'element-plus'; // 导入 Element Plus 插件
-import 'element-plus/dist/index.css'; // 引入 Element Plus 样式
-
-// 全局注册 Element Plus 插件
-config.global.plugins = [ElementPlus];
+```js
+module.exports = {
+  extends: ['@commitlint/config-conventional'],
+  rules: {
+    'type-enum': [
+      2,
+      'always',
+      [
+        'feat', // 新功能（feature）
+        'bug', // 此项特别针对bug号，用于向测试反馈bug列表的bug修改情况
+        'fix', // 修补bug
+        'ui', // 更新 ui
+        'docs', // 文档（documentation）
+        'style', // 格式（不影响代码运行的变动）
+        'perf', // 性能优化
+        'release', // 发布
+        'deploy', // 部署
+        'refactor', // 重构（即不是新增功能，也不是修改bug的代码变动）
+        'test', // 增加测试
+        'chore', // 构建过程或辅助工具的变动
+        'revert', // feat(pencil): add ‘graphiteWidth’ option (撤销之前的commit)
+        'merge', // 合并分支， 例如： merge（前端页面）： feature-xxxx修改线程地址
+        'other', // 其它更改
+        'build' // 打包
+      ]
+    ],
+    'type-case': [2, 'always', 'lower-case'],
+    'type-empty': [2, 'never'],
+    'subject-case': [2, 'always', 'lower-case'],
+    'subject-empty': [2, 'never'],
+    'header-max-length': [0, 'always', 72]
+  }
+};
 ```
 
-### 配置 vitest.config.ts 文件
+- .cz-config.js 文件内容如下，具体可以自主进行更改。这里需要注意的是，根目录下的 package.json 中不能有 "type": "module" 的配置，否则会报错，这是因为加了 "type": "module" 会导致模式不兼容，因此会导致报错。
 
-在 `packages/components` 文件夹下创建 `vitest.config.ts` 文件，具体内容如下：
-
-```ts
-import { defineConfig } from 'vitest/config';
-import vue from '@vitejs/plugin-vue';
-
-export default defineConfig({
-  plugins: [vue()],
-  test: {
-    environment: 'happy-dom',
-    coverage: {
-      include: ['src/**/*.{ts,tsx,vue}'],
-      exclude: ['src/index.ts', 'src/**/*.test.*']
+```js
+module.exports = {
+  types: [
+    { value: 'feat', name: 'feat: 增加新功能' },
+    { value: 'bug', name: 'bug: 测试反馈bug列表中的bug号' },
+    { value: 'fix', name: 'fix: 修复bug' },
+    { value: 'ui', name: 'ui: 更新UI' },
+    { value: 'docs', name: 'docs: 文档变更' },
+    { value: 'style', name: 'style: 代码格式(不影响代码运行的变动)' },
+    { value: 'perf', name: 'perf: 性能优化' },
+    {
+      value: 'refactor',
+      name: 'refactor: 重构(既不是增加feature，也不是修复bug)'
     },
-    setupFiles: ['test/setup.ts']
-  }
-});
+    { value: 'release', name: 'release: 发布' },
+    { value: 'deploy', name: 'deploy: 部署' },
+    { value: 'test', name: 'test: 增加测试' },
+    {
+      value: 'chore',
+      name: 'chore: 构建过程或辅助工具的变动(更改配置文件)'
+    },
+    { value: 'revert', name: 'revert: 回退' },
+    { value: 'other', name: 'other: 其它修改' },
+    { value: 'build', name: 'build: 打包' }
+  ],
+  // override the messages, defaults are as follows
+  messages: {
+    type: '请选择提交类型:',
+    customScope: '请输入您修改的范围(可选):',
+    subject: '请简要描述提交 message (必填):',
+    body: '请输入详细描述(可选，待优化去除，跳过即可):',
+    footer: '请输入要关闭的issue(待优化去除，跳过即可):',
+    confirmCommit: '确认使用以上信息提交？(y/n/e/h)'
+  },
+  allowCustomScopes: true,
+  skipQuestions: ['body', 'footer'],
+  subjectLimit: 72
+};
 ```
 
-### 为组件添加测试用例
-
-在 `packages/components/src/button` 文件夹下创建 `__test__` 文件夹，同时在 `__test__` 文件夹下创建 `button.test.ts` 文件，具体的测试用例可以根据自身的情况而定，这里只是简单举个例子：
-
-```ts
-import { mount } from '@vue/test-utils';
-import Button from '../index.vue';
-import { describe, it, expect } from 'vitest'; // Vitest 的测试函数
-import * as Components from '../index'; // 导入 index.ts 中导出的所有组件
-
-describe('Button Component', () => {
-  // 测试组件是否正确渲染默认插槽内容
-  it('renders correctly with default slot content', () => {
-    // 挂载组件
-    const wrapper = mount(Button);
-    // 断言按钮文本是否为默认内容
-    expect(wrapper.text()).toBe('测试按钮');
-  });
-});
-
-// index.ts
-describe('Components Entry Point', () => {
-  // 测试 Button 组件是否被正确导出
-  it('should export Button component', () => {
-    // 断言 Components 对象中是否存在 Button
-    expect(Components.Button).toBeDefined();
-    // 断言 Button 是否具有 install 方法（由 withInstall 添加）
-    expect(typeof Components.Button.install).toBe('function');
-  });
-});
-```
-
-### 配置 package.json 文件
-
-在 `packages/components` 文件夹下的 `package.json` 文件中添加 `test` 及 `coverage` 命令，具体内容如下：
+最后在项目根目录下的 `package.json` 中增加如下配置：
 
 ```json
 {
-  //...
+  // ...
   "scripts": {
-    "build": "vite build",
-    "test": "vitest run",
-    "coverage": "vitest run --coverage"
+    "commit": "git-cz"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-customizable"
+    }
   }
-  //...
+  // ...
 }
 ```
-
-在根目录下的 `package.json` 文件中添加 `vitest` 及 `vitest:coverage` 命令，方便在全局运行测试用例，具体内容如下：
-
-```json
-// ...
-{
-  "scripts": {
-    "vitest": "pnpm -C packages/components test",
-    "vitest:coverage": "pnpm -C packages/components coverage"
-  }
-}
-// ...
-```
-
-完成上述配置之后，就可以在项目根目录下运行 `pnpm run vitest` 或者 `pnpm run vitest:coverage` 命令来运行测试用例了。
