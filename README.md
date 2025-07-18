@@ -956,35 +956,6 @@ export default [eslint.configs.recommended, eslintPluginPrettierRecommended, ...
 
 > 说明：配置完成 eslint 后，如果在编辑器中 eslint 不能提示代码错误，但是通过运行 `pnpm run test` 命令能够检测出来，可以尝试关闭编辑器，重新打开编辑器。这样应该在编辑代码时就能正常提示错误了。
 
-## 配置 vitest
-
-### 依赖安装
-
-在项目根目录下安装 `vitest` 及相关依赖。
-
-```bash
-pnpm i vitest @vue/test-utils @vitest/coverage-v8 happy-dom -Dw
-```
-
-- happy-dom 用于模拟浏览器环境。
-
-- @vue/test-utils 用于测试 Vue 组件。
-
-- @vitest/coverage-v8 用于展示测试覆盖率，通常运行完之后，会在 `packages/components` 下生成一个 `coverage` 文件夹，可在浏览器中运行其中的 `index.html` 文件查看测试覆盖率。
-
-### 创建 test 文件夹及配置文件
-
-在 `packages/components` 文件夹下创建 `test` 文件夹，同时在 `packages/components/test` 文件夹下创建 `setup.ts` 文件，该文件会在 `vitest.config.ts` 中的 `setupFiles` 配置中被引入。具体内容如下：
-
-```ts
-import { config } from '@vue/test-utils'; // 从 Vue Test Utils 导入全局配置
-import ElementPlus from 'element-plus'; // 导入 Element Plus 插件
-import 'element-plus/dist/index.css'; // 引入 Element Plus 样式
-
-// 全局注册 Element Plus 插件
-config.global.plugins = [ElementPlus];
-```
-
 ## 配置 Prettier
 
 在项目根目录下安装 `Prettier` 及相关依赖。
@@ -1018,6 +989,35 @@ pnpm i prettier -Dw
   "embeddedLanguageFormatting": "auto",
   "singleAttributePerLine": false
 }
+```
+
+## 配置 vitest
+
+### 依赖安装
+
+在项目根目录下安装 `vitest` 及相关依赖。
+
+```bash
+pnpm i vitest @vue/test-utils @vitest/coverage-v8 happy-dom -Dw
+```
+
+- happy-dom 用于模拟浏览器环境。
+
+- @vue/test-utils 用于测试 Vue 组件。
+
+- @vitest/coverage-v8 用于展示测试覆盖率，通常运行完之后，会在 `packages/components` 下生成一个 `coverage` 文件夹，可在浏览器中运行其中的 `index.html` 文件查看测试覆盖率。
+
+### 创建 test 文件夹及配置文件
+
+在 `packages/components` 文件夹下创建 `test` 文件夹，同时在 `packages/components/test` 文件夹下创建 `setup.ts` 文件，该文件会在 `vitest.config.ts` 中的 `setupFiles` 配置中被引入。具体内容如下：
+
+```ts
+import { config } from '@vue/test-utils'; // 从 Vue Test Utils 导入全局配置
+import ElementPlus from 'element-plus'; // 导入 Element Plus 插件
+import 'element-plus/dist/index.css'; // 引入 Element Plus 样式
+
+// 全局注册 Element Plus 插件
+config.global.plugins = [ElementPlus];
 ```
 
 ### 配置 vitest.config.ts 文件
