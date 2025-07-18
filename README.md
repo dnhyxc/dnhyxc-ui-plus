@@ -799,7 +799,7 @@ pnpm i vitest @vue/test-utils @vitest/coverage-v8 happy-dom -D
 
 ### 创建 test 文件夹及配置文件
 
-在 `packages/components` 文件夹下创建 `test` 文件夹，同时在 `packages/components/test` 文件夹下分别创建 `setup.js` 文件，具体内容如下：
+在 `packages/components` 文件夹下创建 `test` 文件夹，同时在 `packages/components/test` 文件夹下创建 `setup.js` 文件，该文件会在 `vitest.config.ts` 中的 `setupFiles` 配置中被引入。具体内容如下：
 
 ```ts
 import { config } from '@vue/test-utils'; // 从 Vue Test Utils 导入全局配置
