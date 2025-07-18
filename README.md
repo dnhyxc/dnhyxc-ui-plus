@@ -331,7 +331,7 @@ packages:
 
 同时使用 `pnpm i dnhyxc-ui-plus --workspace` 命令，将 `dnhyxc-ui-plus` 组件库安装到 `play` 项目中。
 
-## 使用 dnhyxc-ui-plus 组件库
+## 通过 workspace 的方式使用 dnhyxc-ui-plus 组件库
 
 ### 局部导入
 
@@ -343,7 +343,7 @@ packages:
 </template>
 
 <script setup lang="ts">
-import { Button } from 'dnhyxc-ui-plus-beta1/packages/components/src/button';
+import { Button } from 'dnhyxc-ui-plus/packages/components/src/button';
 </script>
 ```
 
@@ -353,7 +353,7 @@ import { Button } from 'dnhyxc-ui-plus-beta1/packages/components/src/button';
 
 ```ts
 import { createApp } from 'vue';
-import { Button } from 'dnhyxc-ui-plus-beta1/packages/components/src/button';
+import { Button } from 'dnhyxc-ui-plus/packages/components/src/button';
 import './style.css';
 import App from './App.vue';
 
@@ -753,6 +753,64 @@ dnhyxc-ui-test
 └─ package.json
 ```
 
+到这一步组件的主要功能就完成了，此时就可以通过 `npm publish` 命令将上述打包输出的 `packages/dnhyxc-ui-plus` 包发布到 `npm` 上了。
+
+> 注意：npm 发包时需要使用 npm 官方的源，同时需要先通过 `npm login` 命令登录 npm 账号，然后再执行 `npm publish` 命令。
+
+## 引用 npm 上的 dnhyxc-ui-plus 组件库
+
+### 下载 dnhyxc-ui-plus 组件库
+
+可以在 play 测试项目中安装 dnhyxc-ui-plus，即进入到 play 测试项目的根目录下，执行如下命令进行安装：
+
+```bash
+pnpm i dnhyxc-ui-plus
+```
+
+### 局部引入组件
+
+在 `play/App.vue` 文件中引入组件。
+
+```vue
+<template>
+  <Button size="large" type="danger" />
+</template>
+
+<script setup lang="ts">
+import { Button } from 'dnhyxc-ui-plus';
+</script>
+```
+
+### 全局引入组件
+
+在 `play/main.ts` 文件中引入组件库。
+
+```ts
+import { createApp } from 'vue';
+import dnhyxcUI from 'dnhyxc-ui-plus';
+// 或者只全局导入单个组件，两种方式都可以
+// import { Button } from 'dnhyxc-ui-plus';
+import App from './App.vue';
+import './style.css';
+
+const app = createApp(App);
+// 全局注册组件库中的所有组件
+app.use(dnhyxcUI);
+// 全局注册单个组件
+// app.use(Button);
+app.mount('#app');
+```
+
+> 说明：上述全局注册组件，如果所有组件都需要全局注册，那么可以通过 `app.use(dnhyxcUI)` 来全局注册组件库中的所有组件，如果只需要全局注册单个组件，那么可以通过 `app.use(Button)` 来全局注册单个组件。
+
+在 `play/App.vue` 文件中使用组件，此时就不需要导入 `Button` 组件了，可以直接使用：
+
+```vue
+<template>
+  <n-button size="large" type="danger" />
+</template>
+```
+
 ## 配置 eslint
 
 最新版本的 eslint 配置将不再是使用 `.eslintrc.js` 及 `.eslintignore` 进行配置了，而是统一改用 `eslint.config.mjs` 进行配置了。
@@ -765,7 +823,7 @@ dnhyxc-ui-test
 pnpm create @eslint/config@latest
 ```
 
-按照指引依次选择如下设置：
+按照指引依次选择如下选项：
 
 1. What do you want to lint?
 
