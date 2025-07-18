@@ -1307,6 +1307,7 @@ npx husky add .husky/commit-msg 'npx --no-install commitlint --edit $1'
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
+# 手动新增的命令
 npm test
 
 npx --no-install commitlint --edit $1
