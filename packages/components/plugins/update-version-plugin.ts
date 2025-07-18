@@ -1,6 +1,6 @@
 import path from 'path';
 import { writeFileSync, readFileSync, existsSync, mkdirSync } from 'fs';
-import semver from 'semver';
+// import semver from 'semver';
 
 interface PackageJson {
   name: string;
@@ -26,7 +26,7 @@ export function updateVersionPlugin(info: PackageJson) {
       }
       // 读取并更新 package.json 的版本号
       const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf-8'));
-      packageJson.version = semver.inc(packageJson.version, 'patch');
+      // packageJson.version = semver.inc(packageJson.version, 'patch');
       // 更新输出文件的内容
       const updatedPackageJson = {
         name,
@@ -37,7 +37,18 @@ export function updateVersionPlugin(info: PackageJson) {
         keywords,
         sideEffects,
         typings,
-        author: packageJson.author,
+        author: {
+          name: packageJson.author,
+          github: `https://github.com/${packageJson.author}`
+        },
+        repository: {
+          type: 'git',
+          url: 'git+https://github.com/dnhyxc/dnhyxc-ui-plus.git'
+        },
+        bugs: {
+          url: 'https://github.com/dnhyxc/dnhyxc-ui-plus/issues'
+        },
+        homepage: 'https://github.com/dnhyxc/dnhyxc-ui-plus/blob/master/README.md',
         license: packageJson.license,
         description: packageJson.description || ''
       };

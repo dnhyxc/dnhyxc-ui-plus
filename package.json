@@ -9,6 +9,7 @@
     "dev:play": "pnpm -C play dev",
     "vitest": "pnpm -C packages/components test",
     "vitest:coverage": "pnpm -C packages/components coverage",
+    "publish": "pnpm --filter=./packages/components run build && pnpm changeset && pnpm changeset version && pnpm changeset publish",
     "prepare": "husky install",
     "commit": "git-cz",
     "test": "eslint ./packages  --ext ts,vue,js --fix"
@@ -29,6 +30,7 @@
   "description": "a ui library for vue3",
   "devDependencies": {
     "@babel/eslint-parser": "^7.27.5",
+    "@changesets/cli": "^2.29.5",
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
     "@eslint/js": "^9.30.1",

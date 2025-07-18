@@ -1316,3 +1316,41 @@ npx --no-install commitlint --edit $1
 上述配置完成后，就可以通过 `git commit` 命令检测 `commitlint` 是否配置成功了，如果配置成功，不符合 commitlint 配置的规则，则 `commit` 时就会报错，无法正常提交代码，符合规则才能正常提交代码。
 
 ## 配置 Changesets
+
+[Changesets](https://github.com/atlassian/changesets) 是一个用于 Monorepo 项目下版本以及 Changelog 文件管理的工具。目前一些比较火的 Monorepo 仓库都在使用该工具进行项目的发包。
+
+在项目根目录下安装 `@changesets/cli`：
+
+```bash
+pnpm install @changesets/cli -Dw
+```
+
+安装完毕之后在根目录下运行 `npx changeset init` 命令，在根目录下生成 `.changeset` 文件夹，其中 `config.json` 文件内容如下：
+
+```json
+{
+  "$schema": "https://unpkg.com/@changesets/config@3.0.0/schema.json",
+  "changelog": "@changesets/cli/changelog",
+  "commit": false,
+  "fixed": [],
+  "linked": [],
+  "access": "public",
+  "baseBranch": "master",
+  "updateInternalDependencies": "patch",
+  "ignore": []
+}
+```
+
+在项目根目录下的 `package.json` 中增加如下脚本：
+
+```json
+{
+  // ...
+  "scripts": {
+    // ...
+    "publish": "pnpm --filter=./packages/* run build && pnpm changeset && pnpm changeset version && pnpm changeset publish"
+    // ...
+  }
+  // ...
+}
+```
