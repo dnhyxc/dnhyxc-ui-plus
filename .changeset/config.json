@@ -9,6 +9,7 @@
   "updateInternalDependencies": "patch",
   "ignore": [
     "dnhyxc-docs",
-    "dnhyxc-ui-plus-beta1"
+    "dnhyxc-ui-plus-beta1",
+    "play"
   ]
 }
