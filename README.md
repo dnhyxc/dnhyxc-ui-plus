@@ -27,12 +27,14 @@ packages:
   - 'packages/**'
 ```
 
-## typescript 环境配置
+## 项目环境配置
 
-在项目根目录下使用 `pnpm i typescript -Dw` 安装 `typescript` 依赖。
+在项目根目录下安装项目运行所需要的依赖。
 
 ```bash
-pnpm i typescript -Dw
+pnpm i vue element-plus -w
+
+pnpm i typescript sass -Dw
 ```
 
 在项目根目录下创建 `tsconfig.json` 文件，内容如下：
@@ -88,6 +90,7 @@ packages
     └── utils
         ├── bem.ts
         └── index.ts
+    └── index.ts
 ```
 
 在根目录下创建 `packages` 文件夹，同时在 `packages` 文件夹下创建 `components` 文件夹，进入 `packages/components` 文件夹，使用 `pnpm init` 生成 `package.json` 文件，并将内容修改为如下：
@@ -192,7 +195,7 @@ export const withInstall = <T>(comp: T) => {
 
 在 `packages/components/src/button` 文件夹下分别创建 `types.ts`、`index.vue`、`style/index.scss`、`index.ts`文件。
 
-- types.ts 用于存放组件所需要的一些属性的类型定义，具体内容如下：
+- packages/components/src/button/types.ts 用于存放组件所需要的一些属性的类型定义，具体内容如下：
 
 ```ts
 import { type ExtractPropTypes, type PropType } from 'vue';
@@ -218,7 +221,7 @@ declare module 'vue' {
 }
 ```
 
-- index.vue 是组件具体实现代码，具体内容如下：
+- packages/components/src/button/index.vue 是组件具体实现代码，具体内容如下：
 
 ```vue
 <template>
@@ -245,7 +248,7 @@ const props = defineProps(buttonProps);
 </script>
 ```
 
-- style/index.scss 是组件的样式代码，具体内容如下：
+- packages/components/src/button/style/index.scss 是组件的样式代码，具体内容如下：
 
 ```scss
 .n-button {
@@ -268,7 +271,7 @@ const props = defineProps(buttonProps);
 }
 ```
 
-- index.ts 是组件的入口文件，具体内容如下：
+- packages/components/src/button/index.ts 是组件的入口文件，具体内容如下：
 
 ```ts
 import { withInstall } from '../../utils';
@@ -282,11 +285,39 @@ export { Button };
 export default Button;
 ```
 
+在 `packages/components/src` 文件夹下创建 `index.ts` 入口文件，用于导出组件。
+
+- packages/components/src/index.ts：
+
+```ts
+export * from './button';
+```
+
+在 `packages/components` 文件夹下创建 `index.ts` 作为所有组件的入口文件。
+
+- packages/components/index.ts：
+
+```ts
+import { App } from 'vue';
+import * as components from './src/index';
+import ElementPlus from 'element-plus';
+import 'element-plus/dist/index.css';
+// 也导出所有单个组件，支持按需引入
+export * from './src/index';
+
+export default {
+  install: (app: App) => {
+    app.use(ElementPlus);
+    for (let c in components) {
+      app.use(components[c as keyof typeof components]);
+    }
+  }
+};
+```
+
 ## 搭建组件预览（测试）环境
 
 在根目录下运行 `create-vite play --template vue-ts` 命令，创建 `play` 组件测试项目。
-
-进入到 `play` 目录中，运行 `pnpm i` 安装依赖。
 
 在项目根目录下的 `pnpm-workspace.yaml` 文件中将 `play` 项目添加到 `packages` 中。
 
@@ -296,21 +327,23 @@ packages:
   - 'play'
 ```
 
+进入到 `play` 目录中，运行 `pnpm i` 安装依赖。
+
 同时使用 `pnpm i dnhyxc-ui-plus --workspace` 命令，将 `dnhyxc-ui-plus` 组件库安装到 `play` 项目中。
 
 ## 使用 dnhyxc-ui-plus 组件库
 
 ### 局部导入
 
-在 `App.vue` 文件中使用局部导入使用 `n-button` 组件。
+在 `App.vue` 文件中使用局部导入使用 `Button` 组件。
 
 ```vue
 <template>
-  <n-button type="primary" size="large" />
+  <Button type="primary" size="large" />
 </template>
 
 <script setup lang="ts">
-import { NButton } from 'dnhyxc-ui-plus-beta1';
+import { Button } from 'dnhyxc-ui-plus-beta1/packages/components/src/button';
 </script>
 ```
 
@@ -320,16 +353,16 @@ import { NButton } from 'dnhyxc-ui-plus-beta1';
 
 ```ts
 import { createApp } from 'vue';
-import dnhyxcUI from 'dnhyxc-ui-plus';
+import { Button } from 'dnhyxc-ui-plus-beta1/packages/components/src/button';
 import './style.css';
 import App from './App.vue';
 
 const app = createApp(App);
-app.use(dnhyxcUI);
+app.use(Button);
 app.mount('#app');
 ```
 
-通过上述方式，在 `App.vue` 文件中就不需要再导入 `NButton` 组件了，可以直接使用 `n-button` 组件。
+通过上述方式，在 `App.vue` 文件中就不需要再导入 `Button` 组件了，可以直接通过 `n-button`（通过 defineOptions 定义的组件名称）使用组件。
 
 ```vue
 <template>
@@ -339,10 +372,10 @@ app.mount('#app');
 
 ## 组件打包
 
-在 `packages/components` 目录下安装打包所需要的依赖。
+在项目根目录下安装打包所需要的依赖。
 
 ```bash
-pnpm i vite @vitejs/plugin-vue vite-plugin-dts @types/node semver @types/semver -D
+pnpm i vite @vitejs/plugin-vue vite-plugin-dts @types/node semver @types/semver -Dw
 ```
 
 > - @vitejs/plugin-vue @vitejs/plugin-vue 的主要作用是为Vite 提供对 Vue 3 语法和单文件组件的支持，并提供一些额外的功能，如 JSX/TSX 支持、Vue 组件库的自动按需导入、环境变量的通用设置等。
@@ -350,7 +383,7 @@ pnpm i vite @vitejs/plugin-vue vite-plugin-dts @types/node semver @types/semver 
 > - @types/node 用于支持 node 环境下的类型声明，即如果使用到了 path，fs 等就需要安装。
 > - semver 用于处理版本号。
 
-在 `packages/components` 文件夹下创建 `plugins` 文件夹，在其中分别创建 `replaceStyleExtPlugin.ts`、`updateVersionPlugin.ts` 及 `index.ts` 文件。
+在 `packages/components` 文件夹下创建 `plugins` 文件夹，在其中分别创建 `relpace-style-ext-plugin.ts`、`update-version-plugin.ts` 及 `index.ts` 文件。
 
 - replaceStyleExtPlugin.ts 文件用于编写将组件（button/index.vue）中引入的 `scss` 文件后缀替换为 `css` 文件后缀的 `vite plugin`。
 
@@ -529,10 +562,10 @@ export default defineConfig({
 组件样式打包使用 `gulp` 来辅助实现，在项目根目录下安装 `gulp` 及相关依赖。
 
 ```bash
-pnpm i gulp sucrase sass gulp-sass gulp-clean-css gulp-autoprefixer @types/gulp @types/gulp-autoprefixer @types/gulp-clean-css @types/gulp-sass -D
+pnpm i gulp sucrase sass gulp-sass gulp-clean-css gulp-autoprefixer @types/gulp @types/gulp-autoprefixer @types/gulp-clean-css @types/gulp-sass -Dw
 ```
 
-在 `packages/components` 文件夹下创建 `scripts` 文件夹，同时在 `packages/components/scripts` 文件夹下分别创建 `delpath.ts`、`paths.ts`、`index.ts`、`run.ts` 文件。
+在 `packages/components` 文件夹下创建 `scripts` 文件夹，同时在 `packages/components/scripts` 创建 `packages/components/scripts/build` 文件夹，在 `packages/components/scripts/build` 文件夹下分别创建 `delpath.ts`、`paths.ts`、`index.ts`、`run.ts` 文件。
 
 - delpath.ts 文件用于删除指定目录下的文件。
 
@@ -653,7 +686,7 @@ export default series(
 {
   // ...
   "scripts": {
-    "build": "gulp -f packages/components/script/build/index.ts"
+    "build": "vite build"
   }
   // ...
 }
@@ -665,13 +698,60 @@ export default series(
 {
   // ...
   "scripts": {
-    "build": "gulp -f packages/components/script/build/index.ts"
+    "build": "gulp -f packages/components/scripts/build/index.ts"
   }
   // ...
 }
 ```
 
-至此，组件打包配置就完成了，接下来就可以在项目根目录下运行 `pnpm run build` 命令来打包组件了。如果中间没有报错，那么就可以在 `packages` 目录下出现打包后的 `dnhyxc-ui-plus` 文件夹了。
+至此，组件打包配置就完成了，接下来就可以在项目根目录下运行 `pnpm run build` 命令来打包组件了。如果中间没有报错，那么就可以在 `packages` 目录下出现打包后的 `dnhyxc-ui-plus` 文件夹了，具体生成的文件目录如下：
+
+```
+dnhyxc-ui-test
+├─ es
+│  ├─ index.d.ts
+│  ├─ index.mjs
+│  ├─ src
+│  │  ├─ button
+│  │  │  ├─ index.d.ts
+│  │  │  ├─ index.mjs
+│  │  │  ├─ index.vue.d.ts
+│  │  │  ├─ index.vue.mjs
+│  │  │  ├─ index.vue2.mjs
+│  │  │  ├─ style
+│  │  │  │  └─ index.css
+│  │  │  ├─ types.d.ts
+│  │  │  └─ types.mjs
+│  │  ├─ index.d.ts
+│  │  └─ index.mjs
+│  └─ utils
+│     ├─ bem.d.ts
+│     ├─ bem.mjs
+│     ├─ index.d.ts
+│     └─ index.mjs
+├─ lib
+│  ├─ index.d.ts
+│  ├─ index.js
+│  ├─ src
+│  │  ├─ button
+│  │  │  ├─ index.d.ts
+│  │  │  ├─ index.js
+│  │  │  ├─ index.vue.d.ts
+│  │  │  ├─ index.vue.js
+│  │  │  ├─ index.vue2.js
+│  │  │  ├─ style
+│  │  │  │  └─ index.css
+│  │  │  ├─ types.d.ts
+│  │  │  └─ types.js
+│  │  ├─ index.d.ts
+│  │  └─ index.js
+│  └─ utils
+│     ├─ bem.d.ts
+│     ├─ bem.js
+│     ├─ index.d.ts
+│     └─ index.js
+└─ package.json
+```
 
 ## 配置 eslint
 

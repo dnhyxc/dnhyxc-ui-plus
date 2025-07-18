@@ -2,7 +2,7 @@
   "name": "dnhyxc-ui",
   "version": "0.0.1",
   "scripts": {
-    "build": "gulp -f packages/components/script/build/index.ts",
+    "build": "gulp -f packages/components/scripts/build/index.ts",
     "dev:docs": "pnpm -C docs dev",
     "build:docs": "pnpm -C docs build",
     "preview:docs": "pnpm -C docs preview",
