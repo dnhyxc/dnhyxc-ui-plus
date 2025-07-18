@@ -863,3 +863,32 @@ describe('Components Entry Point', () => {
   });
 });
 ```
+
+### 配置 package.json 文件
+
+在 `packages/components` 文件夹下的 `package.json` 文件中添加 `test` 及 `coverage` 命令，具体内容如下：
+
+```json
+{
+  //...
+  "scripts": {
+    "build": "vite build",
+    "test": "vitest run",
+    "coverage": "vitest run --coverage"
+  }
+  //...
+}
+```
+
+在根目录下的 `package.json` 文件中添加 `vitest` 及 `vitest:coverage` 命令，方便在全局运行测试用例，具体内容如下：
+
+```json
+// ...
+{
+  "scripts": {
+    "vitest": "pnpm -C packages/components test",
+    "vitest:coverage": "pnpm -C packages/components coverage"
+  }
+}
+// ...
+```

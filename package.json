@@ -12,10 +12,15 @@
     "prepare": "husky install",
     "test": "npx eslint ./packages  --ext ts,vue,js --fix"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "library",
+    "vue3",
+    "ui",
+    "dnhyxc-ui-plus"
+  ],
+  "author": "@dnhyxc",
   "license": "ISC",
-  "description": "",
+  "description": "a ui library for vue3",
   "devDependencies": {
     "@babel/eslint-parser": "^7.27.5",
     "@eslint/js": "^9.30.1",
