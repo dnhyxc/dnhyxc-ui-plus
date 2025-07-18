@@ -755,11 +755,88 @@ dnhyxc-ui-test
 
 ## 配置 eslint
 
+最新版本的 eslint 配置将不再是使用 `.eslintrc.js` 及 `.eslintignore` 进行配置了，而是统一改用 `eslint.config.mjs` 进行配置了。
+
+### 自动生成配置文件
+
+使用 [eslint](https://eslint.org/docs/latest/use/getting-started) 官方提供的 `eslint` 命令来自动生成配置文件。
+
+```bash
+pnpm create @eslint/config@latest
+```
+
+按照指引依次选择如下设置：
+
+1. What do you want to lint?
+
+   > JavaScript
+
+2. How would you like to use ESLint?
+
+   > To check syntax and find problems
+
+3. What type of modules does your project use?
+
+   > JavaScript modules (import/export)
+
+4. Which framework does your project use?
+
+   > Vue.js
+
+5. Does your project use TypeScript?
+
+   > Yes
+
+6. Where does your code run?
+
+   > Browser
+
+7. Would you like to install them now?
+
+   > No 这里选择 No，后续通过手动安装，自动安装会失败，因为它不会增加 -w 选项。
+
+运行完后，会在根目录下生成 `eslint.config.mjs` 文件，具体内容如下：
+
+```js
+import js from '@eslint/js';
+import globals from 'globals';
+import tseslint from 'typescript-eslint';
+import pluginVue from 'eslint-plugin-vue';
+import { defineConfig } from 'eslint/config';
+
+export default defineConfig([
+  { files: ['**/*.{js,mjs,cjs,ts,mts,cts,vue}'], plugins: { js }, extends: ['js/recommended'] },
+  { files: ['**/*.{js,mjs,cjs,ts,mts,cts,vue}'], languageOptions: { globals: globals.browser } },
+  tseslint.configs.recommended,
+  pluginVue.configs['flat/essential'],
+  { files: ['**/*.vue'], languageOptions: { parserOptions: { parser: tseslint.parser } } }
+]);
+```
+
+如果需要增加忽略检测的文件，可以在上述配置的基础上增加 `ignores` 属性。
+
+```js
+export default defineConfig([
+  // ...
+  { ignores: ['packages/dnhyxc-ui-plus/**', 'packages/*/dist/**', 'node_modules/**'] }
+]);
+```
+
+手动安装相关依赖：
+
+```bash
+pnpm i eslint @eslint/js globals typescript-eslint eslint-plugin-vue -Dw
+```
+
+### 手动创建配置文件
+
 在根目录下安装 `eslint` 及相关依赖。
 
 ```bash
-pnpm i eslint globals eslint-plugin-prettier eslint-plugin-vue typescript-eslint vue-eslint-parser prettier @eslint/js @babel/eslint-parser @typescript-eslint/parser @typescript-eslint/eslint-plugin -Dw
+pnpm i eslint globals eslint-plugin-prettier eslint-config-prettier eslint-plugin-vue typescript-eslint vue-eslint-parser @eslint/js @babel/eslint-parser @typescript-eslint/parser @typescript-eslint/eslint-plugin -Dw
 ```
+
+> **注意**：eslint-plugin-vue 版本得是 9.25.0，否则 eslint 检测会报错。
 
 上述相关包版本如下：
 
@@ -780,7 +857,7 @@ pnpm i eslint globals eslint-plugin-prettier eslint-plugin-vue typescript-eslint
 }
 ```
 
-最新版本的 eslint 配置将不再是使用 `.eslintrc.js` 及 `.eslintignore` 进行配置了，而是统一改用 `eslint.config.mjs` 进行配置了。因此需要在项目根目录下创建 `eslint.config.mjs` 文件，具体内容如下：
+在项目根目录下创建 `eslint.config.mjs` 文件，具体内容如下：
 
 ```js
 import eslint from '@eslint/js';
@@ -829,6 +906,7 @@ const baseConfig = [
       vue: vuePlugin
     },
     rules: {
+      // eslint-plugin-vue 需要是 9.25.0 版本，否则这里会报错
       ...vuePlugin.configs['vue3-recommended'].rules,
       'vue/multi-word-component-names': 'off'
     }
@@ -861,14 +939,31 @@ const baseConfig = [
 export default [eslint.configs.recommended, eslintPluginPrettierRecommended, ...baseConfig];
 ```
 
+### 测试 eslint 是否配置成功
+
+在项目根目录下的 `package.json` 文件中添加 `test` 命令。
+
+```json
+{
+  "scripts": {
+    // ...
+    "test": "npx eslint ./packages  --ext ts,vue,js --fix"
+  }
+}
+```
+
+之后运行 `pnpm run test` 命令，看是否会报错。也可以手动写一些错误，然后运行 `pnpm run test` 命令，看是否能自动检测出来。
+
+> 说明：配置完成 eslint 后，如果在编辑器中 eslint 不能提示代码错误，但是通过运行 `pnpm run test` 命令能够检测出来，可以尝试关闭编辑器，重新打开编辑器。这样应该在编辑代码时就能正常提示错误了。
+
 ## 配置 vitest
 
 ### 依赖安装
 
-在 `packages/components` 文件夹下安装 `vitest` 及相关依赖。
+在项目根目录下安装 `vitest` 及相关依赖。
 
 ```bash
-pnpm i vitest @vue/test-utils @vitest/coverage-v8 happy-dom -D
+pnpm i vitest @vue/test-utils @vitest/coverage-v8 happy-dom -Dw
 ```
 
 - happy-dom 用于模拟浏览器环境。
@@ -879,7 +974,7 @@ pnpm i vitest @vue/test-utils @vitest/coverage-v8 happy-dom -D
 
 ### 创建 test 文件夹及配置文件
 
-在 `packages/components` 文件夹下创建 `test` 文件夹，同时在 `packages/components/test` 文件夹下创建 `setup.js` 文件，该文件会在 `vitest.config.ts` 中的 `setupFiles` 配置中被引入。具体内容如下：
+在 `packages/components` 文件夹下创建 `test` 文件夹，同时在 `packages/components/test` 文件夹下创建 `setup.ts` 文件，该文件会在 `vitest.config.ts` 中的 `setupFiles` 配置中被引入。具体内容如下：
 
 ```ts
 import { config } from '@vue/test-utils'; // 从 Vue Test Utils 导入全局配置
@@ -888,6 +983,41 @@ import 'element-plus/dist/index.css'; // 引入 Element Plus 样式
 
 // 全局注册 Element Plus 插件
 config.global.plugins = [ElementPlus];
+```
+
+## 配置 Prettier
+
+在项目根目录下安装 `Prettier` 及相关依赖。
+
+```bash
+pnpm i prettier -Dw
+```
+
+在项目根目录下创建 `.prettierrc.json` 文件，内容根据自己的风格进行定义，这里提供一个参考：
+
+```json
+{
+  "printWidth": 120,
+  "tabWidth": 2,
+  "useTabs": false,
+  "semi": true,
+  "singleQuote": true,
+  "quoteProps": "as-needed",
+  "trailingComma": "none",
+  "jsxSingleQuote": true,
+  "bracketSpacing": true,
+  "jsxBracketSameLine": false,
+  "arrowParens": "always",
+  "rangeStart": 0,
+  "requirePragma": false,
+  "insertPragma": false,
+  "proseWrap": "preserve",
+  "htmlWhitespaceSensitivity": "css",
+  "vueIndentScriptAndStyle": false,
+  "endOfLine": "lf",
+  "embeddedLanguageFormatting": "auto",
+  "singleAttributePerLine": false
+}
 ```
 
 ### 配置 vitest.config.ts 文件
@@ -899,15 +1029,14 @@ import { defineConfig } from 'vitest/config';
 import vue from '@vitejs/plugin-vue';
 
 export default defineConfig({
-  environment: 'happy-dom',
-  coverage: {
-    include: ['src/**/*.{ts,tsx,vue}'],
-    exclude: ['src/index.ts', 'src/**/*.test.*']
-  },
-  setupFiles: ['test/setup.js'],
   plugins: [vue()],
   test: {
-    environment: 'happy-dom'
+    environment: 'happy-dom',
+    coverage: {
+      include: ['src/**/*.{ts,tsx,vue}'],
+      exclude: ['src/index.ts', 'src/**/*.test.*']
+    },
+    setupFiles: ['test/setup.ts']
   }
 });
 ```
