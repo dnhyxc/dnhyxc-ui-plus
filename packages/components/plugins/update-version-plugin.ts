@@ -1,6 +1,6 @@
 import path from 'path';
 import { writeFileSync, readFileSync, existsSync, mkdirSync } from 'fs';
-import semver from 'semver';
+// import semver from 'semver';
 
 interface PackageJson {
   name: string;
@@ -26,8 +26,8 @@ export function updateVersionPlugin(info: PackageJson) {
       }
       // 读取并更新 package.json 的版本号
       const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf-8'));
-      const componentsPkgJson = packageJson;
-      componentsPkgJson.version = semver.inc(packageJson.version, 'patch');
+      // const componentsPkgJson = packageJson;
+      // componentsPkgJson.version = semver.inc(packageJson.version, 'patch');
       // 更新输出文件的内容
       const updatedPackageJson = {
         name,
@@ -63,7 +63,7 @@ export function updateVersionPlugin(info: PackageJson) {
         // 写入更新后的 package.json 到 dnhyxc-ui-plus 目录
         writeFileSync(outputPackageJsonPath, JSON.stringify(updatedPackageJson, null, 2));
         // 更新 outputDir 中的 package.json 文件的版本号
-        writeFileSync(packageJsonPath, JSON.stringify(componentsPkgJson, null, 2));
+        // writeFileSync(packageJsonPath, JSON.stringify(componentsPkgJson, null, 2));
         console.log(`已成功更新版本号 ${packageJson.version} 到 ${name} 文件夹中`);
       } catch (err) {
         console.error(`package.json 写入错误: ${(err as Error).message}`);
