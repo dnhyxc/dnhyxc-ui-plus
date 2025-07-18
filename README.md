@@ -1049,6 +1049,31 @@ pnpm i prettier -Dw
 }
 ```
 
+## 配置 husky
+
+在项目根目录下安装 `husky`，尽量安装与我相同的版本，避免比必要的错误。
+
+```bash
+pnpm i husky@8.0.3 -Dw
+```
+
+> 配置 `husky` 时，首先需要先使用 `git init` 命令创建 `.git` 文件否则执行下述命令将会报错。
+
+项目根目录下运行 `npm run prepare`，自动在根目录下生成 `.husky` 文件夹，紧接着运行 `npx husky add .husky/pre-commit "npm test"` 在 `.husky` 文件夹中生成 `pre-commit` 文件，生成的 `pre-commit` 文件内容如下：
+
+```bash
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+npm test
+```
+
+设置完 pre-commit 之后，为了确保该文件具有可执行权限，可以使用以下命令来授予执行权限：
+
+```bash
+chmod +x .husky/pre-commit
+```
+
 ## 配置 vitest
 
 ### 依赖安装
