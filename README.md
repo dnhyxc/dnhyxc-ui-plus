@@ -1292,3 +1292,13 @@ module.exports = {
   // ...。
 }
 ```
+
+重新设置 pre-commit 钩子，将项目中原有的 `.husky` 文件删除，重新运行如下命令生成。
+
+```bash
+npm run prepare
+
+npx husky add .husky/commit-msg 'npx --no-install commitlint --edit $1'
+```
+
+上述配置完成后，就可以通过 `git commit` 命令检测 `commitlint` 是否配置成功了，如果配置成功了，不符合 commitlint 配置的规则，则 `commit` 时就会报错，无法正常提交代码，符合规则才能正常提交代码。
