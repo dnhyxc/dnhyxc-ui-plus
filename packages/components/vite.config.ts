@@ -45,6 +45,7 @@ export default defineConfig({
       // include: ['./**/*'],
       // outDir: ['../dnhyxc-ui-plus/es', '../dnhyxc-ui-plus/lib'],
       // exclude: ['vite.config.ts', 'script', 'plugins', 'coverage']
+      // tsconfigPath: '../../tsconfig.json',
       include: ['./src', './utils', './index.ts'],
       outDir: ['../dnhyxc-ui-plus/es', '../dnhyxc-ui-plus/lib'],
       exclude: ['./src/**/__tests__']

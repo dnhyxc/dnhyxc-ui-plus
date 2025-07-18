@@ -22,7 +22,7 @@
 
 在项目根目录下同时创建 `packages` 文件夹及 `pnpm-workspace.yaml` 文件，`pnpm-workspace.yaml` 内容如下：
 
-```yaml
+```bash
 packages:
   - 'packages/**'
 ```
@@ -31,7 +31,7 @@ packages:
 
 在项目根目录下使用 `pnpm i typescript -Dw` 安装 `typescript` 依赖。
 
-```yaml
+```bash
 pnpm i typescript -Dw
 ```
 

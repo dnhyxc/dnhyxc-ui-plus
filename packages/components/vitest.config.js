@@ -7,7 +7,7 @@ export default defineConfig({
     include: ['src/**/*.{ts,tsx,vue}'],
     exclude: ['src/index.ts', 'src/**/*.test.*']
   },
-  setupFiles: ['test/setup.js'],
+  setupFiles: ['test/setup.ts'],
   plugins: [vue()],
   test: {
     environment: 'happy-dom'
