@@ -9,7 +9,7 @@
     "dev:play": "pnpm -C play dev",
     "vitest": "pnpm -C packages/components test",
     "vitest:coverage": "pnpm -C packages/components coverage",
-    "publish": "pnpm --filter=./packages/components run build && pnpm changeset && pnpm changeset version && pnpm changeset publish",
+    "publish": "pnpm --filter=./packages/components run build && pnpm changeset && pnpm changeset version --ignore @dnhyxc/components && pnpm changeset publish",
     "prepare": "husky install",
     "commit": "git-cz",
     "test": "eslint ./packages  --ext ts,vue,js --fix"
