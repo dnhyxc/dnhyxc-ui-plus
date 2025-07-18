@@ -1,6 +1,6 @@
 // ButtonComponent.test.js
 import { mount } from '@vue/test-utils';
-import ButtonComponent from '../index.vue';
+import Button from '../index.vue';
 import { describe, it, expect } from 'vitest'; // Vitest 的测试函数
 import * as Components from '../index'; // 导入 index.ts 中导出的所有组件
 
@@ -11,7 +11,7 @@ describe('Button Component', () => {
   // 测试组件是否正确渲染默认插槽内容
   it('renders correctly with default slot content', () => {
     // 挂载组件
-    const wrapper = mount(ButtonComponent);
+    const wrapper = mount(Button);
     // 断言按钮文本是否为默认内容
     expect(wrapper.text()).toBe('测试按钮');
   });

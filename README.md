@@ -678,7 +678,7 @@ export default series(
 在根目录下安装 `eslint` 及相关依赖。
 
 ```bash
-pnpm i eslint eslint-plugin-prettier eslint-plugin-vue typescript-eslint vue-eslint-parser prettier @eslint/js @babel/eslint-parser @typescript-eslint/parser @typescript-eslint/eslint-plugin -Dw
+pnpm i eslint globals eslint-plugin-prettier eslint-plugin-vue typescript-eslint vue-eslint-parser prettier @eslint/js @babel/eslint-parser @typescript-eslint/parser @typescript-eslint/eslint-plugin -Dw
 ```
 
 上述相关包版本如下：
@@ -693,6 +693,7 @@ pnpm i eslint eslint-plugin-prettier eslint-plugin-vue typescript-eslint vue-esl
     "eslint": "^9.30.1",
     "eslint-plugin-prettier": "^5.5.1",
     "eslint-plugin-vue": "^9.25.0",
+    "globals": "^16.3.0",
     "typescript-eslint": "^8.35.1",
     "vue-eslint-parser": "^10.2.0"
   }
@@ -778,4 +779,87 @@ const baseConfig = [
 ];
 
 export default [eslint.configs.recommended, eslintPluginPrettierRecommended, ...baseConfig];
+```
+
+## 配置 vitest
+
+### 依赖安装
+
+在 `packages/components` 文件夹下安装 `vitest` 及相关依赖。
+
+```bash
+pnpm i vitest @vue/test-utils @vitest/coverage-v8 happy-dom -D
+```
+
+- happy-dom 用于模拟浏览器环境。
+
+- @vue/test-utils 用于测试 Vue 组件。
+
+- @vitest/coverage-v8 用于展示测试覆盖率，通常运行完之后，会在 `packages/components` 下生成一个 `coverage` 文件夹，可在浏览器中运行其中的 `index.html` 文件查看测试覆盖率。
+
+### 创建 test 文件夹及配置文件
+
+在 `packages/components` 文件夹下创建 `test` 文件夹，同时在 `packages/components/test` 文件夹下分别创建 `setup.js` 文件，具体内容如下：
+
+```ts
+import { config } from '@vue/test-utils'; // 从 Vue Test Utils 导入全局配置
+import ElementPlus from 'element-plus'; // 导入 Element Plus 插件
+import 'element-plus/dist/index.css'; // 引入 Element Plus 样式
+
+// 全局注册 Element Plus 插件
+config.global.plugins = [ElementPlus];
+```
+
+### 配置 vitest.config.ts 文件
+
+在 `packages/components` 文件夹下创建 `vitest.config.ts` 文件，具体内容如下：
+
+```ts
+import { defineConfig } from 'vitest/config';
+import vue from '@vitejs/plugin-vue';
+
+export default defineConfig({
+  environment: 'happy-dom',
+  coverage: {
+    include: ['src/**/*.{ts,tsx,vue}'],
+    exclude: ['src/index.ts', 'src/**/*.test.*']
+  },
+  setupFiles: ['test/setup.js'],
+  plugins: [vue()],
+  test: {
+    environment: 'happy-dom'
+  }
+});
+```
+
+### 为组件添加测试用例
+
+在 `packages/components/src/button` 文件夹下创建 `__test__` 文件夹，同时在 `__test__` 文件夹下创建 `button.test.ts` 文件，具体的测试用例可以根据自身的情况而定，这里只是简单举个例子：
+
+```ts
+import { mount } from '@vue/test-utils';
+import Button from '../index.vue';
+import { describe, it, expect } from 'vitest'; // Vitest 的测试函数
+import * as Components from '../index'; // 导入 index.ts 中导出的所有组件
+
+describe('Button Component', () => {
+  // 测试组件是否正确渲染默认插槽内容
+  it('renders correctly with default slot content', () => {
+    // 挂载组件
+    const wrapper = mount(Button);
+    // 断言按钮文本是否为默认内容
+    expect(wrapper.text()).toBe('测试按钮');
+  });
+});
+
+// index.ts
+describe('Components Entry Point', () => {
+  // 测试 Button 组件是否被正确导出
+  it('should export Button component', () => {
+    // 断言 Components 对象中是否存在 Button
+    expect(Components.Button).toBeDefined();
+    // 断言 Button 是否具有 install 方法（由 withInstall 添加）
+    expect(typeof Components.Button.install).toBe('function');
+  });
+});
 ```
