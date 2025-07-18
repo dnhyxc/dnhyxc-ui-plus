@@ -11,7 +11,7 @@
     "vitest:coverage": "pnpm -C packages/components coverage",
     "prepare": "husky install",
     "commit": "git-cz",
-    "test": "npx eslint ./packages  --ext ts,vue,js --fix"
+    "test": "eslint ./packages  --ext ts,vue,js --fix"
   },
   "config": {
     "commitizen": {

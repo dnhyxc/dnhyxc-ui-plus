@@ -1301,4 +1301,17 @@ npm run prepare
 npx husky add .husky/commit-msg 'npx --no-install commitlint --edit $1'
 ```
 
-上述配置完成后，就可以通过 `git commit` 命令检测 `commitlint` 是否配置成功了，如果配置成功了，不符合 commitlint 配置的规则，则 `commit` 时就会报错，无法正常提交代码，符合规则才能正常提交代码。
+生成 `.husky/commit-msg` 之后，在 `.husky/commit-msg` 文件中增加 `npm test` 命令，用于在 commitlint 检测前进行 eslint 的检测，内容如下：
+
+```bash
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+npm test
+
+npx --no-install commitlint --edit $1
+```
+
+上述配置完成后，就可以通过 `git commit` 命令检测 `commitlint` 是否配置成功了，如果配置成功，不符合 commitlint 配置的规则，则 `commit` 时就会报错，无法正常提交代码，符合规则才能正常提交代码。
+
+## 配置 Changesets
