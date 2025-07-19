@@ -19,6 +19,6 @@
     "vitepress": "^1.6.3"
   },
   "dependencies": {
-    "dnhyxc-ui-plus-beta1": "workspace:^"
+    "@dnhyxc-ui/components": "workspace:^"
   }
 }

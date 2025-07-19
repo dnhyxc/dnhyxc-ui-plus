@@ -1,6 +1,6 @@
 {
-  "name": "dnhyxc-ui-plus-beta1",
-  "version": "0.0.19",
+  "name": "@dnhyxc-ui/components",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "build": "vite build",

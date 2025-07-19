@@ -383,9 +383,9 @@ pnpm i vite @vitejs/plugin-vue vite-plugin-dts @types/node semver @types/semver 
 > - @types/node 用于支持 node 环境下的类型声明，即如果使用到了 path，fs 等就需要安装。
 > - semver 用于处理版本号。
 
-在 `packages/components` 文件夹下创建 `plugins` 文件夹，在其中分别创建 `relpace-style-ext-plugin.ts`、`update-version-plugin.ts` 及 `index.ts` 文件。
+在 `packages/components` 文件夹下创建 `plugins` 文件夹，在其中分别创建 `relpace-style-ext-plugin.ts`、`create-package-plugin.ts` 及 `index.ts` 文件。
 
-- replaceStyleExtPlugin.ts 文件用于编写将组件（button/index.vue）中引入的 `scss` 文件后缀替换为 `css` 文件后缀的 `vite plugin`。
+- relpace-style-ext-plugin.ts 文件用于编写将组件（button/index.vue）中引入的 `scss` 文件后缀替换为 `css` 文件后缀的 `vite plugin`。
 
 !!! hint 替换 scss 为 css 的原因
 由于 scss 样式，在下文中会介绍通过 gulp 来将 scss 文件打包成 css 文件，因此在 vite.config.ts 中将不需要处理样式文件，所以需要将代码中引入的样式文件后缀 .scss 手动替换为 .css 文件后缀，这样才能在打包后的组件中正确导入打包后的 css 样式文件。
@@ -414,12 +414,11 @@ export function replaceStyleExtPlugin(): PluginOption {
 }
 ```
 
-- updateVersionPlugin.ts 文件用于编写向打包输出的文件夹中添加 package.json 信息的 `vite plugin`，方便后续发布组件库。
+- create-package-plugin.ts 文件用于编写向打包输出的文件夹中添加 package.json 信息的 `vite plugin`，方便后续发布组件库。
 
 ```ts
 import path from 'path';
 import { writeFileSync, readFileSync, existsSync, mkdirSync } from 'fs';
-import semver from 'semver';
 
 interface PackageJson {
   name: string;
@@ -431,12 +430,20 @@ interface PackageJson {
   typings: string;
   packageJsonPath: string;
   outputDir: string;
+  repository?: {
+    type: string;
+    url: string;
+  };
+  bugs?: {
+    url: string;
+  };
+  homepage?: string;
 }
 
-export function updateVersionPlugin(info: PackageJson) {
-  const { name, main, module, files, keywords, sideEffects, typings, packageJsonPath, outputDir } = info;
+export function createPackagePlugin(info: PackageJson) {
+  const { name, main, module, files, keywords, sideEffects, typings, packageJsonPath, outputDir, ...args } = info;
   return {
-    name: 'update-package-json',
+    name: 'create-package-json',
     closeBundle() {
       // 检查源 package.json 是否存在
       if (!existsSync(packageJsonPath)) {
@@ -445,7 +452,6 @@ export function updateVersionPlugin(info: PackageJson) {
       }
       // 读取并更新 package.json 的版本号
       const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf-8'));
-      packageJson.version = semver.inc(packageJson.version, 'patch');
       // 更新输出文件的内容
       const updatedPackageJson = {
         name,
@@ -456,7 +462,11 @@ export function updateVersionPlugin(info: PackageJson) {
         keywords,
         sideEffects,
         typings,
-        author: packageJson.author,
+        author: {
+          name: packageJson.author,
+          github: `https://github.com/${packageJson.author}`
+        },
+        ...args,
         license: packageJson.license,
         description: packageJson.description || ''
       };
@@ -469,9 +479,6 @@ export function updateVersionPlugin(info: PackageJson) {
         }
         // 写入更新后的 package.json 到 dnhyxc-ui-plus 目录
         writeFileSync(outputPackageJsonPath, JSON.stringify(updatedPackageJson, null, 2));
-        // 更新 outputDir 中的 package.json 文件的版本号
-        writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
-        console.log(`已成功更新版本号 ${packageJson.version} 到 ${name} 文件夹中`);
       } catch (err) {
         console.error(`package.json 写入错误: ${(err as Error).message}`);
       }
@@ -484,7 +491,7 @@ export function updateVersionPlugin(info: PackageJson) {
 
 ```ts
 export * from './relpace-style-ext-plugin';
-export * from './update-version-plugin';
+export * from './create-package-plugin';
 ```
 
 在 `packages/components` 文件夹下创建 `vite.config.ts` 文件，具体内容如下：
@@ -494,7 +501,7 @@ import path from 'path';
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import dts from 'vite-plugin-dts';
-import { replaceStyleExtPlugin, updateVersionPlugin } from './plugins';
+import { replaceStyleExtPlugin, createPackagePlugin } from './plugins';
 
 export default defineConfig({
   build: {
@@ -503,29 +510,29 @@ export default defineConfig({
       fileName: (format: string) => `dnhyxc-ui-plus.${format}.js` // 输出文件的命名规则
     },
     rollupOptions: {
-      // 排除不需要打包的依赖，因为在业务项目中会安装 vue、element-plus，scss 样式代码，会通过 gulp 单独打包，因此这里需要排除
+      // 确保外部化处理那些你不想打包进库的依赖
       external: ['vue', /\.scss/, 'element-plus', 'element-plus/dist/index.css'],
       output: [
         {
-          // 打包成 ES 模块格式，适用于现代 JavaScript 环境
+          //打包成 ES 模块格式，适用于现代 JavaScript 环境
           format: 'es',
-          // 打包后文件名
+          //打包后文件名
           entryFileNames: '[name].mjs',
-          // 让打包输出的目录和未打包是的组件目录对应
+          //让打包目录和我们目录对应
           preserveModules: true,
           exports: 'named',
-          // 配置打包根目录
+          //配置打包根目录
           dir: '../dnhyxc-ui-plus/es'
         },
         {
-          // 打包成 CommonJS 模块格式，适用于 Node.js 环境
+          //打包成 CommonJS 模块格式，适用于 Node.js 环境
           format: 'cjs',
-          // 打包后文件名
+          //打包后文件名
           entryFileNames: '[name].js',
-          // 让打包输出的目录和未打包是的组件目录对应
+          //让打包目录和我们目录对应
           preserveModules: true,
           exports: 'named',
-          // 配置打包根目录
+          //配置打包根目录
           dir: '../dnhyxc-ui-plus/lib'
         }
       ]
@@ -533,17 +540,14 @@ export default defineConfig({
   },
   plugins: [
     vue(),
-    // 打包生成类型声明文件
     dts({
-      include: ['./**/*'],
+      include: ['./src', './utils', './index.ts'],
       outDir: ['../dnhyxc-ui-plus/es', '../dnhyxc-ui-plus/lib'],
-      exclude: ['vite.config.ts', 'script', 'plugins', 'coverage']
+      exclude: ['./src/**/__tests__']
     }),
-    // 替换组件中导入的 scss 为 css
     replaceStyleExtPlugin(),
-    // 向打包输出的文件中添加 package.json 信息
-    updateVersionPlugin({
-      name: 'dnhyxc-ui-plus',
+    createPackagePlugin({
+      name: 'dnhyxc-ui-vue-plus',
       main: 'lib/index.js',
       module: 'es/index.mjs',
       files: ['es', 'lib'],
@@ -551,7 +555,15 @@ export default defineConfig({
       sideEffects: ['**/*.css'],
       typings: 'es/index.d.ts',
       packageJsonPath: path.resolve(__dirname, 'package.json'),
-      outputDir: path.resolve(__dirname, '../dnhyxc-ui-plus')
+      outputDir: path.resolve(__dirname, '../dnhyxc-ui-plus'),
+      repository: {
+        type: 'git',
+        url: 'git+https://github.com/dnhyxc/dnhyxc-ui-plus.git'
+      },
+      bugs: {
+        url: 'https://github.com/dnhyxc/dnhyxc-ui-plus/issues'
+      },
+      homepage: 'https://github.com/dnhyxc/dnhyxc-ui-plus/blob/master/README.md'
     })
   ]
 });
@@ -573,8 +585,9 @@ pnpm i gulp sucrase sass gulp-sass gulp-clean-css gulp-autoprefixer @types/gulp 
 import fs from 'fs';
 import { resolve } from 'path';
 import { pkgPath } from './paths';
-//保留的文件
-const stayFile = ['README.md'];
+
+// 需要保留的文件，CHANGELOG.md 在后续通过 changesets 发布包到 npm 上时需要用到，因此需要保留
+const stayFile = ['README.md', 'CHANGELOG.md'];
 
 const delPath = async (path: string) => {
   let files: string[] = [];
@@ -1341,17 +1354,77 @@ pnpm install @changesets/cli -Dw
 }
 ```
 
-在项目根目录下的 `package.json` 中增加如下脚本：
+因为我们只需要将 `packages/dnhyxc-ui-plus` 包发布到 npm 上，其他包不发布到 npm 上，因此需要更改 `config.json` 文件中的 `ignore` 属性，忽略掉 `packages/components` 包（packages/components/package.json 中的 name 属性名即为 packages/components 的包名）、`dosc` 包（dosc/package.json 中的 name 属性名即为 dosc 的包名）及 `play` 包。
+
+```json
+{
+  "$schema": "https://unpkg.com/@changesets/config@3.1.1/schema.json",
+  "changelog": "@changesets/cli/changelog",
+  "commit": false,
+  "fixed": [],
+  "linked": [],
+  "access": "public",
+  "baseBranch": "master",
+  "updateInternalDependencies": "patch",
+  // 忽略掉 dnhyxc-docs、dnhyxc-ui-plus-beta1、play 包
+  "ignore": ["dnhyxc-docs", "dnhyxc-ui-plus-beta1", "play"]
+}
+```
+
+> **注意**：如果上述 `config.json` 文件中 `access` 属性的值不是 `public` 的话，需要手动将其改为 `public`，否则发布包时会报错（EUNSCOPED Can't restrict access to unscoped packages）。
+
+被 `ignore` 忽略的包不会更新版本号，同时不被包含在变更集中。但这并不能阻止被 `ignore` 的包发布到 npm 上，因为只要手动更改了 `package.json` 中的版本号，包仍然会被发布到 `npm` 上。
+
+如果要阻止包在更改了版本号的基础上还不被发布到 `npm` 上，需要在对应包中的 `package.json` 中增加 `"private": true` 属性。
+
+- docs/package.json 增加 private 属性：
+
+```json
+{
+  "name": "dnhyxc-ui-docs",
+  "private": true
+  // ...
+}
+```
+
+- packages/components/package.json 增加 private 属性：
+
+```json
+{
+  "name": "dnhyxc-ui-plus-base",
+  "private": true
+  //...
+}
+```
+
+- paly/package.json 增加 private 属性：
+
+```json
+{
+  "name": "play",
+  "private": true
+  // ...
+}
+```
+
+上述配置完成后，就可以在项目根目录下的 `package.json` 中增加如下用于发布包的脚本了。
 
 ```json
 {
   // ...
   "scripts": {
     // ...
-    "publish1": "pnpm --filter=./packages/* run build && pnpm changeset && pnpm changeset version && pnpm changeset publish",
-    "publish": "pnpm --filter=./packages/dnhyxc-ui-plus run build && pnpm changeset && pnpm changeset version && pnpm --filter=./packages/dnhyxc-ui-plus publish"
+    "publish": "pnpm --filter=./packages/components run build && pnpm changeset && pnpm changeset version && pnpm changeset publish"
     // ...
   }
   // ...
 }
 ```
+
+- pnpm changeset：跟踪代码变更并生成变更描述文件。该命令可以让用户交互式选择要版本化的包（patch/minor/major），同时让用户编辑变更描述（用于 CHANGELOG 中）。
+
+- pnpm changeset version：更新版本号。
+
+- pnpm changeset publish：将包发布到 npm 上。
+
+运行 `npm run publish` 命令后，会优先打包 `packages/components` 包，生成 `packages/dnhyxc-ui-plus` 输出文件，然后生成变更描述文件，最后将包发布到 npm 上。

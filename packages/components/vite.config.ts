@@ -2,7 +2,7 @@ import path from 'path';
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import dts from 'vite-plugin-dts';
-import { replaceStyleExtPlugin, updateVersionPlugin } from './plugins';
+import { replaceStyleExtPlugin, createPackagePlugin } from './plugins';
 
 export default defineConfig({
   build: {
@@ -51,7 +51,7 @@ export default defineConfig({
       exclude: ['./src/**/__tests__']
     }),
     replaceStyleExtPlugin(),
-    updateVersionPlugin({
+    createPackagePlugin({
       name: 'dnhyxc-ui-vue-plus',
       main: 'lib/index.js',
       module: 'es/index.mjs',
@@ -60,7 +60,15 @@ export default defineConfig({
       sideEffects: ['**/*.css'],
       typings: 'es/index.d.ts',
       packageJsonPath: path.resolve(__dirname, 'package.json'),
-      outputDir: path.resolve(__dirname, '../dnhyxc-ui-plus')
+      outputDir: path.resolve(__dirname, '../dnhyxc-ui-plus'),
+      repository: {
+        type: 'git',
+        url: 'git+https://github.com/dnhyxc/dnhyxc-ui-plus.git'
+      },
+      bugs: {
+        url: 'https://github.com/dnhyxc/dnhyxc-ui-plus/issues'
+      },
+      homepage: 'https://github.com/dnhyxc/dnhyxc-ui-plus/blob/master/README.md'
     })
   ]
 });

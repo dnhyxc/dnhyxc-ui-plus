@@ -12,12 +12,20 @@ interface PackageJson {
   typings: string;
   packageJsonPath: string;
   outputDir: string;
+  repository?: {
+    type: string;
+    url: string;
+  };
+  bugs?: {
+    url: string;
+  };
+  homepage?: string;
 }
 
-export function updateVersionPlugin(info: PackageJson) {
-  const { name, main, module, files, keywords, sideEffects, typings, packageJsonPath, outputDir } = info;
+export function createPackagePlugin(info: PackageJson) {
+  const { name, main, module, files, keywords, sideEffects, typings, packageJsonPath, outputDir, ...args } = info;
   return {
-    name: 'update-package-json',
+    name: 'create-package-json',
     closeBundle() {
       // 检查源 package.json 是否存在
       if (!existsSync(packageJsonPath)) {
@@ -26,8 +34,6 @@ export function updateVersionPlugin(info: PackageJson) {
       }
       // 读取并更新 package.json 的版本号
       const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf-8'));
-      // const componentsPkgJson = packageJson;
-      // componentsPkgJson.version = semver.inc(packageJson.version, 'patch');
       // 更新输出文件的内容
       const updatedPackageJson = {
         name,
@@ -42,14 +48,7 @@ export function updateVersionPlugin(info: PackageJson) {
           name: packageJson.author,
           github: `https://github.com/${packageJson.author}`
         },
-        repository: {
-          type: 'git',
-          url: 'git+https://github.com/dnhyxc/dnhyxc-ui-plus.git'
-        },
-        bugs: {
-          url: 'https://github.com/dnhyxc/dnhyxc-ui-plus/issues'
-        },
-        homepage: 'https://github.com/dnhyxc/dnhyxc-ui-plus/blob/master/README.md',
+        ...args,
         license: packageJson.license,
         description: packageJson.description || ''
       };
@@ -64,7 +63,6 @@ export function updateVersionPlugin(info: PackageJson) {
         writeFileSync(outputPackageJsonPath, JSON.stringify(updatedPackageJson, null, 2));
         // 更新 outputDir 中的 package.json 文件的版本号
         // writeFileSync(packageJsonPath, JSON.stringify(componentsPkgJson, null, 2));
-        console.log(`已成功更新版本号 ${packageJson.version} 到 ${name} 文件夹中`);
       } catch (err) {
         console.error(`package.json 写入错误: ${(err as Error).message}`);
       }

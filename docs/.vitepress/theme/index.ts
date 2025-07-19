@@ -2,7 +2,7 @@
 import { h } from 'vue';
 import type { Theme } from 'vitepress';
 import DefaultTheme from 'vitepress/theme';
-import DnhyxcUI from 'dnhyxc-ui-plus-beta1';
+import DnhyxcUI from '@dnhyxc-ui/components';
 import DemoPreview, { useComponents } from '@vitepress-code-preview/container';
 import '@vitepress-code-preview/container/dist/style.css';
 

@@ -1,7 +1,8 @@
 import fs from 'fs';
 import { resolve } from 'path';
 import { pkgPath } from './paths';
-//保留的文件
+
+// 需要保留的文件
 const stayFile = ['README.md', 'CHANGELOG.md'];
 
 const delPath = async (path: string) => {
@@ -27,4 +28,5 @@ const delPath = async (path: string) => {
     if (path !== `${pkgPath}/dnhyxc-ui-plus`) fs.rmdirSync(path);
   }
 };
+
 export default delPath;
