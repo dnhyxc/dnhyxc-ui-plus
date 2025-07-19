@@ -97,7 +97,7 @@ packages
 
 ```json
 {
-  "name": "dnhyxc-ui-plus",
+  "name": "@dnhyxc-ui/components",
   "version": "0.0.0",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -329,9 +329,9 @@ packages:
 
 进入到 `play` 目录中，运行 `pnpm i` 安装依赖。
 
-同时使用 `pnpm i dnhyxc-ui-plus --workspace` 命令，将 `dnhyxc-ui-plus` 组件库安装到 `play` 项目中。
+同时使用 `pnpm i @dnhyxc-ui/components --workspace` 命令，将 `@dnhyxc-ui/components` 组件库安装到 `play` 项目中。
 
-## 通过 workspace 的方式使用 dnhyxc-ui-plus 组件库
+## 通过 workspace 的方式使用 @dnhyxc-ui/components 组件库
 
 ### 局部导入
 
@@ -343,17 +343,17 @@ packages:
 </template>
 
 <script setup lang="ts">
-import { Button } from 'dnhyxc-ui-plus/packages/components/src/button';
+import { Button } from '@dnhyxc-ui/components';
 </script>
 ```
 
 ### 全局导入
 
-在 `main.ts` 文件中使用全局导入使用 `dnhyxc-ui-plus` 组件。
+在 `main.ts` 文件中使用全局导入使用 `@dnhyxc-ui/components` 组件。
 
 ```ts
 import { createApp } from 'vue';
-import { Button } from 'dnhyxc-ui-plus/packages/components/src/button';
+import { Button } from '@dnhyxc-ui/components';
 import './style.css';
 import App from './App.vue';
 
@@ -814,8 +814,8 @@ npx changeset init
   "access": "public",
   "baseBranch": "master",
   "updateInternalDependencies": "patch",
-  // 忽略掉 dnhyxc-docs、dnhyxc-ui-plus-beta1、play 包
-  "ignore": ["dnhyxc-docs", "dnhyxc-ui-plus-beta1", "play"]
+  // 忽略掉 dnhyxc-ui-docs、@dnhyxc-ui/components、play 包
+  "ignore": ["dnhyxc-ui-docs", "@dnhyxc-ui/components", "play"]
 }
 ```
 
@@ -839,7 +839,7 @@ npx changeset init
 
 ```json
 {
-  "name": "dnhyxc-ui-plus-base",
+  "name": "@dnhyxc-ui/components",
   "private": true
   //...
 }
@@ -1434,3 +1434,175 @@ npx --no-install commitlint --edit $1
 ```
 
 上述配置完成后，就可以通过 `git commit` 命令检测 `commitlint` 是否配置成功了，如果配置成功，不符合 commitlint 配置的规则，则 `commit` 时就会报错，无法正常提交代码，符合规则才能正常提交代码。
+
+## 生成组件文档
+
+在项目根目录下，创建 `docs` 文件夹，用于存放组件文档。组件文档将采用 [VitePress](https://vitepress.dev/zh/guide/getting-started) 进行生成。
+
+进入到 docs 目录下，运行 `pnpm init` 命令，初始化 `package.json` 文件。
+
+```bash
+pnpm init
+```
+
+### VitePress 安装
+
+在项目根目录下安装 `vitepress`。
+
+```bash
+pnpm i vitepress -Dw
+```
+
+### 初始化 VitePress 配置
+
+VitePress 附带一个命令行设置向导，可以帮助你构建一个基本项目。安装后，通过运行以下命令启动向导：
+
+```bash
+pnpm vitepress init
+```
+
+### 生成向导及组件页面
+
+按照向导的提示，完成配置之后，在 `docs` 目录下新增 `guide` 和 `components` 文件夹。
+
+在 `docs/guide` 文件夹下新增 `quick-start.md` 和 `installation.md` 文件，文件内容可以自定义，这里只提供一个简单的示例：
+
+- quick-start.md：
+
+```md
+# 快速开始
+
+本节将介绍如何在项目中使用 dnhyxc-ui-plus。
+```
+
+- installation.md：
+
+```md
+# 下载安装
+
+我们建议您使用包管理器（如 NPM、Yarn 或 pnpm）安装 Element Plus，以便更好地与您的项目集成。
+
+使用 pnpm 安装：
+
+pnpm add dnhyxc-ui-plus
+
+使用 npm 安装：
+
+npm install dnhyxc-ui-plus
+
+使用 yarn 安装：
+
+yarn add dnhyxc-ui-plus
+```
+
+在 `docs/components` 文件夹下新增 `button.md` 文件，文件内容可以自定义，这里只提供一个简单的示例：
+
+```md
+# Button 按钮
+
+## 使用按钮
+
+全局注册
+```
+
+修改 `docs/index.md` 文件，内容如下：
+
+```md
+---
+# https://vitepress.dev/reference/default-theme-home-page
+layout: home
+
+hero:
+  name: 'dnhyxc-ui-plus'
+  text: 'dnhyxc-ui-plus 组件库'
+  tagline: My great project tagline
+  actions:
+    - theme: brand
+      text: 快速开始
+      link: /guide/installation
+    - theme: alt
+      text: 组件库
+      link: /components/button
+
+features:
+  - title: Feature A
+    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+  - title: Feature B
+    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+  - title: Feature C
+    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+---
+```
+
+### 修改 .vitepress 配置
+
+修改 `.vitepress/config.mts` 内容，这里根据自己实际情况修改为符合自己的配置，这里简单提供一个参考：
+
+```ts
+import { defineConfig } from 'vitepress';
+
+export default defineConfig({
+  title: 'dnhyxc-ui-plus',
+  description: 'Vue3 UI Component',
+  themeConfig: {
+    search: {
+      provider: 'local'
+    },
+    outline: {
+      label: '页面导航'
+    },
+    docFooter: {
+      prev: '上一页',
+      next: '下一页'
+    },
+    footer: {
+      message: 'Released under the MIT License.',
+      copyright: 'Copyright © 2023-present dnhyxc'
+    },
+    sidebar: {
+      '/guide/': [
+        {
+          text: '指南',
+          items: [
+            { text: '安装', link: '/guide/installation' },
+            { text: '快速上手', link: '/guide/quick-start' }
+          ]
+        }
+      ],
+      '/components/': [
+        {
+          text: '组件',
+          items: [
+            { text: 'Button 按钮', link: '/components/button' },
+            { text: 'Input 文本输入', link: '/components/input' }
+          ]
+        }
+      ]
+    },
+    nav: [
+      { text: '指南', link: '/guide/installation' },
+      { text: '组件', link: '/components/button' }
+    ],
+    socialLinks: [
+      {
+        icon: 'github',
+        link: 'https://github.com/dnhyxc/dnhyxc-ui-plus'
+      }
+    ]
+  }
+});
+```
+
+### 接入 dnhyxc-ui-plus 组件库
+
+在 `docs` 目录下运行如下命令进行安装：
+
+```bash
+pnpm i dnhyxc-ui-test --workspace
+```
+
+修改 `docs/.vitepress/theme/index.ts`，将 `dnhyxc-ui-test` 组件库在全局挂载。
+
+```ts
+
+```

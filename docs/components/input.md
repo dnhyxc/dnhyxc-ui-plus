@@ -25,22 +25,23 @@ const value = ref('');
 
 ## API
 
-### Icon Props
+### Input Props
 
 <script>
-const iconProps = [
+const inputProps = [
   {
     name: 'size',
-    type: 'number | string',
-    default: '16',
-    description: '图标大小',
-    version: '-'
+    type: 'enum',
+    default: 'default',
+    description: '输入框尺寸',
+    version: '-',
+    details: "'large' | 'default' | 'small'"
   },
   {
-    name: 'color',
+    name: 'value',
     type: 'string',
-    default: '#000',
-    description: '图标颜色',
+    default: '',
+    description: '输入框的值',
     version: '-'
   }
 ];
@@ -57,13 +58,22 @@ const iconProps = [
     </tr>
   </thead>
   <tbody>
-    <tr v-for="prop in iconProps" :key="prop.name">
+    <tr v-for="prop in inputProps" :key="prop.name">
       <td>{{ prop.name }}</td>
       <td>
         <code>{{ prop.type }}</code>
+        <el-tooltip
+          v-if="prop.details"
+          class="item"
+          :content="prop.details"
+          placement="top"
+        >
+          <el-icon style="cursor: pointer">❕</el-icon>
+        </el-tooltip>
       </td>
       <td>
-        <code>{{ prop.default }}</code>
+        <code v-if="prop.default">{{ prop.default }}</code>
+        <span v-else>-</span>
       </td>
       <td>{{ prop.description }}</td>
       <td>{{ prop.version }}</td>

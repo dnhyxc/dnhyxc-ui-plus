@@ -8,6 +8,7 @@
 
 ```vue
 <template>
+  <n-button type="danger" style="margin-right: 12px">button</n-button>
   <el-button type="primary">element-plus button</el-button>
   <nel-button>dnhyxc-ui-plus button</nel-button>
 </template>
@@ -17,23 +18,25 @@
 
 ## API
 
-### Icon Props
+### Button Props
 
 <script>
-const iconProps = [
+const buttonProps = [
   {
     name: 'size',
-    type: 'number | string',
-    default: '16',
-    description: '图标大小',
-    version: '-'
+    type: "enum",
+    default: 'default',
+    description: '按钮尺寸',
+    version: '-',
+    details: "'large' | 'default' | 'small'"
   },
   {
-    name: 'color',
-    type: 'string',
-    default: '#000',
-    description: '图标颜色',
-    version: '-'
+    name: 'type',
+    type: "enum",
+    default: 'default',
+    description: '按钮类型',
+    version: '-',
+    details: "'default' | 'primary' | 'success' | 'warning' | 'danger' | 'info' | '' | 'text'"
   }
 ];
 </script>
@@ -49,10 +52,19 @@ const iconProps = [
     </tr>
   </thead>
   <tbody>
-    <tr v-for="prop in iconProps" :key="prop.name">
+    <tr v-for="prop in buttonProps" :key="prop.name">
       <td>{{ prop.name }}</td>
       <td>
-        <code>{{ prop.type }}</code>
+        <code>
+          {{ prop.type }}
+        </code>
+        <el-tooltip
+          class="item"
+          :content="prop.details"
+          placement="top"
+        >
+          <el-icon style="cursor: pointer">❕</el-icon>
+        </el-tooltip>
       </td>
       <td>
         <code>{{ prop.default }}</code>
