@@ -252,22 +252,9 @@ const props = defineProps(buttonProps);
 
 ```scss
 .n-button {
-  color: #fff;
-  border-radius: 5px;
-  border: none;
-  padding: 8px 15px;
-  font-size: 14px;
-  font-weight: 500;
-  font-family: inherit;
-  height: 32px;
-  line-height: 15px;
-  background-color: #409eff;
-  transition: border-color 0.25s;
-  cursor: pointer;
-}
-
-.n-button:hover {
-  background-color: #88b9f9;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 ```
 
@@ -1593,15 +1580,15 @@ export default defineConfig({
 });
 ```
 
-### 接入 dnhyxc-ui-plus 组件库
+### 接入 @dnhyxc-ui/components 组件库
 
 在 `docs` 目录下运行如下命令进行安装：
 
 ```bash
-pnpm i dnhyxc-ui-test --workspace
+pnpm i @dnhyxc-ui/components --workspace
 ```
 
-修改 `docs/.vitepress/theme/index.ts`，将 `dnhyxc-ui-test` 组件库在全局挂载。
+修改 `docs/.vitepress/theme/index.ts`，将 `@dnhyxc-ui/components` 组件库在全局挂载。
 
 ```ts
 
