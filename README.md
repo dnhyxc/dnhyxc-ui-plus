@@ -768,7 +768,114 @@ dnhyxc-ui-test
 
 到这一步组件的主要功能就完成了，此时就可以通过 `npm publish` 命令将上述打包输出的 `packages/dnhyxc-ui-plus` 包发布到 `npm` 上了。
 
-> 注意：npm 发包时需要使用 npm 官方的源，同时需要先通过 `npm login` 命令登录 npm 账号，然后再执行 `npm publish` 命令。
+> 注意：npm 发包时需要使用 npm 官方的源，同时需要先通过 `npm login` 命令登录 npm 账号，然后再执行 `npm publish` 命令，下面将会使用 Changesets 来进行 npm 包的发布。
+
+## 配置 Changesets
+
+[Changesets](https://github.com/atlassian/changesets) 是一个用于 Monorepo 项目下版本以及 Changelog 文件管理的工具。目前一些比较火的 Monorepo 仓库都在使用该工具进行项目的发包。
+
+在项目根目录下安装 `@changesets/cli`：
+
+```bash
+pnpm install @changesets/cli -Dw
+```
+
+安装完毕之后在根目录下运行 `npx changeset init` 命令，在根目录下生成 `.changeset` 文件夹及 `config.json` 文件。
+
+```bash
+npx changeset init
+```
+
+生成的 `config.json` 文件内容如下：
+
+```json
+{
+  "$schema": "https://unpkg.com/@changesets/config@3.0.0/schema.json",
+  "changelog": "@changesets/cli/changelog",
+  "commit": false,
+  "fixed": [],
+  "linked": [],
+  "access": "public",
+  "baseBranch": "master",
+  "updateInternalDependencies": "patch",
+  "ignore": []
+}
+```
+
+因为我们只需要将 `packages/dnhyxc-ui-plus` 包发布到 npm 上，其他包不发布到 npm 上，因此需要更改 `config.json` 文件中的 `ignore` 属性，忽略掉 `packages/components` 包（packages/components/package.json 中的 name 属性名即为 packages/components 的包名）、`dosc` 包（dosc/package.json 中的 name 属性名即为 dosc 的包名）及 `play` 包。
+
+```json
+{
+  "$schema": "https://unpkg.com/@changesets/config@3.1.1/schema.json",
+  "changelog": "@changesets/cli/changelog",
+  "commit": false,
+  "fixed": [],
+  "linked": [],
+  "access": "public",
+  "baseBranch": "master",
+  "updateInternalDependencies": "patch",
+  // 忽略掉 dnhyxc-docs、dnhyxc-ui-plus-beta1、play 包
+  "ignore": ["dnhyxc-docs", "dnhyxc-ui-plus-beta1", "play"]
+}
+```
+
+> **注意**：如果上述 `config.json` 文件中 `access` 属性的值不是 `public` 的话，需要手动将其改为 `public`，否则发布包时会报错（EUNSCOPED Can't restrict access to unscoped packages）。
+
+被 `ignore` 忽略的包不会更新版本号，同时不被包含在变更集中。但这并不能阻止被 `ignore` 的包发布到 npm 上，因为只要手动更改了 `package.json` 中的版本号，包仍然会被发布到 `npm` 上。
+
+如果要阻止包在更改了版本号的基础上还不被发布到 `npm` 上，需要在对应包中的 `package.json` 中增加 `"private": true` 属性。
+
+- docs/package.json 增加 private 属性：
+
+```json
+{
+  "name": "dnhyxc-ui-docs",
+  "private": true
+  // ...
+}
+```
+
+- packages/components/package.json 增加 private 属性：
+
+```json
+{
+  "name": "dnhyxc-ui-plus-base",
+  "private": true
+  //...
+}
+```
+
+- paly/package.json 增加 private 属性：
+
+```json
+{
+  "name": "play",
+  "private": true
+  // ...
+}
+```
+
+上述配置完成后，就可以在项目根目录下的 `package.json` 中增加如下用于发布包的脚本了。
+
+```json
+{
+  // ...
+  "scripts": {
+    // ...
+    "publish": "pnpm --filter=./packages/components run build && pnpm changeset && pnpm changeset version && pnpm changeset publish"
+    // ...
+  }
+  // ...
+}
+```
+
+- pnpm changeset：跟踪代码变更并生成变更描述文件。该命令可以让用户交互式选择要版本化的包（patch/minor/major），同时让用户编辑变更描述（用于 CHANGELOG 中）。
+
+- pnpm changeset version：更新版本号。
+
+- pnpm changeset publish：将包发布到 npm 上。
+
+运行 `npm run publish` 命令后，会优先打包 `packages/components` 包，生成 `packages/dnhyxc-ui-plus` 输出文件，然后生成变更描述文件，最后将包发布到 npm 上。
 
 ## 引用 npm 上的 dnhyxc-ui-plus 组件库
 
@@ -1327,104 +1434,3 @@ npx --no-install commitlint --edit $1
 ```
 
 上述配置完成后，就可以通过 `git commit` 命令检测 `commitlint` 是否配置成功了，如果配置成功，不符合 commitlint 配置的规则，则 `commit` 时就会报错，无法正常提交代码，符合规则才能正常提交代码。
-
-## 配置 Changesets
-
-[Changesets](https://github.com/atlassian/changesets) 是一个用于 Monorepo 项目下版本以及 Changelog 文件管理的工具。目前一些比较火的 Monorepo 仓库都在使用该工具进行项目的发包。
-
-在项目根目录下安装 `@changesets/cli`：
-
-```bash
-pnpm install @changesets/cli -Dw
-```
-
-安装完毕之后在根目录下运行 `npx changeset init` 命令，在根目录下生成 `.changeset` 文件夹，其中 `config.json` 文件内容如下：
-
-```json
-{
-  "$schema": "https://unpkg.com/@changesets/config@3.0.0/schema.json",
-  "changelog": "@changesets/cli/changelog",
-  "commit": false,
-  "fixed": [],
-  "linked": [],
-  "access": "public",
-  "baseBranch": "master",
-  "updateInternalDependencies": "patch",
-  "ignore": []
-}
-```
-
-因为我们只需要将 `packages/dnhyxc-ui-plus` 包发布到 npm 上，其他包不发布到 npm 上，因此需要更改 `config.json` 文件中的 `ignore` 属性，忽略掉 `packages/components` 包（packages/components/package.json 中的 name 属性名即为 packages/components 的包名）、`dosc` 包（dosc/package.json 中的 name 属性名即为 dosc 的包名）及 `play` 包。
-
-```json
-{
-  "$schema": "https://unpkg.com/@changesets/config@3.1.1/schema.json",
-  "changelog": "@changesets/cli/changelog",
-  "commit": false,
-  "fixed": [],
-  "linked": [],
-  "access": "public",
-  "baseBranch": "master",
-  "updateInternalDependencies": "patch",
-  // 忽略掉 dnhyxc-docs、dnhyxc-ui-plus-beta1、play 包
-  "ignore": ["dnhyxc-docs", "dnhyxc-ui-plus-beta1", "play"]
-}
-```
-
-> **注意**：如果上述 `config.json` 文件中 `access` 属性的值不是 `public` 的话，需要手动将其改为 `public`，否则发布包时会报错（EUNSCOPED Can't restrict access to unscoped packages）。
-
-被 `ignore` 忽略的包不会更新版本号，同时不被包含在变更集中。但这并不能阻止被 `ignore` 的包发布到 npm 上，因为只要手动更改了 `package.json` 中的版本号，包仍然会被发布到 `npm` 上。
-
-如果要阻止包在更改了版本号的基础上还不被发布到 `npm` 上，需要在对应包中的 `package.json` 中增加 `"private": true` 属性。
-
-- docs/package.json 增加 private 属性：
-
-```json
-{
-  "name": "dnhyxc-ui-docs",
-  "private": true
-  // ...
-}
-```
-
-- packages/components/package.json 增加 private 属性：
-
-```json
-{
-  "name": "dnhyxc-ui-plus-base",
-  "private": true
-  //...
-}
-```
-
-- paly/package.json 增加 private 属性：
-
-```json
-{
-  "name": "play",
-  "private": true
-  // ...
-}
-```
-
-上述配置完成后，就可以在项目根目录下的 `package.json` 中增加如下用于发布包的脚本了。
-
-```json
-{
-  // ...
-  "scripts": {
-    // ...
-    "publish": "pnpm --filter=./packages/components run build && pnpm changeset && pnpm changeset version && pnpm changeset publish"
-    // ...
-  }
-  // ...
-}
-```
-
-- pnpm changeset：跟踪代码变更并生成变更描述文件。该命令可以让用户交互式选择要版本化的包（patch/minor/major），同时让用户编辑变更描述（用于 CHANGELOG 中）。
-
-- pnpm changeset version：更新版本号。
-
-- pnpm changeset publish：将包发布到 npm 上。
-
-运行 `npm run publish` 命令后，会优先打包 `packages/components` 包，生成 `packages/dnhyxc-ui-plus` 输出文件，然后生成变更描述文件，最后将包发布到 npm 上。
