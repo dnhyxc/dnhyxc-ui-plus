@@ -206,7 +206,9 @@ export const buttonProps = {
   disabled: Boolean,
   loading: Boolean,
   link: Boolean,
-  type: String as PropType<'primary' | 'success' | 'warning' | 'danger' | 'info' | 'text' | 'never'>
+  type: String as PropType<'primary' | 'success' | 'warning' | 'danger' | 'info' | 'text' | 'never'>,
+  width: String,
+  height: String
 } as const;
 
 export type ButtonProps = ExtractPropTypes<typeof buttonProps>;
@@ -226,8 +228,8 @@ declare module 'vue' {
 ```vue
 <template>
   <div :class="bem.b()" v-bind="$attrs">
-    <el-button :type="type" :size="size" :disabled="disabled" :link="link" :loading="loading">
-      dnhyxc-ui button
+    <el-button :type="type" :size="size" :disabled="disabled" :link="link" :loading="loading" :style="styles">
+      <slot>dnhyxc-ui button</slot>
     </el-button>
   </div>
 </template>
@@ -245,6 +247,17 @@ defineOptions({
 });
 
 const props = defineProps(buttonProps);
+
+const styles = computed<CSSProperties>(() => {
+  const { size, color, width, height } = props;
+  if (!size && !color && !width && !height) return {};
+  return {
+    ...(size ? { 'font-size': size + 'px' } : {}),
+    ...(width ? { width: width + 'px' } : {}),
+    ...(height ? { height: height + 'px' } : {}),
+    ...(color ? { color: color } : {})
+  };
+});
 </script>
 ```
 
@@ -1484,13 +1497,7 @@ yarn add dnhyxc-ui-plus
 
 在 `docs/components` 文件夹下新增 `button.md` 文件，文件内容可以自定义，这里只提供一个简单的示例：
 
-```md
-# Button 按钮
 
-## 使用按钮
-
-全局注册
-```
 
 修改 `docs/index.md` 文件，内容如下：
 
@@ -1588,8 +1595,43 @@ export default defineConfig({
 pnpm i @dnhyxc-ui/components --workspace
 ```
 
-修改 `docs/.vitepress/theme/index.ts`，将 `@dnhyxc-ui/components` 组件库在全局挂载。
+修改 `docs/.vitepress/theme/index.ts`，将 `@dnhyxc-ui/components` 组件库在全局挂载，方便在 `components` 中的组件中使用：
 
 ```ts
+// https://vitepress.dev/guide/custom-theme
+import { h } from 'vue';
+import type { Theme } from 'vitepress';
+import DefaultTheme from 'vitepress/theme';
+import DnhyxcUI from '@dnhyxc-ui/components';
+import './style.css';
 
+export default {
+  extends: DefaultTheme,
+  Layout: () => {
+    return h(DefaultTheme.Layout, null, {
+      // https://vitepress.dev/guide/extending-default-theme#layout-slots
+    });
+  },
+  enhanceApp({ app, router, siteData }) {
+    DefaultTheme.enhanceApp({ app, router, siteData });
+    // 注册组件库
+    app.use(DnhyxcUI);
+  }
+} satisfies Theme;
+```
+
+### vitepress 可能的打包问题处理
+
+在 `@dnhyxc-ui/components` 组件库中或者在 `docs` 下直接使用了 `element-plus` 时，如果 vitepress 打包出现无法识别 `css` 资源的报错时，可以在 `docs` 目录下创建 `vite.config.ts` 文件，在其中增加 `ssr` 配置，在 ssr 中设置 `noExternal` 属性，并在 `noExternal` 中添加用到了 `element-plus` 的组件库包名，就能解决打包 `css` 错误的问题。具体如下：
+
+```ts
+import { defineConfig } from 'vite';
+
+export default defineConfig({
+  base: '/',
+  // 为了解决打包 element-plus css 无法处理而报错问题的问题，需要添加以下 ssr 配置
+  ssr: {
+    noExternal: ['element-plus', '@dnhyxc-ui/components']
+  }
+});
 ```
