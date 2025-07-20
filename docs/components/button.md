@@ -8,9 +8,9 @@
 
 ```vue
 <template>
-  <n-button type="danger" style="margin-right: 12px">button</n-button>
-  <el-button type="primary">element-plus button</el-button>
-  <nel-button>dnhyxc-ui-plus button</nel-button>
+  <n-button type="success" size="large" style="margin-right: 12px">success button</n-button>
+  <n-button type="primary" style="margin-right: 12px">primary button</n-button>
+  <n-button type="danger" size="small">danger button</n-button>
 </template>
 ```
 
