@@ -331,7 +331,7 @@ packages:
 
 同时使用 `pnpm i @dnhyxc-ui/components --workspace` 命令，将 `@dnhyxc-ui/components` 组件库安装到 `play` 项目中。
 
-## 通过 workspace 的方式使用 @dnhyxc-ui/components 组件库
+## 使用 @dnhyxc-ui/components 组件库
 
 ### 局部导入
 
