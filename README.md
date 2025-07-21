@@ -378,7 +378,7 @@ app.mount('#app');
 pnpm i vite @vitejs/plugin-vue vite-plugin-dts @types/node semver @types/semver -Dw
 ```
 
-> - @vitejs/plugin-vue @vitejs/plugin-vue 的主要作用是为Vite 提供对 Vue 3 语法和单文件组件的支持，并提供一些额外的功能，如 JSX/TSX 支持、Vue 组件库的自动按需导入、环境变量的通用设置等。
+> - @vitejs/plugin-vue @vitejs/plugin-vue 的主要作用是为 Vite 提供对 Vue 3 语法和单文件组件的支持，并提供一些额外的功能，如 JSX/TSX 支持、Vue 组件库的自动按需导入、环境变量的通用设置等。
 > - vite-plugin-dts 用于生成组件库的类型声明文件。
 > - @types/node 用于支持 node 环境下的类型声明，即如果使用到了 path，fs 等就需要安装。
 > - semver 用于处理版本号。
@@ -670,7 +670,9 @@ export const buildComponent = async () => {
 };
 
 export const buildStyle = () => {
-  return src(`${componentPath}/src/**/style/**.scss`, { ignore: [`${componentPath}/**/node_modules/**`] })
+  return src(`${componentPath}/src/**/style/**.scss`, {
+    ignore: [`${componentPath}/**/node_modules/**`]
+  })
     .pipe(glupSass(dartSass)())
     .pipe(
       autoprefixer(
@@ -870,6 +872,10 @@ npx changeset init
 ```
 
 - pnpm changeset：跟踪代码变更并生成变更描述文件。该命令可以让用户交互式选择要版本化的包（patch/minor/major），同时让用户编辑变更描述（用于 CHANGELOG 中）。
+
+![image.png](https://dnhyxc.cn/image/__ARTICLE_IMG__d125503d08370fc03c1d7ecc266eb1732n66efe5c8d80d0da837a3e600h1752838725418.webp)
+
+![image.png](https://dnhyxc.cn/image/__ARTICLE_IMG__d60f95bfe87bd86832e1a8579950eca79n66efe5c8d80d0da837a3e600h1752839800348.webp)
 
 - pnpm changeset version：更新版本号。
 
@@ -1096,11 +1102,21 @@ import pluginVue from 'eslint-plugin-vue';
 import { defineConfig } from 'eslint/config';
 
 export default defineConfig([
-  { files: ['**/*.{js,mjs,cjs,ts,mts,cts,vue}'], plugins: { js }, extends: ['js/recommended'] },
-  { files: ['**/*.{js,mjs,cjs,ts,mts,cts,vue}'], languageOptions: { globals: globals.browser } },
+  {
+    files: ['**/*.{js,mjs,cjs,ts,mts,cts,vue}'],
+    plugins: { js },
+    extends: ['js/recommended']
+  },
+  {
+    files: ['**/*.{js,mjs,cjs,ts,mts,cts,vue}'],
+    languageOptions: { globals: globals.browser }
+  },
   tseslint.configs.recommended,
   pluginVue.configs['flat/essential'],
-  { files: ['**/*.vue'], languageOptions: { parserOptions: { parser: tseslint.parser } } }
+  {
+    files: ['**/*.vue'],
+    languageOptions: { parserOptions: { parser: tseslint.parser } }
+  }
 ]);
 ```
 
@@ -1109,7 +1125,9 @@ export default defineConfig([
 ```js
 export default defineConfig([
   // ...
-  { ignores: ['packages/dnhyxc-ui-plus/**', 'packages/*/dist/**', 'node_modules/**'] }
+  {
+    ignores: ['packages/dnhyxc-ui-plus/**', 'packages/*/dist/**', 'node_modules/**']
+  }
 ]);
 ```
 
@@ -1461,45 +1479,13 @@ VitePress 附带一个命令行设置向导，可以帮助你构建一个基本�
 pnpm vitepress init
 ```
 
-### 生成向导及组件页面
+运行 `pnpm vitepress init` 之后就会出现如下这个向导，每个选项的具体选择如下：
 
-按照向导的提示，完成配置之后，在 `docs` 目录下新增 `guide` 和 `components` 文件夹。
+![image.png](https://dnhyxc.cn/image/__ARTICLE_IMG__dfa2ac9e0114735764fec3f53e760568cn66efe5c8d80d0da837a3e600h1752895047103.webp)
 
-在 `docs/guide` 文件夹下新增 `quick-start.md` 和 `installation.md` 文件，文件内容可以自定义，这里只提供一个简单的示例：
+### 生成组件向导及组件页面
 
-- quick-start.md：
-
-```md
-# 快速开始
-
-本节将介绍如何在项目中使用 dnhyxc-ui-plus。
-```
-
-- installation.md：
-
-```md
-# 下载安装
-
-我们建议您使用包管理器（如 NPM、Yarn 或 pnpm）安装 Element Plus，以便更好地与您的项目集成。
-
-使用 pnpm 安装：
-
-pnpm add dnhyxc-ui-plus
-
-使用 npm 安装：
-
-npm install dnhyxc-ui-plus
-
-使用 yarn 安装：
-
-yarn add dnhyxc-ui-plus
-```
-
-在 `docs/components` 文件夹下新增 `button.md` 文件，文件内容可以自定义，这里只提供一个简单的示例：
-
-
-
-修改 `docs/index.md` 文件，内容如下：
+修改 `docs/index.md` 文件，根据自己实际情况进行配置，这里提供一个参考，内容如下：
 
 ```md
 ---
@@ -1530,7 +1516,7 @@ features:
 
 ### 修改 .vitepress 配置
 
-修改 `.vitepress/config.mts` 内容，这里根据自己实际情况修改为符合自己的配置，这里简单提供一个参考：
+修改 `.vitepress/config.mts` 内容，这里根据自己实际情况修改为符合自己的配置，这里提供一个参考：
 
 ```ts
 import { defineConfig } from 'vitepress';
@@ -1619,6 +1605,235 @@ export default {
   }
 } satisfies Theme;
 ```
+
+按照向导的提示，完成配置之后，在 `docs` 目录下新增 `guide` 和 `components` 文件夹。
+
+在 `docs/guide` 文件夹下新增 `quick-start.md` 和 `installation.md` 文件，文件内容可以自定义，这里只提供一个简单的示例：
+
+- quick-start.md：
+
+```md
+# 快速开始
+
+本节将介绍如何在项目中使用 dnhyxc-ui-plus。
+```
+
+- installation.md：
+
+````md
+# 下载安装
+
+我们建议您使用包管理器（如 NPM、Yarn 或 pnpm）安装 Element Plus，以便更好地与您的项目集成。
+
+使用 pnpm 安装：
+
+```bash
+pnpm add dnhyxc-ui-plus
+```
+
+使用 npm 安装：
+
+```bash
+npm install dnhyxc-ui-plus
+```
+
+使用 yarn 安装：
+
+```bash
+yarn add dnhyxc-ui-plus
+```
+````
+
+在 `docs/components` 文件夹下新增 `button.md` 文件，文件内容可以自定义，这里只提供一个简单的示例：
+
+````md
+# Button 按钮
+
+## 使用按钮
+
+全局注册
+
+<n-button type="success" size="large" style="margin-right: 12px">success button</n-button>
+<n-button type="primary" style="margin-right: 12px">primary button</n-button>
+<n-button type="danger" size="small">danger button</n-button>
+
+```vue
+<template>
+  <n-button type="success" size="large" style="margin-right: 12px">button</n-button>
+
+  <n-button type="primary" style="margin-right: 12px">button</n-button>
+</template>
+```
+
+## API
+
+### Button Props
+
+| 参数 | 说明     | 类型   | 可选值                                                       | 默认值  |
+| ---- | -------- | ------ | ------------------------------------------------------------ | ------- |
+| type | 按钮类型 | string | default / success / primary / danger / warning / info / text | default |
+| size | 按钮大小 | string | large / small / default                                      | default |
+````
+
+上述 `button.md` 组件根据上述 md 内容，code 最终展示效果如下：
+
+![image.png](https://dnhyxc.cn/image/__ARTICLE_IMG__d563f6e06fa8052103ca291d71fec854fn66efe5c8d80d0da837a3e600h1753062480851.webp)
+
+### 配置 vitepress-code-preview
+
+`vitepress-code-preview` 一款给 vitepress 文档中嵌入的 Vue 示例代码增加演示功能的插件。本插件基于 vitepress、 `markdown-it` 和 `unified` 实现，它可以帮助你在编写文档的时候，对嵌入的 Vue 示例代码增加演示功能，支持的 Vue 组件形式有 SFC, JSX, TSX。
+
+在 `docs` 目录下安装如下插件：
+
+```bash
+pnpm add @vitepress-code-preview/container @vitepress-code-preview/plugin -D
+```
+
+在 `docs/vite.config.ts` 中导入插件：
+
+```ts
+import { defineConfig } from 'vite';
+import { viteDemoPreviewPlugin } from '@vitepress-code-preview/plugin';
+
+export default defineConfig({
+  base: '/', // 线上打包路径改为绝对路径，防止打包后，资源文件路径出现上述错误
+  // 为了解决打包 element-plus css 无法处理而报错问题的问题，需要添加以下 ssr 配置
+  ssr: {
+    noExternal: ['element-plus', '@dnhyxc-ui/components']
+  },
+  plugins: [viteDemoPreviewPlugin()]
+});
+```
+
+修改 `docs/.vitepress/config.ts` 配置文件，在其中增加 `markdown` 配置，并且在其中使用 `demoPreviewPlugin`：
+
+```ts
+import { defineConfig } from 'vitepress';
+import { demoPreviewPlugin } from '@vitepress-code-preview/plugin';
+
+export default defineConfig({
+  title: 'dnhyxc-ui-plus',
+  description: 'Vue3 UI Component',
+  themeConfig: {
+    // ...
+  },
+  // 增加 markdown 配置，使用 demoPreviewPlugin 插件
+  markdown: {
+    config(md) {
+      md.use(demoPreviewPlugin);
+    }
+  }
+});
+```
+
+最后修改 `docs/.vitepress/theme/index.ts`，在其中导入 `@vitepress-code-preview/container` 注册组件容器：
+
+```ts
+// ...
+// 导入组件容器
+import DemoPreview, { useComponents } from '@vitepress-code-preview/container';
+// 导入样式
+import '@vitepress-code-preview/container/dist/style.css';
+// ...
+
+export default {
+  // ...
+  enhanceApp({ app, router, siteData }) {
+    // 注册组件容器
+    useComponents(app, DemoPreview);
+    // ...
+  }
+} satisfies Theme;
+```
+
+### 在 MD 文件中使用 vitepress-code-preview
+
+在 demo 容器中直接编写 vue 代码
+
+````md
+# Button 按钮
+
+## 使用按钮
+
+全局注册
+
+:::demo
+
+```vue
+<template>
+  <n-button type="success" size="large" style="margin-right: 12px">success button</n-button>
+  <n-button type="primary" style="margin-right: 12px">primary button</n-button>
+  <n-button type="danger" size="small">danger button</n-button>
+</template>
+```
+
+:::
+
+## API
+
+### Button Props
+
+<script>
+const buttonProps = [
+  {
+    name: 'size',
+    type: "enum",
+    default: 'default',
+    description: '按钮尺寸',
+    version: '-',
+    details: "'large' | 'default' | 'small'"
+  },
+  {
+    name: 'type',
+    type: "enum",
+    default: 'default',
+    description: '按钮类型',
+    version: '-',
+    details: "'default' | 'primary' | 'success' | 'warning' | 'danger' | 'info' | '' | 'text'"
+  }
+];
+</script>
+
+<table>
+  <thead>
+    <tr>
+      <th style="width: 1000px">名称</th>
+      <th style="width: 1000px">类型</th>
+      <th style="width: 1000px">默认值</th>
+      <th style="width: 1000px">说明</th>
+      <th style="width: 1000px">版本</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr v-for="prop in buttonProps" :key="prop.name">
+      <td>{{ prop.name }}</td>
+      <td>
+        <code>
+          {{ prop.type }}
+        </code>
+        <el-tooltip
+          class="item"
+          :content="prop.details"
+          placement="top"
+        >
+          <el-icon style="cursor: pointer">❕</el-icon>
+        </el-tooltip>
+      </td>
+      <td>
+        <code>{{ prop.default }}</code>
+      </td>
+      <td>{{ prop.description }}</td>
+      <td>{{ prop.version }}</td>
+    </tr>
+  </tbody>
+</table>
+````
+
+> 说明：Button Props 可以通过 markdown 的表格实现，如果觉得 markdown 实现的 table 不美观，也可以自己通过上述 vue 直接自定义实现表格，展示组件的属性。但是需要注意的是，dom 元素不需要通过 `<template></template>` 标签进行包裹。
+
+最终配置完成之后，组件根据上述 md 内容，code 最终展示效果如下：
+
+![image.png](https://dnhyxc.cn/image/__ARTICLE_IMG__d47b5f1ef4a74efa035fa65552b883f78n66efe5c8d80d0da837a3e600h1753061127076.webp)
 
 ### vitepress 可能的打包问题处理
 
