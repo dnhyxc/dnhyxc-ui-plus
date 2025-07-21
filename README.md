@@ -882,6 +882,58 @@ npx changeset init
 
 运行 `npm run publish` 命令后，会优先打包 `packages/components` 包，生成 `packages/dnhyxc-ui-plus` 输出文件，然后生成变更描述文件，最后将包发布到 npm 上。
 
+## 配置自动更新 @dnhyxc-ui/components version
+
+当项目通过 `pnpm changeset version` 变更 version 之后，将跟新的 version 同步更新到 `@dnhyxc-ui/components`。因为 `dnhyxc-ui-plus` 的 version 是每次打包 `@dnhyxc-ui/components` 之后，同步到 `dnhyxc-ui-plus` 的 `package.json` 中的。因此将 `dnhyxc-ui-plus` 更新后的 version 同步到 `@dnhyxc-ui/components` 之后，就不需要每次发布 `dnhyxc-ui-plus` 包时要手动更新 `@dnhyxc-ui/components` 的 version 了。
+
+在项目更目录下的 `packages/components/scripts` 下新增 `version` 文件夹，并在 `version` 中新增 `index.js` 文件，`index.js` 内容如下：
+
+```js
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { writeFileSync, readFileSync } from 'fs';
+
+// 通过改写__dirname 为__dirnameNew，解决打包报错
+const __filenameNew = fileURLToPath(import.meta.url);
+const __dirnameNew = path.dirname(__filenameNew);
+
+export const getPath = (_path) => path.resolve(__dirnameNew, _path);
+
+const updateVerison = () => {
+  const dnhyxcUIPlusMdPath = getPath('../../../dnhyxc-ui-plus/package.json');
+  const componentsPkgPath = getPath('../../package.json');
+  // 读取并更新 package.json 的版本号
+  const dnhyxcUIPlusPkg = JSON.parse(readFileSync(dnhyxcUIPlusMdPath, 'utf-8'));
+  const componentsPkg = JSON.parse(readFileSync(componentsPkgPath, 'utf-8'));
+
+  componentsPkg.version = dnhyxcUIPlusPkg.version;
+
+  try {
+    writeFileSync(componentsPkgPath, JSON.stringify(componentsPkg, null, 2));
+    console.log(`✨ @dnhyxc-ui/components package.json version 已更新为 ${dnhyxcUIPlusPkg.version}`);
+  } catch (err) {
+    console.error(`package.json 写入错误: ${err.message}`);
+  }
+};
+
+updateVerison();
+```
+
+脚本配置完毕之后，在根目录下的 `package.json` 中更新 `publish` 脚本，增加 `node ./packages/components/scripts/version/index.js` 命令：
+
+```json
+{
+  // ...
+  "scripts": {
+    // ...
+    "publish": "pnpm --filter=./packages/components run build && pnpm changeset && pnpm changeset version && pnpm changeset publish && node ./packages/components/scripts/version/index.js"
+  }
+  // ...
+}
+```
+
+这样每次发布之后 `dnhyxc-ui-plus` 包之后，就会将 `dnhyxc-ui-plus/package.js` 中的最新 `version` 同步到 `packages/components/package.json` 中了。
+
 ## 引用 npm 上的 dnhyxc-ui-plus 组件库
 
 ### 下载 dnhyxc-ui-plus 组件库
