@@ -1,7 +1,8 @@
 {
   "name": "@dnhyxc-ui/components",
-  "version": "0.0.1",
+  "version": "0.0.9",
   "private": true,
+  "type": "module",
   "scripts": {
     "build": "vite build",
     "test": "vitest run",
