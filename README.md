@@ -375,13 +375,12 @@ app.mount('#app');
 在项目根目录下安装打包所需要的依赖。
 
 ```bash
-pnpm i vite @vitejs/plugin-vue vite-plugin-dts @types/node semver @types/semver -Dw
+pnpm i vite @vitejs/plugin-vue vite-plugin-dts @types/node -Dw
 ```
 
 > - @vitejs/plugin-vue @vitejs/plugin-vue 的主要作用是为 Vite 提供对 Vue 3 语法和单文件组件的支持，并提供一些额外的功能，如 JSX/TSX 支持、Vue 组件库的自动按需导入、环境变量的通用设置等。
 > - vite-plugin-dts 用于生成组件库的类型声明文件。
 > - @types/node 用于支持 node 环境下的类型声明，即如果使用到了 path，fs 等就需要安装。
-> - semver 用于处理版本号。
 
 在 `packages/components` 文件夹下创建 `plugins` 文件夹，在其中分别创建 `relpace-style-ext-plugin.ts`、`create-package-plugin.ts` 及 `index.ts` 文件。
 
