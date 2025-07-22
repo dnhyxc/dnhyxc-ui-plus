@@ -3,22 +3,14 @@
 layout: home
 
 hero:
-  name: 'dnhyxc-ui'
-  text: 'dnhyxc-ui 组件库'
-  tagline: My great project tagline
+  name: 'dnhyxc-ui-plus'
+  text: 'dnhyxc-ui-plus 组件库'
+  tagline: 基于 Vue3 + TypeScript + Element Plus 的组件库
   actions:
     - theme: brand
       text: 快速开始
       link: /guide/installation
     - theme: alt
-      text: 组件库
+      text: 组件
       link: /components/button
-
-features:
-  - title: Feature A
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature B
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature C
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
 ---
