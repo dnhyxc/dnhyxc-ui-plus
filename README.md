@@ -509,7 +509,7 @@ export default defineConfig({
       fileName: (format: string) => `dnhyxc-ui-plus.${format}.js` // 输出文件的命名规则
     },
     rollupOptions: {
-      // 确保外部化处理那些你不想打包进库的依赖
+      // 确保外部化处理那些你不想打包进库的依赖，同时将 scss 样式资源也排除，因为后续 scss 资源将使用 gulp 进行打包
       external: ['vue', /\.scss/, 'element-plus', 'element-plus/dist/index.css'],
       output: [
         {
@@ -567,6 +567,8 @@ export default defineConfig({
   ]
 });
 ```
+
+上述 `vite.config.ts` 配置中，不处理 `scss` 样式资源，由下文中提到的 `gulp` 进行辅助打包。
 
 ## 组件样式打包
 
