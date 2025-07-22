@@ -2,15 +2,15 @@
   "name": "play",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
-    "dnhyxc-ui-plus-beta1": "0.0.1-beta.10",
     "@dnhyxc-ui/components": "workspace:^",
+    "dnhyxc-ui-plus-beta1": "0.0.1-beta.10",
+    "monaco-editor": "^0.43.0",
     "vue": "^3.5.13"
   },
   "devDependencies": {

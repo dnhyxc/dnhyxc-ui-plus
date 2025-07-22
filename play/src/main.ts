@@ -1,5 +1,5 @@
 import { createApp } from 'vue';
-import dnhyxcUI from 'dnhyxc-ui-plus-beta1';
+import dnhyxcUI from '@dnhyxc-ui/components';
 import './style.css';
 import App from './App.vue';
 
