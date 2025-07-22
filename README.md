@@ -400,6 +400,10 @@ export function replaceStyleExtPlugin(): PluginOption {
     generateBundle(config, bundle) {
       const keys = Object.keys(bundle);
       for (const key of keys) {
+        // 只处理 src 目录下的文件
+        if (!key.includes('src/')) {
+          continue;
+        }
         const bundler = bundle[key] as { code: string };
         // rollup内置方法，将所有输出文件 code 中的 .scss 换成 .css
         this.emitFile({
