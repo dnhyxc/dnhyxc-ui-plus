@@ -1,0 +1,23 @@
+{
+  "serverInfo": {
+    "host": "101.43.50.15",
+    "username": "root",
+    "port": "22"
+  },
+  "nginxInfo": {
+    "remoteFilePath": "/usr/local/nginx/conf",
+    "restartPath": "/usr/local/nginx/sbin"
+  },
+  "serviceInfo": {
+    "restartPath": "/usr/local/server"
+  },
+  "docs": {
+    "name": "dosc",
+    "localFilePath": {
+      "mac": "/Users/dnhyxc/Documents/code/dnhyxc-ui-plus/docs/.vitepress",
+      "win": ""
+    },
+    "remoteFilePath": "/usr/local/nginx/public_demo",
+    "isServer": false
+  }
+}

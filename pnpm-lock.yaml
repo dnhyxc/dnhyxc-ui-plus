@@ -144,6 +144,9 @@ importers:
       '@dnhyxc-ui/components':
         specifier: workspace:^
         version: link:../packages/components
+      dnhyxc-ui-plus:
+        specifier: workspace:^
+        version: link:../packages/dnhyxc-ui-plus
     devDependencies:
       '@vitejs/plugin-vue':
         specifier: ^5.2.1
