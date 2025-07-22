@@ -13,6 +13,7 @@ es
 lib
 packages/dnhyxc-ui-plus/**
 packages/components/coverage/**
+docs/publish.config.json
 cache
 dist.zip
 docs/cache
