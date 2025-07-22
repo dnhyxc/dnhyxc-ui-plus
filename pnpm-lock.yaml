@@ -164,8 +164,8 @@ importers:
   packages/components:
     dependencies:
       monaco-editor:
-        specifier: ^0.52.2
-        version: 0.52.2
+        specifier: ^0.43.0
+        version: 0.43.0
 
   packages/dnhyxc-ui-plus: {}
 
@@ -177,6 +177,9 @@ importers:
       dnhyxc-ui-plus-beta1:
         specifier: 0.0.1-beta.10
         version: 0.0.1-beta.10
+      monaco-editor:
+        specifier: ^0.43.0
+        version: 0.43.0
       vue:
         specifier: ^3.5.13
         version: 3.5.17(typescript@5.7.3)
@@ -3174,8 +3177,8 @@ packages:
   mlly@1.7.4:
     resolution: {integrity: sha512-qmdSIPC4bDJXgZTCR7XosJiNKySV7O215tsPtDN9iEO/7q/76b/ijtgRu/+epFXSJhijtTCCGp3DWS549P3xKw==}
 
-  monaco-editor@0.52.2:
-    resolution: {integrity: sha512-GEQWEZmfkOGLdd3XK8ryrfWz3AIP8YymVXiPHEdewrUq7mh0qrKrfHLNCXcbB6sTnMLnOZ3ztSiKcciFUkIJwQ==}
+  monaco-editor@0.43.0:
+    resolution: {integrity: sha512-cnoqwQi/9fml2Szamv1XbSJieGJ1Dc8tENVMD26Kcfl7xGQWp7OBKMjlwKVGYFJ3/AXJjSOGvcqK7Ry/j9BM1Q==}
 
   mri@1.2.0:
     resolution: {integrity: sha512-tzzskb3bG8LvYGFF/mDTpq3jpI6Q9wc3LEmBaghu+DdCssd1FakN7Bc0hVNmEyGq1bq3RgfkCb3cmQLpNPOroA==}
@@ -7697,7 +7700,7 @@ snapshots:
       pkg-types: 1.3.1
       ufo: 1.6.1
 
-  monaco-editor@0.52.2: {}
+  monaco-editor@0.43.0: {}
 
   mri@1.2.0: {}
 

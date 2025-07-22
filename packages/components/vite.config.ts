@@ -3,6 +3,7 @@ import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import dts from 'vite-plugin-dts';
 import { replaceStyleExtPlugin, createPackagePlugin } from './plugins';
+import { external } from './scripts/build/external';
 
 export default defineConfig({
   build: {
@@ -12,7 +13,7 @@ export default defineConfig({
     },
     rollupOptions: {
       // 确保外部化处理那些你不想打包进库的依赖
-      external: ['vue', /\.scss/, 'element-plus', 'element-plus/dist/index.css'],
+      external,
       output: [
         {
           //打包成 ES 模块格式，适用于现代 JavaScript 环境

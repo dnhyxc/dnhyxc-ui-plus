@@ -21,9 +21,9 @@
   "license": "ISC",
   "description": "a ui library for vue3",
   "dependencies": {
-    "monaco-editor": "^0.52.2"
+    "monaco-editor": "^0.43.0"
   },
   "peerDependencies": {
-    "monaco-editor": "^0.52.2"
+    "monaco-editor": "^0.43.2"
   }
 }
