@@ -865,7 +865,7 @@ npx changeset init
   // ...
   "scripts": {
     // ...
-    "publish": "pnpm --filter=./packages/components run build && pnpm changeset && pnpm changeset version && pnpm changeset publish"
+    "publish": "pnpm run build && pnpm changeset && pnpm changeset version && pnpm changeset publish"
     // ...
   }
   // ...
@@ -1626,22 +1626,22 @@ export default defineConfig({
 });
 ```
 
-### 接入 @dnhyxc-ui/components 组件库
+### 接入 dnhyxc-ui-plus 组件库
 
 在 `docs` 目录下运行如下命令进行安装：
 
 ```bash
-pnpm i @dnhyxc-ui/components --workspace
+pnpm i dnhyxc-ui-plus --workspace
 ```
 
-修改 `docs/.vitepress/theme/index.ts`，将 `@dnhyxc-ui/components` 组件库在全局挂载，方便在 `components` 中的组件中使用：
+修改 `docs/.vitepress/theme/index.ts`，将 `dnhyxc-ui-plus` 组件库在全局挂载，方便在 `components` 中的组件中使用：
 
 ```ts
 // https://vitepress.dev/guide/custom-theme
 import { h } from 'vue';
 import type { Theme } from 'vitepress';
 import DefaultTheme from 'vitepress/theme';
-import DnhyxcUI from '@dnhyxc-ui/components';
+import DnhyxcUI from 'dnhyxc-ui-plus';
 import './style.css';
 
 export default {
@@ -1712,10 +1712,28 @@ yarn add dnhyxc-ui-plus
 
 ```vue
 <template>
-  <n-button type="success" size="large" style="margin-right: 12px">button</n-button>
-
-  <n-button type="primary" style="margin-right: 12px">button</n-button>
+  <n-button type="success" size="large" style="margin-right: 12px">success button</n-button>
+  <n-button type="primary" style="margin-right: 12px">primary button</n-button>
+  <n-button type="danger" size="small">danger button</n-button>
 </template>
+```
+
+局部使用
+
+<Button type="success" size="large" style="margin-right: 12px">success button</Button>
+<Button type="primary" style="margin-right: 12px">primary button</Button>
+<Button type="danger" size="small">danger button</Button>
+
+```vue
+<template>
+  <Button type="success" size="large" style="margin-right: 12px">success button</Button>
+  <Button type="primary" style="margin-right: 12px">primary button</Button>
+  <Button type="danger" size="small">danger button</Button>
+</template>
+
+<script setup lang="ts"></script>
+import { Button } from 'dnhyxc-ui-plus';
+</script>
 ```
 
 ## API
@@ -1822,6 +1840,24 @@ export default {
 
 :::
 
+局部注册
+
+:::demo
+
+```vue
+<template>
+  <Button type="success" size="large" style="margin-right: 12px">success button</Button>
+  <Button type="primary" style="margin-right: 12px">primary button</Button>
+  <Button type="danger" size="small">danger button</Button>
+</template>
+
+<script setup lang="ts">
+import { Button } from 'dnhyxc-ui-plus';
+</script>
+```
+
+:::
+
 ## API
 
 ### Button Props
@@ -1882,6 +1918,8 @@ const buttonProps = [
 </table>
 ````
 
+> 注意：上述 `:::demo` 及 `:::` 与其上下内容之间需要留有空行，特别是 `:::demo` 需要与其上边的内容留出空行，否则可能将无法正常解析。
+>
 > 说明：Button Props 可以通过 markdown 的表格实现，如果觉得 markdown 实现的 table 不美观，也可以自己通过上述 vue 直接自定义实现表格，展示组件的属性。但是需要注意的是，dom 元素不需要通过 `<template></template>` 标签进行包裹。
 
 最终配置完成之后，组件根据上述 md 内容，code 最终展示效果如下：
