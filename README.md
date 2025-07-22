@@ -803,7 +803,7 @@ npx changeset init
 }
 ```
 
-因为我们只需要将 `packages/dnhyxc-ui-plus` 包发布到 npm 上，其他包不发布到 npm 上，因此需要更改 `config.json` 文件中的 `ignore` 属性，忽略掉 `packages/components` 包（packages/components/package.json 中的 name 属性名即为 packages/components 的包名）、`dosc` 包（dosc/package.json 中的 name 属性名即为 dosc 的包名）及 `play` 包。
+因为我们只需要将 `packages/dnhyxc-ui-plus` 包发布到 npm 上，其他包不发布到 npm 上，因此需要更改 `config.json` 文件中的 `ignore` 属性，忽略掉 `packages/components` 包（packages/components/package.json 中的 name 属性名即为 packages/components 的包名）、`dosc（后续组件文档包）` 包（dosc/package.json 中的 name 属性名即为 dosc 的包名）及 `play（组件预览/调试包）` 包。
 
 ```json
 {
@@ -1546,13 +1546,13 @@ layout: home
 hero:
   name: 'dnhyxc-ui-plus'
   text: 'dnhyxc-ui-plus 组件库'
-  tagline: My great project tagline
+  tagline: 基于 Vue3 + TypeScript + Element Plus 的组件库
   actions:
     - theme: brand
       text: 快速开始
       link: /guide/installation
     - theme: alt
-      text: 组件库
+      text: 组件
       link: /components/button
 
 features:
@@ -1732,7 +1732,7 @@ yarn add dnhyxc-ui-plus
 
 ### 配置 vitepress-code-preview
 
-`vitepress-code-preview` 一款给 vitepress 文档中嵌入的 Vue 示例代码增加演示功能的插件。本插件基于 vitepress、 `markdown-it` 和 `unified` 实现，它可以帮助你在编写文档的时候，对嵌入的 Vue 示例代码增加演示功能，支持的 Vue 组件形式有 SFC, JSX, TSX。
+`vitepress-code-preview` 一款给 vitepress 文档中嵌入的 Vue 示例代码增加演示功能的插件。本插件基于 `vitepress`、 `markdown-it` 和 `unified` 实现，它可以帮助你在编写文档的时候，对嵌入的 Vue 示例代码增加演示功能，支持的 Vue 组件形式有 SFC, JSX, TSX。
 
 在 `docs` 目录下安装如下插件：
 
@@ -1901,3 +1901,7 @@ export default defineConfig({
   }
 });
 ```
+
+## 项目 github 仓库
+
+[dnhyxc-ui-plus](https://github.com/dnhyxc/dnhyxc-ui-plus)
