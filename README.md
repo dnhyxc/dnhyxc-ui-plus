@@ -1906,4 +1906,4 @@ export default defineConfig({
 
 ## 项目 github 仓库
 
-[dnhyxc-ui-plus](https://github.com/dnhyxc/dnhyxc-ui-plus)
+[dnhyxc-ui-plus](https://github.com/dnhyxc/dnhyxc-ui-plus/tree/template)
