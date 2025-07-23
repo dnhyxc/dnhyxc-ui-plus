@@ -1,6 +1,6 @@
 {
   "name": "@dnhyxc-ui/components",
-  "version": "0.0.10",
+  "version": "0.0.32",
   "private": true,
   "type": "module",
   "scripts": {
@@ -19,11 +19,5 @@
   ],
   "author": "@dnhyxc",
   "license": "ISC",
-  "description": "a ui library for vue3",
-  "dependencies": {
-    "monaco-editor": "^0.43.0"
-  },
-  "peerDependencies": {
-    "monaco-editor": "^0.43.2"
-  }
+  "description": "a ui library for vue3"
 }

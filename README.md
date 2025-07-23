@@ -73,7 +73,7 @@ pnpm i typescript sass -Dw
 }
 ```
 
-## 组件开发
+## 组件开发配置
 
 根目录下 `packages/components` 具体文件目录如下：
 
@@ -108,6 +108,8 @@ packages
   "description": "a ui library for vue3"
 }
 ```
+
+### 配置组件命名规范及全局注册 install 方法
 
 在 `packages/components` 文件夹下创建 `utils` 文件夹。
 
@@ -188,6 +190,12 @@ export const withInstall = <T>(comp: T) => {
   return comp as SFCWithInstall<T>;
 };
 ```
+
+## 组件开发
+
+### 使用全局导入 element-plus 及样式的方式开发组件
+
+这种方式是最简单的开发方式，但是这种方式会将 `element-plus` 组件库的所有组件都引入到项目中，但是会增大打包体积。
 
 在 `packages/components` 文件夹下创建 `src` 文件夹。
 
@@ -315,6 +323,50 @@ export default {
 };
 ```
 
+### 采用局部导入 element-plus 及样式的方式开发组件
+
+这种方式是最推荐的开发方式，因为这种方式只会引入组件所需要的组件和样式，不会引入整个 `element-plus` 组件库，从而减少打包体积。但是这种方式在开发每个组件时需要手动导入对应的组件及其样式，相对第一种方式稍微麻烦一点。
+
+这种方式只需要修改上述 `packages/components/src/button/index.vue` 及 `packages/components/index.ts` 文件，其它文件内容不变。
+
+- packages/components/src/button/index.vue 修改内容如下：
+
+```vue
+<template>
+  <!-- ... -->
+</template>
+<script lang="ts" setup>
+// ...
+// 增加 ElButton 组件及其样式的导入
+import { ElButton } from 'element-plus';
+import 'element-plus/es/components/button/style/css';
+//...
+</script>
+```
+
+- packages/components/index.ts 中去除 `element-plus` 及其样式的导入：
+
+```ts
+import { App } from 'vue';
+import * as components from './src/index';
+// 去除 ElementPlus 组件及其样式的导入
+// import ElementPlus from 'element-plus';
+// import 'element-plus/dist/index.css';
+// 也导出所有单个组件，支持按需引入
+export * from './src/index';
+
+export * from './src/notification';
+
+export default {
+  install: (app: App) => {
+    // app.use(ElementPlus);
+    for (let c in components) {
+      app.use(components[c as keyof typeof components]);
+    }
+  }
+};
+```
+
 ## 搭建组件预览（测试）环境
 
 在根目录下运行 `create-vite play --template vue-ts` 命令，创建 `play` 组件测试项目。
@@ -331,9 +383,43 @@ packages:
 
 同时使用 `pnpm i @dnhyxc-ui/components --workspace` 命令，将 `@dnhyxc-ui/components` 组件库安装到 `play` 项目中。
 
-## 使用 @dnhyxc-ui/components 组件库
+### 配置按需加载
 
-### 局部导入
+如果是使用全局导入 `element-plus` 及样式的方式开发组件的方式，那么可以不配置按需加载，因为在我们开发的组件包中已经全局导入了 `element-plus` 及其样式。只有使用局部导入 `element-plus` 及样式的方式开发组件时，才需要配置按需加载。
+
+在项目根目录下安装按需加载相关的插件，使后续配置 `docs` 组件文档时不需要重复安装。
+
+```bash
+pnpm i unplugin-auto-import unplugin-element-plus unplugin-vue-components -Dw
+```
+
+修改 `play` 项目的 `vite.config.ts` 文件，配置按需加载。
+
+```ts
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
+// 按需加载插件
+import AutoImport from 'unplugin-auto-import/vite';
+import Components from 'unplugin-vue-components/vite';
+import ElementPlus from 'unplugin-element-plus/vite';
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [
+    vue(),
+    AutoImport({
+      resolvers: [ElementPlusResolver()]
+    }),
+    Components({
+      resolvers: [ElementPlusResolver()]
+    }),
+    ElementPlus({})
+  ]
+});
+```
+
+### 使用局部导入 @dnhyxc-ui/components 组件库
 
 在 `App.vue` 文件中使用局部导入使用 `Button` 组件。
 
@@ -347,18 +433,22 @@ import { Button } from '@dnhyxc-ui/components';
 </script>
 ```
 
-### 全局导入
+### 使用全局导入 @dnhyxc-ui/components 组件库
 
 在 `main.ts` 文件中使用全局导入使用 `@dnhyxc-ui/components` 组件。
 
 ```ts
 import { createApp } from 'vue';
-import { Button } from '@dnhyxc-ui/components';
+// 方式一：全局导入单个组件
+// import { Button } from '@dnhyxc-ui/components';
+// 方式二：全局导入所有组件
+import DnhyxcUI from '@dnhyxc-ui/components';
 import './style.css';
 import App from './App.vue';
 
 const app = createApp(App);
-app.use(Button);
+// app.use(Button);
+app.use(DnhyxcUI);
 app.mount('#app');
 ```
 
@@ -497,7 +587,7 @@ export * from './relpace-style-ext-plugin';
 export * from './create-package-plugin';
 ```
 
-在 `packages/components` 文件夹下创建 `vite.config.ts` 文件，具体内容如下：
+在 `packages/components` 文件夹下创建 `vite.config.ts` 文件，这里需要特别注意配置 `external` 属性，将不需要进行打包的包或者文件进行排除。如 `element-plus` 及我们在开发组件时导入的对应组件样式文件（`element-plus/es/components/button/style/css`），这里可以通过正则进行匹配 `/^element-plus\/.*/`，这样就不需要将每个组件的 `style/css` 都在 `external` 中导入了。
 
 ```ts
 import path from 'path';
@@ -514,7 +604,7 @@ export default defineConfig({
     },
     rollupOptions: {
       // 确保外部化处理那些你不想打包进库的依赖，同时将 scss 样式资源也排除，因为后续 scss 资源将使用 gulp 进行打包
-      external: ['vue', /\.scss/, 'element-plus', 'element-plus/dist/index.css'],
+      external: ['vue', /\.(scss|css)$/, 'element-plus', /^element-plus\/.*/, 'node_modules'],
       output: [
         {
           //打包成 ES 模块格式，适用于现代 JavaScript 环境
@@ -572,7 +662,7 @@ export default defineConfig({
 });
 ```
 
-上述 `vite.config.ts` 配置中，不处理 `scss` 样式资源，由下文中提到的 `gulp` 进行辅助打包。
+上述 `vite.config.ts` 配置中，不处理 `scss` 样式资源，由下文中提到的 `gulp` 进行辅助打包。排除 `element-plus` 及其相关的内容是因为在业务组件中会安装 `element-plus`，因此这里不需要将其进行打包。
 
 ## 组件样式打包
 
@@ -1033,6 +1123,10 @@ import vue from '@vitejs/plugin-vue';
 
 export default defineConfig({
   plugins: [vue()],
+  // 为了解决 TypeError: Unknown file extension ".css" 的报错，需要添加以下 ssr 配置
+  ssr: {
+    noExternal: ['element-plus']
+  },
   test: {
     environment: 'happy-dom',
     coverage: {
@@ -1043,6 +1137,8 @@ export default defineConfig({
   }
 });
 ```
+
+> 如果运行 `pnpm test` 命令时出现 `TypeError: Unknown file extension ".css"` 的报错，需要在 `vitest.config.ts` 文件中添加 `ssr` 配置。将 `element-plus` 标记为不需要外部化的依赖，这样可以确保在服务端渲染时正确处理 element-plus 的样式文件。
 
 ### 为组件添加测试用例
 
@@ -1060,7 +1156,7 @@ describe('Button Component', () => {
     // 挂载组件
     const wrapper = mount(Button);
     // 断言按钮文本是否为默认内容
-    expect(wrapper.text()).toBe('测试按钮');
+    expect(wrapper.text()).toBe('dnhyxc-ui button');
   });
 });
 
@@ -1540,7 +1636,7 @@ pnpm vitepress init
 
 ![image.png](https://dnhyxc.cn/image/__ARTICLE_IMG__dfa2ac9e0114735764fec3f53e760568cn66efe5c8d80d0da837a3e600h1752895047103.webp)
 
-### 生成组件向导及组件页面
+### 修改 VitePress 相关配置
 
 修改 `docs/index.md` 文件，根据自己实际情况进行配置，这里提供一个参考，内容如下：
 
@@ -1570,8 +1666,6 @@ features:
     details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
 ---
 ```
-
-### 修改 .vitepress 配置
 
 修改 `.vitepress/config.mts` 内容，这里根据自己实际情况修改为符合自己的配置，这里提供一个参考：
 
@@ -1630,7 +1724,7 @@ export default defineConfig({
 });
 ```
 
-### 接入 dnhyxc-ui-plus 组件库
+### 配置组件运行环境
 
 在 `docs` 目录下运行如下命令进行安装：
 
@@ -1645,6 +1739,8 @@ pnpm i dnhyxc-ui-plus --workspace
 import { h } from 'vue';
 import type { Theme } from 'vitepress';
 import DefaultTheme from 'vitepress/theme';
+// 如果使用全局导入 element-plus 及其样式开发的组件，可以不需要导入 element-plus
+import ElmentPlus from 'element-plus';
 import DnhyxcUI from 'dnhyxc-ui-plus';
 import './style.css';
 
@@ -1657,13 +1753,46 @@ export default {
   },
   enhanceApp({ app, router, siteData }) {
     DefaultTheme.enhanceApp({ app, router, siteData });
+    // 如果使用全局导入 element-plus 及其样式开发的组件，可以不需要导入注册 element-plus
+    app.use(ElmentPlus);
     // 注册组件库
     app.use(DnhyxcUI);
   }
 } satisfies Theme;
 ```
 
-按照向导的提示，完成配置之后，在 `docs` 目录下新增 `guide` 和 `components` 文件夹。
+> 如果使用全局导入 element-plus 及其样式开发的组件，可以不需要导入注册 element-plus。
+
+在 `docs` 目录下新建 `vite.config.ts` 文件，用于设置 `element-plus` 按需加载等配置，如果是使用全局导入 `element-plus` 及其样式开发的组件，可以不配置 `element-plus` 按需加载，也能正常使用 `element-plus` 及 `dnhyxc-ui-plus` 组件库。
+
+```ts
+import { defineConfig } from 'vite';
+import AutoImport from 'unplugin-auto-import/vite';
+import Components from 'unplugin-vue-components/vite';
+import ElementPlus from 'unplugin-element-plus/vite';
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
+
+export default defineConfig({
+  base: '/', // 线上打包路径改为绝对路径，防止打包后，资源文件路径出现上述错误
+  // 为了解决打包 element-plus css 无法处理而报错问题的问题，需要添加以下 ssr 配置
+  ssr: {
+    noExternal: ['element-plus', 'dnhyxc-ui-plus']
+  },
+  plugins: [
+    AutoImport({
+      resolvers: [ElementPlusResolver()]
+    }),
+    Components({
+      resolvers: [ElementPlusResolver()]
+    }),
+    ElementPlus({})
+  ]
+});
+```
+
+### 配置组件指引及在 markdown 中使用组件
+
+在 `docs` 目录下新增 `guide` 和 `components` 文件夹。
 
 在 `docs/guide` 文件夹下新增 `quick-start.md` 和 `installation.md` 文件，文件内容可以自定义，这里只提供一个简单的示例：
 
@@ -1764,10 +1893,11 @@ import { Button } from 'dnhyxc-ui-plus';
 pnpm add @vitepress-code-preview/container @vitepress-code-preview/plugin -D
 ```
 
-在 `docs/vite.config.ts` 中导入插件：
+修改 `docs/vite.config.ts`，在其中导入插件：
 
 ```ts
 import { defineConfig } from 'vite';
+// 导入插件
 import { viteDemoPreviewPlugin } from '@vitepress-code-preview/plugin';
 
 export default defineConfig({
@@ -1941,7 +2071,7 @@ export default defineConfig({
   base: '/',
   // 为了解决打包 element-plus css 无法处理而报错问题的问题，需要添加以下 ssr 配置
   ssr: {
-    noExternal: ['element-plus', '@dnhyxc-ui/components']
+    noExternal: ['element-plus', 'dnhyxc-ui-plus']
   }
 });
 ```

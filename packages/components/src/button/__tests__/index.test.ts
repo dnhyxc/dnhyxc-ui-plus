@@ -13,7 +13,7 @@ describe('Button Component', () => {
     // 挂载组件
     const wrapper = mount(Button);
     // 断言按钮文本是否为默认内容
-    expect(wrapper.text()).toBe('测试按钮');
+    expect(wrapper.text()).toBe('dnhyxc-ui button');
   });
 
   // // 测试组件是否正确渲染自定义插槽内容

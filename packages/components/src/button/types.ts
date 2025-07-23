@@ -6,9 +6,10 @@ export const buttonProps = {
   disabled: Boolean,
   loading: Boolean,
   link: Boolean,
-  type: String as PropType<'primary' | 'success' | 'warning' | 'danger' | 'info' | 'text' | 'never'>,
+  type: String as PropType<'primary' | 'success' | 'warning' | 'danger' | 'info' | 'text'>,
   width: String,
-  height: String
+  height: String,
+  onClick: Function as PropType<(e: MouseEvent) => void>
 } as const;
 
 export type ButtonProps = ExtractPropTypes<typeof buttonProps>;
