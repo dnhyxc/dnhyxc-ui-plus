@@ -8,10 +8,21 @@
 
 ```vue
 <template>
-  <n-button type="success" size="large" style="margin-right: 12px">success button</n-button>
+  <n-button type="success" size="large" style="margin-right: 12px" :on-click="onClick">success button</n-button>
   <n-button type="primary" style="margin-right: 12px">primary button</n-button>
   <n-button type="danger" size="small">danger button</n-button>
 </template>
+
+<script setup lang="ts">
+import { notification } from 'dnhyxc-ui-plus';
+const onClick = (e: MouseEvent) => {
+  notification({
+    title: '成功提示',
+    message: '这是一条成功提示消息',
+    type: 'success'
+  });
+};
+</script>
 ```
 
 :::
