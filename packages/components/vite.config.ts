@@ -12,7 +12,7 @@ export default defineConfig({
     },
     rollupOptions: {
       // 确保外部化处理那些你不想打包进库的依赖
-      external: ['vue', /\.scss/, 'element-plus', 'element-plus/dist/index.css'],
+      external: ['vue', /\.(scss|css)$/, 'element-plus', /^element-plus\/.*/, 'node_modules'],
       output: [
         {
           //打包成 ES 模块格式，适用于现代 JavaScript 环境
@@ -42,17 +42,13 @@ export default defineConfig({
   plugins: [
     vue(),
     dts({
-      // include: ['./**/*'],
-      // outDir: ['../dnhyxc-ui-plus/es', '../dnhyxc-ui-plus/lib'],
-      // exclude: ['vite.config.ts', 'script', 'plugins', 'coverage']
-      // tsconfigPath: '../../tsconfig.json',
       include: ['./src', './utils', './index.ts'],
       outDir: ['../dnhyxc-ui-plus/es', '../dnhyxc-ui-plus/lib'],
       exclude: ['./src/**/__tests__']
     }),
     replaceStyleExtPlugin(),
     createPackagePlugin({
-      name: 'dnhyxc-ui-vue-plus',
+      name: 'dnhyxc-ui-plus',
       main: 'lib/index.js',
       module: 'es/index.mjs',
       files: ['es', 'lib'],

@@ -16,6 +16,24 @@
 
 :::
 
+局部注册
+
+:::demo
+
+```vue
+<template>
+  <Button type="success" size="large" style="margin-right: 12px">success button</Button>
+  <Button type="primary" style="margin-right: 12px">primary button</Button>
+  <Button type="danger" size="small">danger button</Button>
+</template>
+
+<script setup lang="ts">
+import { Button } from 'dnhyxc-ui-plus';
+</script>
+```
+
+:::
+
 ## API
 
 ### Button Props
