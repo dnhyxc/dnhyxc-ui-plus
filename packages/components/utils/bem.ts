@@ -46,7 +46,7 @@ const createBEM = (prefix: string = '') => {
   };
 };
 
-export const createNamespace = (name: string) => {
-  const prefix = `n-${name}`;
+export const createNamespace = (name: string, pre?: string) => {
+  const prefix = `${pre || 'n'}-${name}`;
   return createBEM(prefix);
 };

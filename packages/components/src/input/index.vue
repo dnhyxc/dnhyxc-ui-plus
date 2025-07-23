@@ -15,6 +15,8 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import type { CSSProperties } from 'vue';
+import { ElInput } from 'element-plus';
+import 'element-plus/es/components/input/style/css';
 import { createNamespace } from '../../utils/bem';
 import { inputProps } from './types';
 import './style/index.scss';
