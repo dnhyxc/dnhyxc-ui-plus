@@ -5,6 +5,7 @@ import DefaultTheme from 'vitepress/theme';
 import ElementPlus from 'element-plus';
 import DnhyxcUI from 'dnhyxc-ui-plus';
 import DemoPreview, { useComponents } from '@vitepress-code-preview/container';
+import PropsTable from '../components/props-table';
 import 'element-plus/dist/index.css';
 import '@vitepress-code-preview/container/dist/style.css';
 import 'virtual:group-icons.css';
@@ -22,5 +23,6 @@ export default {
     DefaultTheme.enhanceApp({ app, router, siteData });
     app.use(ElementPlus);
     app.use(DnhyxcUI);
+    app.use(PropsTable);
   }
 } satisfies Theme;

@@ -7,6 +7,8 @@ export * from './src/index';
 
 export * from './src/notification';
 
+export * from './utils';
+
 export default {
   install: (app: App) => {
     // app.use(ElementPlus);

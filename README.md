@@ -1744,7 +1744,7 @@ pnpm i dnhyxc-ui-plus --workspace
 import { h } from 'vue';
 import type { Theme } from 'vitepress';
 import DefaultTheme from 'vitepress/theme';
-// 如果使用全局导入 element-plus 及其样式开发的组件，可以不需要导入 element-plus 及其样式
+// 如果使用全局导入 element-plus 及其样式开发的组件，可以不需要导入 element-plus 的样式
 import ElmentPlus from 'element-plus';
 import 'element-plus/dist/index.css';
 import DnhyxcUI from 'dnhyxc-ui-plus';
@@ -1759,7 +1759,7 @@ export default {
   },
   enhanceApp({ app, router, siteData }) {
     DefaultTheme.enhanceApp({ app, router, siteData });
-    // 如果使用全局导入 element-plus 及其样式开发的组件，可以不需要导入注册 element-plus
+    // 注册 element-plus，方便在 md 中使用 element-plus 组件
     app.use(ElmentPlus);
     // 注册组件库
     app.use(DnhyxcUI);
@@ -1767,7 +1767,7 @@ export default {
 } satisfies Theme;
 ```
 
-> 如果使用全局导入 element-plus 及其样式开发的组件，可以不需要导入注册 element-plus。
+> 如果使用全局导入 element-plus 及其样式开发的组件，可以不需要导入 element-plus 的样式。
 
 ### 配置组件指引及在 markdown 中使用组件
 

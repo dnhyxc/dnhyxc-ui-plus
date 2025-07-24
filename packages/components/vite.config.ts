@@ -48,7 +48,7 @@ export default defineConfig({
     }),
     replaceStyleExtPlugin(),
     createPackagePlugin({
-      name: 'dnhyxc-ui-vue-plus',
+      name: 'dnhyxc-ui-plus',
       main: 'lib/index.js',
       module: 'es/index.mjs',
       files: ['es', 'lib'],

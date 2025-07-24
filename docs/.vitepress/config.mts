@@ -3,6 +3,7 @@ import { demoPreviewPlugin } from '@vitepress-code-preview/plugin';
 import { groupIconMdPlugin } from 'vitepress-plugin-group-icons';
 
 export default defineConfig({
+  lang: 'zh-CN',
   title: 'dnhyxc-ui-plus',
   description: 'Vue3 UI Component',
   themeConfig: {
@@ -20,6 +21,10 @@ export default defineConfig({
       message: 'Released under the MIT License.',
       copyright: 'Copyright © 2025-present dnhyxc'
     },
+    sidebarMenuLabel: '菜单',
+    returnToTopLabel: '返回顶部',
+    darkModeSwitchLabel: '外观',
+    logo: '/logo.svg',
     sidebar: {
       '/guide/': [
         {
@@ -48,7 +53,7 @@ export default defineConfig({
     socialLinks: [
       {
         icon: 'github',
-        link: 'https://github.com/dnhyxc/dnhyxc-ui-plus'
+        link: 'https://github.com/dnhyxc/dnhyxc-ui-plus/tree/template'
       }
     ]
   },
