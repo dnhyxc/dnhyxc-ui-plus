@@ -276,6 +276,11 @@ const styles = computed<CSSProperties>(() => {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+
+  // 修改 element-plus 样式
+  .el-button--large {
+    font-size: 16px;
+  }
 }
 ```
 
