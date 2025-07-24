@@ -4,20 +4,16 @@
 
 ::: code-group
 
+```sh [pnpm]
+pnpm add dnhyxc-ui-plus
+```
+
 ```sh [npm]
-npm install vitepress-plugin-group-icons
+npm install dnhyxc-ui-plus
 ```
 
 ```sh [yarn]
-yarn add vitepress-plugin-group-icons
-```
-
-```sh [pnpm]
-pnpm add vitepress-plugin-group-icons
-```
-
-```sh [bun]
-bun add vitepress-plugin-group-icons
+yarn add dnhyxc-ui-plus
 ```
 
 :::
