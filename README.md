@@ -1888,9 +1888,101 @@ import { Button } from 'dnhyxc-ui-plus';
 
 ![image.png](https://dnhyxc.cn/image/__ARTICLE_IMG__d563f6e06fa8052103ca291d71fec854fn66efe5c8d80d0da837a3e600h1753062480851.webp)
 
+### 配置 vitepress-plugin-group-icons
+
+[vitepress-plugin-group-icons](https://www.npmjs.com/package/vitepress-plugin-group-icons) 是一个专门为 VitePress 设计的插件，它通过增强代码块的功能，为开发者提供了一个更加直观和便捷的文档编写体验。这个插件允许你将代码块组织成不同的组，每组代码块都可以通过一个统一的图标进行标识，极大地提升了文档的可视性和用户交互体验。
+
+在 `docs` 目录下安装如下插件：
+
+```bash
+pnpm add vitepress-plugin-group-icons -D
+```
+
+修改 `docs/.vitepress/config.mts`，在其中导入插件：
+
+```ts
+// ...
+import { groupIconMdPlugin } from 'vitepress-plugin-group-icons';
+
+export default defineConfig({
+  title: 'dnhyxc-ui-plus',
+  description: 'Vue3 UI Component',
+  themeConfig: {
+    // ...
+  },
+  markdown: {
+    config(md) {
+      // ...
+      // 使用 groupIconMdPlugin 插件
+      md.use(groupIconMdPlugin);
+    }
+  }
+});
+```
+
+修改 `docs/vite.config.ts`，在其中导入插件：
+
+```ts
+// ...
+import { groupIconVitePlugin } from 'vitepress-plugin-group-icons';
+
+export default defineConfig({
+  base: '/', // 线上打包路径改为绝对路径，防止打包后，资源文件路径出现上述错误
+  // 为了解决打包 element-plus css 无法处理而报错问题的问题，需要添加以下 ssr 配置
+  ssr: {
+    noExternal: ['element-plus', '@dnhyxc-ui/components']
+  },
+  plugins: [
+    // ...
+    // 使用 groupIconVitePlugin 插件
+    groupIconVitePlugin()
+  ]
+});
+```
+
+> groupIconVitePlugin 也可以按照官网，在 `.vitepress/config.ts` 中配置。
+
+修改 `docs/.vitepress/theme/index.ts`，在其中导入插件样式：
+
+```ts
+// https://vitepress.dev/guide/custom-theme
+// ...
+import 'virtual:group-icons.css';
+
+// ...
+```
+
+在 `docs/guide/installation.md` 中使用插件：
+
+````md
+# 下载安装
+
+我们建议您使用包管理器（如 NPM、Yarn 或 pnpm）安装 Element Plus，以便更好地与您的项目集成。
+
+::: code-group
+
+```sh [npm]
+npm install vitepress-plugin-group-icons
+```
+
+```sh [yarn]
+yarn add vitepress-plugin-group-icons
+```
+
+```sh [pnpm]
+pnpm add vitepress-plugin-group-icons
+```
+
+```sh [bun]
+bun add vitepress-plugin-group-icons
+```
+
+:::
+````
+
 ### 配置 vitepress-code-preview
 
-`vitepress-code-preview` 一款给 vitepress 文档中嵌入的 Vue 示例代码增加演示功能的插件。本插件基于 `vitepress`、 `markdown-it` 和 `unified` 实现，它可以帮助你在编写文档的时候，对嵌入的 Vue 示例代码增加演示功能，支持的 Vue 组件形式有 SFC, JSX, TSX。
+[vitepress-code-preview](https://www.npmjs.com/package/@vitepress-code-preview/plugin) 一款给 vitepress 文档中嵌入的 Vue 示例代码增加演示功能的插件。本插件基于 `vitepress`、 `markdown-it` 和 `unified` 实现，它可以帮助你在编写文档的时候，对嵌入的 Vue 示例代码增加演示功能，支持的 Vue 组件形式有 SFC, JSX, TSX。
 
 在 `docs` 目录下安装如下插件：
 

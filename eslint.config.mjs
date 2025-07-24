@@ -45,7 +45,8 @@ const baseConfig = [
     },
     rules: {
       ...vuePlugin.configs['vue3-recommended'].rules,
-      'vue/multi-word-component-names': 'off'
+      'vue/multi-word-component-names': 'off',
+      'vue/no-v-html': 'off' // 关闭 v-html 指令的 ESLint 检查
     }
   },
 

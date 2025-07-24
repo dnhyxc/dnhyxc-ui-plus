@@ -15,7 +15,6 @@
 </template>
 <script lang="ts" setup>
 import { computed, type CSSProperties } from 'vue';
-import { ElButton } from 'element-plus';
 import 'element-plus/es/components/button/style/css';
 import { buttonProps } from './types';
 import { createNamespace } from '../../utils/bem';
