@@ -7,7 +7,7 @@
     "dev": "vitepress dev",
     "build": "vitepress build",
     "preview": "vitepress preview",
-    "release": "npx dnhyxc-ci release docs",
+    "release": "npx dnhyxc-ci publish docs",
     "publish": "vitepress build && npx dnhyxc-ci publish docs"
   },
   "keywords": [],

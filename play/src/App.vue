@@ -1,5 +1,6 @@
 <template>
   <n-button type="success" size="large" color="#f5f5f5" :on-click="onClick" />
+  <n-button type="success" size="small" color="#f5f5f5" :on-click="onClick" />
   <el-button type="primary">element-plus</el-button>
   <el-checkbox v-model="checked" />
   <el-tag type="primary">Tag 1</el-tag>
