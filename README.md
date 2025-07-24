@@ -1744,8 +1744,9 @@ pnpm i dnhyxc-ui-plus --workspace
 import { h } from 'vue';
 import type { Theme } from 'vitepress';
 import DefaultTheme from 'vitepress/theme';
-// 如果使用全局导入 element-plus 及其样式开发的组件，可以不需要导入 element-plus
+// 如果使用全局导入 element-plus 及其样式开发的组件，可以不需要导入 element-plus 的样式
 import ElmentPlus from 'element-plus';
+import 'element-plus/dist/index.css';
 import DnhyxcUI from 'dnhyxc-ui-plus';
 import './style.css';
 
@@ -1758,7 +1759,7 @@ export default {
   },
   enhanceApp({ app, router, siteData }) {
     DefaultTheme.enhanceApp({ app, router, siteData });
-    // 如果使用全局导入 element-plus 及其样式开发的组件，可以不需要导入注册 element-plus
+    // 注册 element-plus，方便在 md 中使用 element-plus 组件
     app.use(ElmentPlus);
     // 注册组件库
     app.use(DnhyxcUI);
@@ -1766,34 +1767,7 @@ export default {
 } satisfies Theme;
 ```
 
-> 如果使用全局导入 element-plus 及其样式开发的组件，可以不需要导入注册 element-plus。
-
-在 `docs` 目录下新建 `vite.config.ts` 文件，用于设置 `element-plus` 按需加载等配置，如果是使用全局导入 `element-plus` 及其样式开发的组件，可以不配置 `element-plus` 按需加载，也能正常使用 `element-plus` 及 `dnhyxc-ui-plus` 组件库。
-
-```ts
-import { defineConfig } from 'vite';
-import AutoImport from 'unplugin-auto-import/vite';
-import Components from 'unplugin-vue-components/vite';
-import ElementPlus from 'unplugin-element-plus/vite';
-import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
-
-export default defineConfig({
-  base: '/', // 线上打包路径改为绝对路径，防止打包后，资源文件路径出现上述错误
-  // 为了解决打包 element-plus css 无法处理而报错问题的问题，需要添加以下 ssr 配置
-  ssr: {
-    noExternal: ['element-plus', 'dnhyxc-ui-plus']
-  },
-  plugins: [
-    AutoImport({
-      resolvers: [ElementPlusResolver()]
-    }),
-    Components({
-      resolvers: [ElementPlusResolver()]
-    }),
-    ElementPlus({})
-  ]
-});
-```
+> 如果使用全局导入 element-plus 及其样式开发的组件，可以不需要导入 element-plus 的样式。
 
 ### 配置组件指引及在 markdown 中使用组件
 
