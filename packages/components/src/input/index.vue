@@ -26,7 +26,7 @@ import { computed, ref } from 'vue';
 import type { CSSProperties } from 'vue';
 import { ElInput, ElButton } from 'element-plus';
 import 'element-plus/es/components/input/style/css';
-import { createNamespace } from '../../utils/bem';
+import { createNamespace } from '../../utils';
 import { inputProps } from './types';
 import './style/index.scss';
 

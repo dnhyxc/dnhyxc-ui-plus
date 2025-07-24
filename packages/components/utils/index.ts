@@ -1,5 +1,7 @@
 import type { App, Plugin } from 'vue';
 
+export * from './bem';
+
 export type SFCWithInstall<T> = T & Plugin;
 
 export const withInstall = <T>(comp: T) => {

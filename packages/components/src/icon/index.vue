@@ -4,7 +4,7 @@
 <script lang="ts" setup>
 import { getSvg } from './svg';
 import { IconProps } from './types';
-import { createNamespace } from '../../utils/bem';
+import { createNamespace } from '../../utils';
 import './style/index.scss';
 
 const bem = createNamespace('icon');

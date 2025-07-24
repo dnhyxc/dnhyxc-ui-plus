@@ -18,7 +18,7 @@ import { computed, type CSSProperties } from 'vue';
 import { ElButton } from 'element-plus';
 import 'element-plus/es/components/button/style/css';
 import { buttonProps } from './types';
-import { createNamespace } from '../../utils/bem';
+import { createNamespace } from '../../utils';
 import './style/index.scss';
 
 const bem = createNamespace('button');
