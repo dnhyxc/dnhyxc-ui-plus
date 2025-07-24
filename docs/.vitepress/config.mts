@@ -1,5 +1,6 @@
 import { defineConfig } from 'vitepress';
 import { demoPreviewPlugin } from '@vitepress-code-preview/plugin';
+import { groupIconMdPlugin } from 'vitepress-plugin-group-icons';
 
 export default defineConfig({
   title: 'dnhyxc-ui-plus',
@@ -34,7 +35,8 @@ export default defineConfig({
           text: '组件',
           items: [
             { text: 'Button 按钮', link: '/components/button' },
-            { text: 'Input 文本输入', link: '/components/input' }
+            { text: 'Input 文本输入', link: '/components/input' },
+            { text: 'Icon 图标', link: '/components/icon' }
           ]
         }
       ]
@@ -54,6 +56,7 @@ export default defineConfig({
     config(md) {
       // const docRoot = fileURLToPath(new URL('../', import.meta.url));
       md.use(demoPreviewPlugin);
+      md.use(groupIconMdPlugin);
     }
   }
 });

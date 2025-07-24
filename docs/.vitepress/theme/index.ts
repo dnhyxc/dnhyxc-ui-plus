@@ -6,7 +6,7 @@ import ElementPlus from 'element-plus';
 import DnhyxcUI from 'dnhyxc-ui-plus';
 import DemoPreview, { useComponents } from '@vitepress-code-preview/container';
 import '@vitepress-code-preview/container/dist/style.css';
-
+import 'virtual:group-icons.css';
 import './style.css';
 
 export default {

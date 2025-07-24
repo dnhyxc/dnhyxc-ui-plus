@@ -1,9 +1,13 @@
 <template>
-  <n-button type="success" size="large" color="#f5f5f5" :on-click="onClick" />
-  <n-button type="success" size="small" color="#f5f5f5" :on-click="onClick" />
-  <el-button type="primary">element-plus</el-button>
-  <el-checkbox v-model="checked" />
-  <el-tag type="primary">Tag 1</el-tag>
+  <div class="coms">
+    <n-button type="success" size="large" color="#f5f5f5" :on-click="onClick" />
+    <n-button type="success" size="small" color="#f5f5f5" :on-click="onClick" />
+    <n-icon name="sea" size="28" />
+    <n-icon name="ai" />
+    <el-button type="primary">element-plus</el-button>
+    <el-checkbox v-model="checked" />
+    <el-tag type="primary">Tag 1</el-tag>
+  </div>
   <n-input ref="inputRef" v-model:value="keyword" size="large" placeholder="请输入!!!" @keypress.enter="onKeypress" />
 </template>
 
@@ -29,3 +33,10 @@ const onClick = (e: MouseEvent) => {
   });
 };
 </script>
+
+<style lang="scss" scoped>
+.coms {
+  display: flex;
+  align-items: center;
+}
+</style>
