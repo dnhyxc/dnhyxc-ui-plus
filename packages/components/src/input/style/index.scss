@@ -1,3 +1,14 @@
 .n-input {
-  border: 1px solid red;
+  display: flex;
+  align-items: center;
+  width: 100%;
+
+  .input {
+    flex: 1;
+  }
+
+  // 修改 element-plus 样式
+  .el-button--large {
+    font-size: 25px;
+  }
 }

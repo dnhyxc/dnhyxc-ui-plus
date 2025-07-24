@@ -6,14 +6,23 @@
 -->
 <template>
   <div :class="bem.b()" v-bind="$attrs">
-    <el-input v-model="keyword" :size="size" :style="styles" :disabled="disabled" :placeholder="placeholder">
+    <el-input
+      ref="inputRef"
+      v-model="keyword"
+      :size="size"
+      :style="styles"
+      :disabled="disabled"
+      :placeholder="placeholder"
+      class="input"
+    >
       <slot></slot>
     </el-input>
+    <el-button type="primary" size="large">搜索</el-button>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import type { CSSProperties } from 'vue';
 import { ElInput } from 'element-plus';
 import 'element-plus/es/components/input/style/css';
@@ -32,6 +41,8 @@ const emit = defineEmits(['update:value']);
 
 const props = defineProps(inputProps);
 
+const inputRef = ref();
+
 const keyword = computed({
   get() {
     return props.value;
@@ -47,5 +58,9 @@ const styles = computed<CSSProperties>(() => {
     ...(props.size ? { 'font-size': props.size + 'px' } : {}),
     ...(props.color ? { color: props.color } : {})
   };
+});
+
+defineExpose({
+  inputRef
 });
 </script>
