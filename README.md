@@ -1895,7 +1895,7 @@ import { Button } from 'dnhyxc-ui-plus';
 在 `docs` 目录下安装如下插件：
 
 ```bash
-pnpm add vitepress-plugin-group-icons -D
+pnpm add dnhyxc-ui-plus -D
 ```
 
 修改 `docs/.vitepress/config.mts`，在其中导入插件：
@@ -1961,24 +1961,24 @@ import 'virtual:group-icons.css';
 
 ::: code-group
 
+```sh [pnpm]
+pnpm add dnhyxc-ui-plus
+```
+
 ```sh [npm]
-npm install vitepress-plugin-group-icons
+npm install dnhyxc-ui-plus
 ```
 
 ```sh [yarn]
-yarn add vitepress-plugin-group-icons
-```
-
-```sh [pnpm]
-pnpm add vitepress-plugin-group-icons
-```
-
-```sh [bun]
-bun add vitepress-plugin-group-icons
+yarn add dnhyxc-ui-plus
 ```
 
 :::
 ````
+
+配置完成之后，展示如下：
+
+![image.png](https://dnhyxc.cn/image/__ARTICLE_IMG__d977277f39c41b61e2eb5adcb8a0ffd55n66efe5c8d80d0da837a3e600h1753338298462.webp)
 
 ### 配置 vitepress-code-preview
 
