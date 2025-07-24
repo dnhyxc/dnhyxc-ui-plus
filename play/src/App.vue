@@ -3,7 +3,10 @@
     <n-button type="success" size="large" color="#f5f5f5" :on-click="onClick" />
     <n-button type="success" size="small" color="#f5f5f5" :on-click="onClick" />
     <n-icon name="sea" size="28" />
-    <n-icon name="ai" />
+    <n-icon name="ai" size="100" />
+    <n-icon name="wechat-program" />
+    <n-icon name="pause-play" />
+    <n-icon name="pause-play-fill" class-name="play-fill-icon" />
     <el-button type="primary">element-plus</el-button>
     <el-checkbox v-model="checked" />
     <el-tag type="primary">Tag 1</el-tag>
@@ -13,7 +16,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { notification } from '@dnhyxc-ui/components';
+import { notification } from 'dnhyxc-ui-vue-plus';
 
 const keyword = ref('');
 const inputRef = ref();
@@ -38,5 +41,9 @@ const onClick = (e: MouseEvent) => {
 .coms {
   display: flex;
   align-items: center;
+
+  .play-fill-icon {
+    cursor: pointer;
+  }
 }
 </style>

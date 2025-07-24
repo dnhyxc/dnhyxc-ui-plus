@@ -5,6 +5,7 @@ import DefaultTheme from 'vitepress/theme';
 import ElementPlus from 'element-plus';
 import DnhyxcUI from 'dnhyxc-ui-plus';
 import DemoPreview, { useComponents } from '@vitepress-code-preview/container';
+import 'element-plus/dist/index.css';
 import '@vitepress-code-preview/container/dist/style.css';
 import 'virtual:group-icons.css';
 import './style.css';

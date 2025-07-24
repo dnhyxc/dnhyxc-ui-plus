@@ -8,6 +8,7 @@ export const inputProps = {
   loading: Boolean,
   link: Boolean,
   value: String,
+  className: String,
   type: String as PropType<'primary' | 'success' | 'warning' | 'danger' | 'info' | 'text' | 'never'>
 } as const;
 

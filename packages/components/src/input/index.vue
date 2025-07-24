@@ -5,7 +5,7 @@
  * index.vue
 -->
 <template>
-  <div :class="bem.b()" v-bind="$attrs">
+  <div :class="className" v-bind="$attrs">
     <el-input
       ref="inputRef"
       v-model="keyword"
@@ -24,7 +24,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import type { CSSProperties } from 'vue';
-import { ElInput } from 'element-plus';
+import { ElInput, ElButton } from 'element-plus';
 import 'element-plus/es/components/input/style/css';
 import { createNamespace } from '../../utils/bem';
 import { inputProps } from './types';
@@ -40,6 +40,8 @@ const bem = createNamespace('input');
 const emit = defineEmits(['update:value']);
 
 const props = defineProps(inputProps);
+
+const className = [bem.b(), props.className].filter(Boolean).join(' ');
 
 const inputRef = ref();
 

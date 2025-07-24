@@ -10,7 +10,16 @@
 <template>
   <n-icon name="sea" size="28" />
   <n-icon name="ai" size="100" />
+  <n-icon name="wechat-program" />
+  <n-icon name="pause-play" />
+  <n-icon name="pause-play-fill" class-name="play-fill-icon" />
 </template>
+
+<style lang="scss" scoped>
+.play-fill-icon {
+  cursor: pointer;
+}
+</style>
 ```
 
 :::
@@ -40,10 +49,11 @@ import { Icon } from 'dnhyxc-ui-plus';
 const inputProps = [
   {
     name: 'name',
-    type: 'string',
+    type: 'enum',
     default: '',
     description: '图标名称',
     version: '-',
+    details: "'sea' | 'ai' | 'thumbnail' | 'in-clip' | 'out-clip' | 'wechat-program' | 'to-top' | 'prev' | 'next' | 'unfull' | 'full' | 'pause' | 'pause-play' | 'pause-play-fill' | 'picture-to-picture' | 'solid'"
   },
   {
     name: 'size',

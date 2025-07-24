@@ -6,6 +6,7 @@ export interface IconProps {
   height?: string;
   size?: string;
   color?: string;
+  className?: string;
 }
 
 // 定义这个是为了让组件在业务中使用时，可以有组件所需的类型提示

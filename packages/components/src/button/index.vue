@@ -1,5 +1,5 @@
 <template>
-  <div :class="bem.b()" v-bind="$attrs">
+  <div :class="className" v-bind="$attrs">
     <el-button
       :type="type"
       :size="size"
@@ -15,6 +15,7 @@
 </template>
 <script lang="ts" setup>
 import { computed, type CSSProperties } from 'vue';
+import { ElButton } from 'element-plus';
 import 'element-plus/es/components/button/style/css';
 import { buttonProps } from './types';
 import { createNamespace } from '../../utils/bem';
@@ -28,6 +29,8 @@ defineOptions({
 });
 
 const props = defineProps(buttonProps);
+
+const className = [bem.b(), props.className].filter(Boolean).join(' ');
 
 const styles = computed<CSSProperties>(() => {
   const { size, color, width, height } = props;

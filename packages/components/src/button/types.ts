@@ -9,6 +9,7 @@ export const buttonProps = {
   type: String as PropType<'primary' | 'success' | 'warning' | 'danger' | 'info' | 'text'>,
   width: String,
   height: String,
+  className: String,
   onClick: Function as PropType<(e: MouseEvent) => void>
 } as const;
 

@@ -1,5 +1,5 @@
 <template>
-  <div :class="bem.b()" v-bind="$attrs" v-html="getSvg(name, { size, width, height, color })" />
+  <div :class="className" v-bind="$attrs" v-html="getSvg(name, { size, width, height, color })" />
 </template>
 <script lang="ts" setup>
 import { getSvg } from './svg';
@@ -14,5 +14,7 @@ defineOptions({
   name: 'n-icon'
 });
 
-defineProps<IconProps>();
+const props = defineProps<IconProps>();
+
+const className = [bem.b(), props.className].filter(Boolean).join(' ');
 </script>
