@@ -1678,8 +1678,21 @@ features:
 import { defineConfig } from 'vitepress';
 
 export default defineConfig({
+  lang: 'zh-CN',
   title: 'dnhyxc-ui-plus',
   description: 'Vue3 UI Component',
+  // html head
+  head: [
+    ['link', { rel: 'icon', href: '/logo.svg' }],
+    ['meta', { name: 'author', content: 'dnhyxc' }],
+    [
+      'meta',
+      {
+        name: 'keywords',
+        content: 'dnhyxc-ui-plus,vue3,element-plus'
+      }
+    ]
+  ],
   themeConfig: {
     search: {
       provider: 'local'
@@ -1693,8 +1706,13 @@ export default defineConfig({
     },
     footer: {
       message: 'Released under the MIT License.',
-      copyright: 'Copyright © 2023-present dnhyxc'
+      copyright: 'Copyright © 2025-present dnhyxc'
     },
+    sidebarMenuLabel: '菜单',
+    returnToTopLabel: '返回顶部',
+    darkModeSwitchLabel: '外观',
+    // logo 必须放在根目录下的 public 目录下，否则打包过后会找不到资源
+    logo: '/logo.svg',
     sidebar: {
       '/guide/': [
         {
@@ -1709,8 +1727,12 @@ export default defineConfig({
         {
           text: '组件',
           items: [
-            { text: 'Button 按钮', link: '/components/button' },
-            { text: 'Input 文本输入', link: '/components/input' }
+            {
+              text: 'Button 按钮',
+              link: '/components/button'
+            },
+            { text: 'Input 文本输入', link: '/components/input' },
+            { text: 'Icon 图标', link: '/components/icon' }
           ]
         }
       ]
@@ -1723,7 +1745,7 @@ export default defineConfig({
     socialLinks: [
       {
         icon: 'github',
-        link: 'https://github.com/dnhyxc/dnhyxc-ui-plus'
+        link: 'https://github.com/dnhyxc/dnhyxc-ui-plus/tree/template'
       }
     ]
   }
