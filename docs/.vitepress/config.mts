@@ -36,6 +36,7 @@ export default defineConfig({
     sidebarMenuLabel: '菜单',
     returnToTopLabel: '返回顶部',
     darkModeSwitchLabel: '外观',
+    // logo 必须放在根目录下的 public 目录下，否则打包过后会找不到资源
     logo: '/logo.svg',
     sidebar: {
       '/guide/': [
