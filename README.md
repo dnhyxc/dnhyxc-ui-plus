@@ -1716,8 +1716,9 @@ export default defineConfig({
       ]
     },
     nav: [
-      { text: '指南', link: '/guide/installation' },
-      { text: '组件', link: '/components/button' }
+      // activeMatch 使切换到 quick-start 时 nav 指南也会高亮
+      { text: '指南', link: '/guide/installation', activeMatch: '/guide/' },
+      { text: '组件', link: '/components/button', activeMatch: '/components/' }
     ],
     socialLinks: [
       {
