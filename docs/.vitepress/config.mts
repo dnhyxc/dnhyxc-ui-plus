@@ -6,6 +6,18 @@ export default defineConfig({
   lang: 'zh-CN',
   title: 'dnhyxc-ui-plus',
   description: 'Vue3 UI Component',
+  // html head
+  head: [
+    ['link', { rel: 'icon', href: '/logo.svg' }],
+    ['meta', { name: 'author', content: 'dnhyxc' }],
+    [
+      'meta',
+      {
+        name: 'keywords',
+        content: 'dnhyxc-ui-plus,vue3,element-plus'
+      }
+    ]
+  ],
   themeConfig: {
     search: {
       provider: 'local'
@@ -39,7 +51,10 @@ export default defineConfig({
         {
           text: '组件',
           items: [
-            { text: 'Button 按钮', link: '/components/button' },
+            {
+              text: 'Button 按钮',
+              link: '/components/button'
+            },
             { text: 'Input 文本输入', link: '/components/input' },
             { text: 'Icon 图标', link: '/components/icon' }
           ]

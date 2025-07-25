@@ -63,6 +63,18 @@
   :root {
     --vp-home-hero-image-filter: blur(68px);
   }
+
+  .VPDoc .container .content {
+    padding: 0 0 50px !important;
+  }
+
+  .VPDoc .container .aside .content {
+    padding: 0 0 0 16px !important;
+  }
+}
+
+.content-container {
+  max-width: 820px !important;
 }
 
 /**
@@ -111,4 +123,25 @@
 .el-popper[data-popper-placement^='bottom'] > .el-popper__arrow:before {
   border-right-color: transparent !important;
   border-bottom-color: transparent !important;
+}
+
+.el-switch__label {
+  color: var(--vp-c-text-1);
+}
+
+.el-input__wrapper {
+  background-color: var(--vp-c-bg);
+  box-shadow: var(--vp-c-divider) 0 0 0 1px;
+}
+
+.el-input__wrapper:hover {
+  box-shadow: 0 0 0 1px var(--vp-c-gray-1);
+}
+
+.el-input__wrapper.is-focus {
+  box-shadow: 0 0 0 1px var(--vp-c-brand-1);
+}
+
+.el-input__inner {
+  color: var(--vp-c-text-1);
 }

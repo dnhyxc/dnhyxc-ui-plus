@@ -77,4 +77,4 @@ const data = [
 ];
 </script>
 
-<n-props-table :data="data" />
+<props-table :data="data" />

@@ -1,7 +1,14 @@
 <template>
-  <div :class="className" v-bind="$attrs" v-html="getSvg(name, { size, width, height, color })" />
+  <div
+    ref="iconRef"
+    :class="className"
+    v-bind="$attrs"
+    :style="`cursor: ${cursor}`"
+    v-html="getSvg(name, { size, width, height, color })"
+  />
 </template>
 <script lang="ts" setup>
+import { ref } from 'vue';
 import { getSvg } from './svg';
 import { IconProps } from './types';
 import { createNamespace } from '../../utils';
@@ -17,4 +24,11 @@ defineOptions({
 const props = defineProps<IconProps>();
 
 const className = [bem.b(), props.className].filter(Boolean).join(' ');
+
+const iconRef = ref<HTMLElement>();
+
+defineExpose({
+  getSvg,
+  iconRef
+});
 </script>

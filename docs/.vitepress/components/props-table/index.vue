@@ -45,7 +45,7 @@
 
 <script setup lang="ts">
 defineOptions({
-  name: 'n-props-table'
+  name: 'props-table'
 });
 
 interface IProps {

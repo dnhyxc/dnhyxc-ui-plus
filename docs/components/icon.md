@@ -13,6 +13,7 @@
   <n-icon name="wechat-program" />
   <n-icon name="pause-play" />
   <n-icon name="pause-play-fill" class-name="play-fill-icon" />
+  <n-icon name="out-clip" />
 </template>
 
 <style lang="scss" scoped>
@@ -40,6 +41,8 @@ import { Icon } from 'dnhyxc-ui-plus';
 ```
 
 :::
+
+<icon-list />
 
 ## API
 
@@ -81,4 +84,4 @@ const data = [
 ];
 </script>
 
-<n-props-table :data="data" />
+<props-table :data="data" />

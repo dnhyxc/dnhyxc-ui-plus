@@ -1,19 +1,13 @@
-export const getSvg = (
-  name: string,
-  {
-    size = '20',
-    color,
-    width = size,
-    height = size,
-    fill = color
-  }: {
-    size?: string;
-    width?: string;
-    height?: string;
-    color?: string;
-    fill?: string;
-  }
-) => {
+export interface IconOptions {
+  size?: string;
+  width?: string;
+  height?: string;
+  color?: string;
+  fill?: string;
+}
+
+export const getSvg = (name: string, options?: IconOptions) => {
+  const { size = '20', width = size, height = size, color, fill = color } = options || {};
   const defaultFill = '#2674FD';
 
   const svgs = {
