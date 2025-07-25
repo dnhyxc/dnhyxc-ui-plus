@@ -43,8 +43,8 @@ const copyType = ref('element');
 const searchValue = ref('');
 const filterIcons = ref(icons);
 
-const onChange = (value: string) => {
-  copyType.value = value;
+const onChange = (value: string | number | boolean) => {
+  copyType.value = value as string;
 };
 
 const onSearch = (value: string) => {
