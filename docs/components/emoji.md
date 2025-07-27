@@ -59,7 +59,6 @@ const data = [
     type: 'string',
     default: '',
     description: '是否展示图标',
-    typeEnum: ['sea', 'ai', 'thumbnail', 'in-clip', 'out-clip', 'wechat-program', 'to-top', 'prev', 'next', 'unfull', 'full', 'pause', 'pause-play', 'pause-play-fill', 'picture-to-picture', 'solid']
   },
   {
     name: 'className',
