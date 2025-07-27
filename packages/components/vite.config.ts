@@ -11,6 +11,11 @@ export default defineConfig({
       fileName: (format: string) => `dnhyxc-ui-plus.${format}.js` // 输出文件的命名规则
     },
     rollupOptions: {
+      onwarn(warning, warn) {
+        // 屏蔽文件名冲突警告
+        if (warning.code === 'FILE_NAME_CONFLICT') return;
+        warn(warning);
+      },
       // 确保外部化处理那些你不想打包进库的依赖
       external: ['vue', /\.(scss|css)$/, 'element-plus', /^element-plus\/.*/, 'node_modules'],
       output: [
