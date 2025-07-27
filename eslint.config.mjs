@@ -76,7 +76,8 @@ const baseConfig = [
     },
     rules: {
       ...tsEslintPlugin.configs.recommended.rules,
-      '@typescript-eslint/no-confusing-non-null-assertion': 2
+      '@typescript-eslint/no-confusing-non-null-assertion': 2,
+      '@typescript-eslint/ban-ts-comment': 0
     },
     plugins: {
       '@typescript-eslint': tsEslintPlugin

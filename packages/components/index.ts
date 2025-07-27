@@ -1,4 +1,4 @@
-import { App } from 'vue';
+import { App, Plugin } from 'vue';
 import * as components from './src/index';
 // import ElementPlus from 'element-plus';
 // import 'element-plus/dist/index.css';
@@ -13,7 +13,7 @@ export default {
   install: (app: App) => {
     // app.use(ElementPlus);
     for (let c in components) {
-      app.use(components[c as keyof typeof components]);
+      app.use(components[c as keyof typeof components] as Plugin);
     }
   }
 };

@@ -1,0 +1,33 @@
+.n-emoji {
+  padding: 5px 2px;
+
+  .emoji-list {
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 5px;
+  }
+
+  .emoji-item {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    height: 35px;
+    width: 35px;
+
+    .emoji {
+      height: auto;
+      width: 30px;
+      cursor: pointer;
+    }
+  }
+
+  .show-more {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 32px;
+    cursor: pointer;
+  }
+}
