@@ -2,8 +2,6 @@ import { ElNotification } from 'element-plus';
 import 'element-plus/es/components/notification/style/css';
 import { Params } from './types';
 
-export * from './types';
-
 export const notification = ({
   title,
   message,

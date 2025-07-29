@@ -7,7 +7,20 @@ export interface IconProps {
   size?: string;
   color?: string;
   className?: string;
-  cursor?: string;
+  cursor?:
+    | 'pointer'
+    | 'default'
+    | 'auto'
+    | 'crosshair'
+    | 'grab'
+    | 'grabbing'
+    | 'help'
+    | 'move'
+    | 'not-allowed'
+    | 'text'
+    | 'wait'
+    | 'zoom-in'
+    | 'zoom-out';
 }
 
 // 定义这个是为了让组件在业务中使用时，可以有组件所需的类型提示

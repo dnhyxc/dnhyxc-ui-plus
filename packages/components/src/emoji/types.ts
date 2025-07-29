@@ -5,7 +5,7 @@ export type EmojiName = (typeof EMOJI_NAME)[number];
 export type EmojiList = EmojiName[];
 
 export type EmojiProps = Readonly<{
-  onSelect: (value: string) => void;
+  onSelect: (value: EmojiName) => void;
   visible?: boolean;
   className?: string;
   col?: number; // 每一行的列数，即一行放几个，默认是10个
