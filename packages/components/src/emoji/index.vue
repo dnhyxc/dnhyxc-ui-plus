@@ -21,7 +21,7 @@
 import { computed, ref, type CSSProperties } from 'vue';
 import { createNamespace } from '../../utils';
 import { EMOJI_MAP, EMOJI_NAME } from './constant';
-import { EmojiProps } from './types';
+import { EmojiProps, EmojiName } from './types';
 import './style/index.scss';
 
 const bem = createNamespace('emoji');
@@ -94,7 +94,7 @@ const showMore = () => {
 };
 
 // 选择表情
-const onSelect = (key: string) => {
+const onSelect = (key: EmojiName) => {
   props.onSelect?.(key);
 };
 </script>
