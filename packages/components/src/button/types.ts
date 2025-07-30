@@ -1,5 +1,6 @@
 import { type ExtractPropTypes, type PropType } from 'vue';
 import type Button from './index.vue';
+
 export const buttonProps = {
   size: String as PropType<'large' | 'default' | 'small'>,
   color: String,

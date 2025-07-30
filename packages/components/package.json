@@ -1,11 +1,12 @@
 {
   "name": "@dnhyxc-ui/components",
-  "version": "0.0.35",
+  "version": "0.0.41",
   "private": true,
   "type": "module",
   "scripts": {
     "build": "vite build",
     "test": "vitest run",
+    "test:component": "node scripts/vitest/index.js",
     "coverage": "vitest run --coverage"
   },
   "keywords": [

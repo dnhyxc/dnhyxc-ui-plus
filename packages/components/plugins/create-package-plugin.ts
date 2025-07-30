@@ -29,6 +29,7 @@ export function createPackagePlugin(info: PackageJson) {
     closeBundle() {
       // 检查源 package.json 是否存在
       if (!existsSync(packageJsonPath)) {
+        // eslint-disable-next-line no-console
         console.error(`Error: package.json file not found at ${packageJsonPath}`);
         return;
       }
@@ -64,6 +65,7 @@ export function createPackagePlugin(info: PackageJson) {
         // 更新 outputDir 中的 package.json 文件的版本号
         // writeFileSync(packageJsonPath, JSON.stringify(componentsPkgJson, null, 2));
       } catch (err) {
+        // eslint-disable-next-line no-console
         console.error(`package.json 写入错误: ${(err as Error).message}`);
       }
     }

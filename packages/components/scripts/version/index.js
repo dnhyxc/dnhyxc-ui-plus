@@ -19,8 +19,10 @@ const updateVerison = () => {
 
   try {
     writeFileSync(componentsPkgPath, JSON.stringify(componentsPkg, null, 2));
+    // eslint-disable-next-line no-console
     console.log(`✨ @dnhyxc-ui/components package.json version 已更新为 ${dnhyxcUIPlusPkg.version}`);
   } catch (err) {
+    // eslint-disable-next-line no-console
     console.error(`package.json 写入错误: ${err.message}`);
   }
 };

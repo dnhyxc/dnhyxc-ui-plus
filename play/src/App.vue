@@ -24,8 +24,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { notification, type EmojiName } from '@dnhyxc-ui/components';
-// import { notification } from 'dnhyxc-ui-vue-plus';
+// import { notification, type EmojiName } from '@dnhyxc-ui/components';
+import { notification, type EmojiName } from 'dnhyxc-ui-vue-plus';
 
 const keyword = ref('');
 const inputRef = ref();

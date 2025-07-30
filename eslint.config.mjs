@@ -1,92 +1,10 @@
-import eslint from '@eslint/js';
-import tsEslintPlugin from '@typescript-eslint/eslint-plugin';
-import tsEslintParser from '@typescript-eslint/parser';
-import vuePlugin from 'eslint-plugin-vue';
-import vueParser from 'vue-eslint-parser';
-import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
-import globals from 'globals';
+import { createEslintConfig, ignoresConfig } from '@dnhyxc/eslint';
 
-const baseConfig = [
-  // 全局配置
-  {
-    name: 'global config',
-    languageOptions: {
-      globals: {
-        ...globals.es2022,
-        ...globals.browser,
-        ...globals.node
-      },
-      sourceType: 'module' // 确保设置为 module
-    },
-    rules: {
-      'no-dupe-class-members': 0,
-      'no-redeclare': 0,
-      'no-undef': 0,
-      'no-unused-vars': 0
-    }
-  },
+// 创建一个新的 ignores 配置对象，可以基于旧的进行修改，或者完全替换
+const ignores = {
+  ignores: [...ignoresConfig.ignores, 'packages/dnhyxc-ui-plus/**']
+};
 
-  // Vue 文件配置
-  {
-    name: 'vue-eslint',
-    files: ['**/*.vue'],
-    languageOptions: {
-      parser: vueParser,
-      parserOptions: {
-        parser: tsEslintParser, // Vue 文件中使用 TS 解析器
-        ecmaVersion: 'latest',
-        sourceType: 'module',
-        extraFileExtensions: ['.vue'],
-        ecmaFeatures: { jsx: false }
-      }
-    },
-    plugins: {
-      vue: vuePlugin
-    },
-    rules: {
-      ...vuePlugin.configs['vue3-recommended'].rules,
-      'vue/multi-word-component-names': 'off',
-      'vue/no-v-html': 'off' // 关闭 v-html 指令的 ESLint 检查
-    }
-  },
-
-  // JS/TS 文件配置
-  // {
-  //   files: ['**/*.{js,ts}'],
-  //   languageOptions: {
-  //     parser: tsEslintParser, // 统一使用 TS 解析器
-  //     parserOptions: {
-  //       ecmaVersion: 'latest',
-  //       sourceType: 'module',
-  //       ecmaFeatures: { jsx: false }
-  //     }
-  //   }
-  // },
-  // JS/TS 文件配置
-  {
-    name: 'typescript-eslint/base',
-    // files: ['**/*.ts'],
-    files: ['**/*.{js,ts}'],
-    languageOptions: {
-      parser: tsEslintParser,
-      sourceType: 'module',
-      parserOptions: {
-        ecmaFeatures: { jsx: false }
-      }
-    },
-    rules: {
-      ...tsEslintPlugin.configs.recommended.rules,
-      '@typescript-eslint/no-confusing-non-null-assertion': 2,
-      '@typescript-eslint/ban-ts-comment': 0
-    },
-    plugins: {
-      '@typescript-eslint': tsEslintPlugin
-    }
-  },
-  // 忽略文件
-  {
-    ignores: ['packages/dnhyxc-ui-plus/**', 'packages/*/dist/**', 'node_modules/**']
-  }
-];
-
-export default [eslint.configs.recommended, eslintPluginPrettierRecommended, ...baseConfig];
+export default createEslintConfig({
+  ignores
+});
