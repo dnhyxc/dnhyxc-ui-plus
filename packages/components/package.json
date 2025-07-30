@@ -6,6 +6,7 @@
   "scripts": {
     "build": "vite build",
     "test": "vitest run",
+    "test:component": "node scripts/vitest/index.js",
     "coverage": "vitest run --coverage"
   },
   "keywords": [

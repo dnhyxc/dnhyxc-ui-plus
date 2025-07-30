@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { mount } from '@vue/test-utils';
-import Emoji from '../../emoji';
+import Emoji from '..';
 
 describe('Emoji Component', () => {
   // 测试基础渲染
