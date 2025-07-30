@@ -27,6 +27,9 @@ importers:
       '@commitlint/config-conventional':
         specifier: ^19.8.1
         version: 19.8.1
+      '@dnhyxc/eslint':
+        specifier: ^0.0.5
+        version: 0.0.5(@eslint/js@9.31.0)(@typescript-eslint/eslint-plugin@8.37.0(@typescript-eslint/parser@8.37.0(eslint@9.31.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.31.0(jiti@2.4.2))(typescript@5.8.3))(@typescript-eslint/parser@8.37.0(eslint@9.31.0(jiti@2.4.2))(typescript@5.8.3))(eslint-config-prettier@10.1.5(eslint@9.31.0(jiti@2.4.2)))(eslint-plugin-prettier@5.5.1(eslint-config-prettier@10.1.5(eslint@9.31.0(jiti@2.4.2)))(eslint@9.31.0(jiti@2.4.2))(prettier@3.6.2))(eslint-plugin-vue@9.33.0(eslint@9.31.0(jiti@2.4.2)))(eslint@9.31.0(jiti@2.4.2))(globals@16.3.0)(vue-eslint-parser@10.2.0(eslint@9.31.0(jiti@2.4.2)))
       '@eslint/js':
         specifier: ^9.30.1
         version: 9.31.0
@@ -177,8 +180,8 @@ importers:
         specifier: 0.0.1-beta.10
         version: 0.0.1-beta.10
       dnhyxc-ui-vue-plus:
-        specifier: 0.0.40
-        version: 0.0.40
+        specifier: 0.0.41
+        version: 0.0.41
       md-editor-v3:
         specifier: ^5.8.2
         version: 5.8.2(vue@3.5.17(typescript@5.7.3))
@@ -588,6 +591,19 @@ packages:
   '@ctrl/tinycolor@3.6.1':
     resolution: {integrity: sha512-SITSV6aIXsuVNV3f3O0f2n/cgyEDWoSqtZMYiAmcsYHydcKrOz3gUxB/iXd/Qf08+IZX4KpgNbvUdMBmWz+kcA==}
     engines: {node: '>=10'}
+
+  '@dnhyxc/eslint@0.0.5':
+    resolution: {integrity: sha512-LLpwUXJ0KRdqlUghOqieNXcNcUrPiznFzZWG4AIjqXltTAFmOBtwd8Hns+4Gn8FAFqzpiIAGsGaT4jf/ZoxFNg==}
+    peerDependencies:
+      '@eslint/js': ^9.30.1
+      '@typescript-eslint/eslint-plugin': ^8.35.1
+      '@typescript-eslint/parser': ^8.35.1
+      eslint: '>=8.0.0'
+      eslint-config-prettier: ^10.1.5
+      eslint-plugin-prettier: ^5.5.1
+      eslint-plugin-vue: ^9.25.0
+      globals: ^16.3.0
+      vue-eslint-parser: ^10.2.0
 
   '@docsearch/css@3.8.2':
     resolution: {integrity: sha512-y05ayQFyUmCXze79+56v/4HpycYF3uFqB78pLPrSV5ZKAlDuIAAJNhaRi8tTdRNXh05yxX/TyNnzD6LwSM89vQ==}
@@ -2274,8 +2290,8 @@ packages:
   dnhyxc-ui-plus-beta1@0.0.1-beta.10:
     resolution: {integrity: sha512-8+204J4z7IHpsDXoLh3EjVLrDZmlPkahZRIamqRx7CAxyjfwued5XkMoaAK/N4RiS1ZP9civPi59UHCV/gFs7w==}
 
-  dnhyxc-ui-vue-plus@0.0.40:
-    resolution: {integrity: sha512-CZSWgz7p54BCxNqU3AmEFpK6Ayn0rrPM7AcDbnNi/yzLTqFhO7j/kKzYSxMhgHdQrKeF7U2rK09AZ7Qxa9I1TQ==}
+  dnhyxc-ui-vue-plus@0.0.41:
+    resolution: {integrity: sha512-bXPNoHiR/z5CFmRSYICRNkEvAY7wa6ydaprr/70JzVkV1qcW0r/wgVyxhBeHi9d7ZKjlhZgMmpNMy/QuH2DEyQ==}
 
   dom-serializer@2.0.0:
     resolution: {integrity: sha512-wIkAryiqt/nV5EQKqQpo3SToSOV9J0DnbJqwK7Wv/Trc92zIAYZ4FlMu+JPFW1DfGFt81ZTCGgDEabffXeLyJg==}
@@ -5358,6 +5374,18 @@ snapshots:
 
   '@ctrl/tinycolor@3.6.1': {}
 
+  '@dnhyxc/eslint@0.0.5(@eslint/js@9.31.0)(@typescript-eslint/eslint-plugin@8.37.0(@typescript-eslint/parser@8.37.0(eslint@9.31.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.31.0(jiti@2.4.2))(typescript@5.8.3))(@typescript-eslint/parser@8.37.0(eslint@9.31.0(jiti@2.4.2))(typescript@5.8.3))(eslint-config-prettier@10.1.5(eslint@9.31.0(jiti@2.4.2)))(eslint-plugin-prettier@5.5.1(eslint-config-prettier@10.1.5(eslint@9.31.0(jiti@2.4.2)))(eslint@9.31.0(jiti@2.4.2))(prettier@3.6.2))(eslint-plugin-vue@9.33.0(eslint@9.31.0(jiti@2.4.2)))(eslint@9.31.0(jiti@2.4.2))(globals@16.3.0)(vue-eslint-parser@10.2.0(eslint@9.31.0(jiti@2.4.2)))':
+    dependencies:
+      '@eslint/js': 9.31.0
+      '@typescript-eslint/eslint-plugin': 8.37.0(@typescript-eslint/parser@8.37.0(eslint@9.31.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.31.0(jiti@2.4.2))(typescript@5.8.3)
+      '@typescript-eslint/parser': 8.37.0(eslint@9.31.0(jiti@2.4.2))(typescript@5.8.3)
+      eslint: 9.31.0(jiti@2.4.2)
+      eslint-config-prettier: 10.1.5(eslint@9.31.0(jiti@2.4.2))
+      eslint-plugin-prettier: 5.5.1(eslint-config-prettier@10.1.5(eslint@9.31.0(jiti@2.4.2)))(eslint@9.31.0(jiti@2.4.2))(prettier@3.6.2)
+      eslint-plugin-vue: 9.33.0(eslint@9.31.0(jiti@2.4.2))
+      globals: 16.3.0
+      vue-eslint-parser: 10.2.0(eslint@9.31.0(jiti@2.4.2))
+
   '@docsearch/css@3.8.2': {}
 
   '@docsearch/js@3.8.2(@algolia/client-search@5.33.0)(search-insights@2.17.3)':
@@ -7074,7 +7102,7 @@ snapshots:
 
   dnhyxc-ui-plus-beta1@0.0.1-beta.10: {}
 
-  dnhyxc-ui-vue-plus@0.0.40: {}
+  dnhyxc-ui-vue-plus@0.0.41: {}
 
   dom-serializer@2.0.0:
     dependencies:
