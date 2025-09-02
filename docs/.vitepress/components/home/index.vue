@@ -98,6 +98,8 @@ onUnmounted(() => {
 
   .left {
     padding-top: 30px;
+    margin-left: 85px;
+
     .title {
       display: flex;
       flex-direction: column;
@@ -160,7 +162,7 @@ onUnmounted(() => {
     align-items: center;
     justify-content: center;
     margin-left: 50px;
-    margin-top: -10px;
+    margin-bottom: 38px;
 
     .image {
       display: flex;
