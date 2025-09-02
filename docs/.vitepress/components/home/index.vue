@@ -179,6 +179,8 @@ onUnmounted(() => {
         inset 50px 50px 50px rgba(255, 255, 255, 0.9),
         10px 10px 20px rgba(0, 0, 0, 0.2),
         0 0 20px rgba(255, 255, 255, 0.7);
+
+      transition: all 0.3s ease-out;
     }
   }
 }
