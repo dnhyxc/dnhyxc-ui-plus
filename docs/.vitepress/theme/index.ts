@@ -7,6 +7,7 @@ import DnhyxcUI from 'dnhyxc-ui-plus';
 import DemoPreview, { useComponents } from '@vitepress-code-preview/container';
 import PropsTable from '../components/props-table';
 import IconList from '../components/icon-list';
+import Home from '../components/home';
 import 'element-plus/dist/index.css';
 import '@vitepress-code-preview/container/dist/style.css';
 import 'virtual:group-icons.css';
@@ -26,5 +27,6 @@ export default {
     app.use(DnhyxcUI);
     app.use(PropsTable);
     app.use(IconList);
+    app.use(Home);
   }
 } satisfies Theme;
