@@ -18,8 +18,10 @@
       </div>
     </div>
     <div class="right">
-      <div ref="rotateRef" class="image">
-        <n-icon name="sea" size="180" style="margin-top: -25px" />
+      <div class="ball-wrap">
+        <div ref="rotateRef" class="ball">
+          <n-icon name="sea" size="180" style="margin-top: -25px" />
+        </div>
       </div>
     </div>
   </div>
@@ -44,6 +46,8 @@ const handleMouseMove = (e: MouseEvent) => {
   // 获取元素的位置和尺寸信息
   const rect = rotateRef.value.getBoundingClientRect();
 
+  console.log(rect);
+
   // 计算鼠标相对元素中心点的位置
   const centerX = rect.left + rect.width / 2;
   const centerY = rect.top + rect.height / 2;
@@ -53,6 +57,8 @@ const handleMouseMove = (e: MouseEvent) => {
   // 计算旋转角度（将鼠标移动距离转换为合适的旋转角度）
   const rotateX = (mouseY / rect.height) * 8;
   const rotateY = -(mouseX / rect.width) * 8;
+
+  console.log(rotateX, rotateY);
   // 设置transform
   // 设置3D变换效果:
   // perspective(800px): 设置3D透视效果,值越大透视感越弱
@@ -164,10 +170,7 @@ onUnmounted(() => {
     margin-left: 50px;
     margin-bottom: 38px;
 
-    .image {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .ball-wrap {
       width: 300px;
       height: 300px;
       border-radius: 50%;
@@ -179,8 +182,16 @@ onUnmounted(() => {
         inset 50px 50px 50px rgba(255, 255, 255, 0.9),
         10px 10px 20px rgba(0, 0, 0, 0.2),
         0 0 20px rgba(255, 255, 255, 0.7);
-
       transition: all 0.3s ease-out;
+
+      .ball {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 300px;
+        height: 300px;
+        border-radius: 50%;
+      }
     }
   }
 }
