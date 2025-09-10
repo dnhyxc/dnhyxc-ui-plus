@@ -45,9 +45,6 @@ const handleMouseMove = (e: MouseEvent) => {
 
   // 获取元素的位置和尺寸信息
   const rect = rotateRef.value.getBoundingClientRect();
-
-  console.log(rect);
-
   // 计算鼠标相对元素中心点的位置
   const centerX = rect.left + rect.width / 2;
   const centerY = rect.top + rect.height / 2;
@@ -57,8 +54,6 @@ const handleMouseMove = (e: MouseEvent) => {
   // 计算旋转角度（将鼠标移动距离转换为合适的旋转角度）
   const rotateX = (mouseY / rect.height) * 8;
   const rotateY = -(mouseX / rect.width) * 8;
-
-  console.log(rotateX, rotateY);
   // 设置transform
   // 设置3D变换效果:
   // perspective(800px): 设置3D透视效果,值越大透视感越弱
