@@ -12,7 +12,15 @@ export const icons = [
       'pause-play',
       'pause-play-fill',
       'picture-to-picture',
-      'solid'
+      'solid',
+      'info',
+      'zoom-in',
+      'zoom-out',
+      'rotate',
+      'download',
+      'reset',
+      'left-arrow',
+      'right-arrow'
     ]
   },
   {

@@ -1,0 +1,40 @@
+import type NImagePreview from './index.vue';
+
+export interface ImagePreviewOptions<T, P = never> {
+  selectImage: T;
+  previewVisible: boolean;
+  dialogWidth?: string;
+  dialogStyle?: string;
+  imageTransformInfo?: {
+    scale: number;
+    rotate: number;
+    boundary: boolean; // 控制是否需要控制边界
+    imgWidth: number;
+    imgHeight: number;
+  };
+  showPrevAndNext?: boolean;
+  showWaterModal?: () => void;
+  title?: string;
+  prevImgs?: P[]; // { id: string; url: string; [key: string]: any }[]
+  closeOnClickModal?: boolean;
+  size?: string;
+  download?: () => void;
+  onDownloadFile?: (params: {
+    url: string;
+    type?: string;
+    fileName?: string;
+    callback?: (res: boolean) => void;
+    mark?: string;
+  }) => void;
+  getImgSizeFromUrl?: (url: string) => Promise<{
+    type: string;
+    size: number;
+  }>;
+  changeImgUrlDomain?: (url: string) => string;
+}
+
+declare module 'vue' {
+  export interface GlobalComponents {
+    NImagePreview: typeof NImagePreview;
+  }
+}

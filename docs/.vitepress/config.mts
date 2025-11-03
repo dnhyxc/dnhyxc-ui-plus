@@ -55,7 +55,8 @@ export default defineConfig({
             { text: 'Button 按钮', link: '/components/button' },
             { text: 'Input 文本输入', link: '/components/input' },
             { text: 'Icon 图标', link: '/components/icon' },
-            { text: 'Emoji 表情', link: '/components/emoji' }
+            { text: 'Emoji 表情', link: '/components/emoji' },
+            { text: 'ImagePreview 图片预览', link: '/components/image-preview' }
           ]
         }
       ]

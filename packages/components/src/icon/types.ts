@@ -6,6 +6,7 @@ export interface IconProps {
   height?: string;
   size?: string;
   color?: string;
+  hoverColor?: string;
   className?: string;
   cursor?:
     | 'pointer'

@@ -14,6 +14,8 @@
   <n-icon name="pause-play" />
   <n-icon name="pause-play-fill" class-name="play-fill-icon" />
   <n-icon name="out-clip" />
+  <n-icon name="info" />
+  <n-icon name="zoom-in" />
 </template>
 
 <style lang="scss" scoped>
@@ -55,7 +57,7 @@ const data = [
     type: 'enum',
     default: '',
     description: '图标名称',
-    typeEnum: ['sea', 'ai', 'thumbnail', 'in-clip', 'out-clip', 'wechat-program', 'to-top', 'prev', 'next', 'unfull', 'full', 'pause', 'pause-play', 'pause-play-fill', 'picture-to-picture', 'solid']
+    typeEnum: ['sea', 'ai', 'thumbnail', 'in-clip', 'out-clip', 'wechat-program', 'to-top', 'prev', 'next', 'unfull', 'full', 'pause', 'pause-play', 'pause-play-fill', 'picture-to-picture', 'solid', 'info']
   },
   {
     name: 'size',
