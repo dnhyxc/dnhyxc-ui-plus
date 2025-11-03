@@ -129,9 +129,6 @@ const vMove = {
       const boundary = binding.value?.boundary ?? false; // 是否控制边界
       const x = el.getAttribute('move-x') !== 'false';
       const y = el.getAttribute('move-y') !== 'false';
-
-      console.log(dragBox, x, y);
-
       dragBox.style.position = 'absolute';
       const pdom = dragBox.parentNode as HTMLElement;
       boundary && (pdom.style.position = 'relative');
