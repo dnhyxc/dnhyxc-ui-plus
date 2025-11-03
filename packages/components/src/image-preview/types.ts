@@ -1,7 +1,7 @@
 import type NImagePreview from './index.vue';
 
-export interface ImagePreviewOptions<T, P = never> {
-  selectImage: T;
+export interface ImagePreviewOptions<T> {
+  selectdImage: T;
   previewVisible: boolean;
   dialogWidth?: string;
   dialogStyle?: string;
@@ -14,12 +14,15 @@ export interface ImagePreviewOptions<T, P = never> {
   };
   showPrevAndNext?: boolean;
   showWaterModal?: () => void;
+  imageSize?: string;
   title?: string;
-  prevImgs?: P[]; // { id: string; url: string; [key: string]: any }[]
+  imageList?: {
+    url: string;
+    id?: string;
+    [key: string]: string | number | boolean | null | undefined;
+  }[]; // { id: string; url: string; [key: string]: any }[]
   closeOnClickModal?: boolean;
-  size?: string;
-  download?: () => void;
-  onDownloadFile?: (params: {
+  download?: (params: {
     url: string;
     type?: string;
     fileName?: string;

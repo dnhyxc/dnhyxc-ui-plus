@@ -20,17 +20,53 @@
     <el-tag type="primary">Tag 1</el-tag>
   </div>
   <n-input ref="inputRef" v-model:value="keyword" size="large" placeholder="请输入!!!" @keypress.enter="onKeypress" />
+  <ImagePreview
+    v-model:previewVisible="previewVisible"
+    show-prev-and-next
+    dialog-width="800px"
+    closeOnClickModal
+    :image-list="[
+      {
+        id: '1',
+        url: 'https://files.codelife.cc/wallhaven/full/o5/wallhaven-o5jjg5.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
+      },
+      {
+        id: '2',
+        url: 'https://files.codelife.cc/wallhaven/full/83/wallhaven-83ywmo.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
+      },
+      {
+        id: '3',
+        url: 'https://files.codelife.cc/wallhaven/full/2e/wallhaven-2eq1gy.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
+      },
+      {
+        id: '4',
+        url: 'https://files.codelife.cc/wallhaven/full/83/wallhaven-83ywmo.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
+      },
+      {
+        id: '5',
+        url: 'https://files.codelife.cc/wallhaven/full/83/wallhaven-83ywmo.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
+      }
+    ]"
+    :selectd-image="{
+      id: '1',
+      url: 'https://files.codelife.cc/wallhaven/full/o5/wallhaven-o5jjg5.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
+    }"
+    :download="onDownload"
+    :getImgSizeFromUrl="getImgSizeFromUrl"
+  />
+  <n-button type="primary" @click="previewVisible = true">查看图片</n-button>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 // import { notification, type EmojiName } from '@dnhyxc-ui/components';
-import { notification, type EmojiName } from 'dnhyxc-ui-vue-plus';
+import { notification, type EmojiName, ImagePreview } from 'dnhyxc-ui-vue-plus';
 
 const keyword = ref('');
 const inputRef = ref();
 const checked = ref(true);
 const showEmoji = ref(true);
+const previewVisible = ref(false);
 
 const onSelect = (key: EmojiName) => {
   console.log(key, 'onSelect');
@@ -54,6 +90,39 @@ const onClick = (e: MouseEvent) => {
 
 const onAddEmoji = (key: string) => {
   console.log(key, 'onAddEmoji');
+};
+
+const getImgSizeFromUrl = async (
+  url: string
+): Promise<{
+  type: string;
+  size: number;
+}> => {
+  try {
+    const response = await fetch(url);
+    const blob = await response.blob();
+    const type = blob.type.split('/').pop() as string;
+    const sizeInBytes = blob.size;
+    const sizeInKB = sizeInBytes / 1024;
+    return {
+      type,
+      size: sizeInKB
+    };
+  } catch (error) {
+    return {
+      type: '',
+      size: 0
+    };
+  }
+};
+
+const onDownload = (imageInfo: any) => {
+  const link = document.createElement('a');
+  link.href = imageInfo.url;
+  link.download = imageInfo.url.split('/').pop() || 'download';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 };
 </script>
 

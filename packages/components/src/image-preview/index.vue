@@ -52,14 +52,20 @@
               <el-tooltip effect="light" content="旋转" placement="top" popper-class="custom-dropdown-styles">
                 <Icon name="rotate" size="20" color="var(--icon-color)" class-name="icon" @click="onRotate" />
               </el-tooltip>
-              <el-tooltip effect="light" content="下载" placement="top" popper-class="custom-dropdown-styles">
+              <el-tooltip
+                v-if="download"
+                effect="light"
+                content="下载"
+                placement="top"
+                popper-class="custom-dropdown-styles"
+              >
                 <Icon name="download" size="20" color="var(--icon-color)" class-name="icon" @click="onDownload" />
               </el-tooltip>
               <el-tooltip effect="light" content="重置" placement="top" popper-class="custom-dropdown-styles">
                 <Icon name="reset" size="20" color="var(--icon-color)" class-name="icon" @click="onRefresh" />
               </el-tooltip>
               <el-tooltip
-                v-if="showPrevAndNext && prevImages.length > 1"
+                v-if="(showPrevAndNext && prevImages.length) || prevImages.length > 1"
                 effect="light"
                 content="上一张"
                 placement="top"
@@ -68,7 +74,7 @@
                 <Icon name="left-arrow" size="20" color="var(--icon-color)" class-name="icon" @click="onPrev" />
               </el-tooltip>
               <el-tooltip
-                v-if="showPrevAndNext && prevImages.length > 1"
+                v-if="(showPrevAndNext && prevImages.length) || prevImages.length > 1"
                 effect="light"
                 content="下一张"
                 placement="top"
@@ -78,7 +84,7 @@
               </el-tooltip>
               <span class="info-list">
                 <span v-if="fileSize" class="size info">{{ fileSize?.toFixed(2) }} KB</span>
-                <span v-if="size" class="size info">{{ size }}</span>
+                <span v-if="imageSize" class="size info">{{ imageSize }}</span>
                 <slot
                   v-if="prevImages && prevImages.length"
                   name="info"
@@ -109,9 +115,12 @@
 
 <script setup lang="ts">
 import { computed, reactive, ref, watch, nextTick, DirectiveBinding } from 'vue';
+import { ElDialog, ElTooltip } from 'element-plus';
 import { createNamespace } from '../../utils';
 import { Icon } from '../icon';
 import { ImagePreviewOptions } from './types';
+import 'element-plus/es/components/dialog/style/css';
+import 'element-plus/es/components/tooltip/style/css';
 import './style/index.scss';
 
 const bem = createNamespace('image-preview');
@@ -189,8 +198,8 @@ const vMove = {
 
 const props = defineProps<ImagePreviewOptions<{ url: string; size?: number; id?: string }>>();
 
-const currentImage = ref<ImagePreviewOptions<{ url: string; size?: number; id?: string }>['selectImage']>(
-  props.selectImage
+const currentImage = ref<ImagePreviewOptions<{ url: string; size?: number; id?: string }>['selectdImage']>(
+  props.selectdImage
 );
 
 const imgRef = ref<HTMLImageElement | null>(null);
@@ -208,7 +217,7 @@ const fileSize = ref<number | null>(0);
 const emit = defineEmits(['update:previewVisible']);
 
 const onComputedImgSize = async (url: string, size?: number) => {
-  if (props?.size) {
+  if (props?.imageSize) {
     fileSize.value = 0;
   } else {
     if (size) {
@@ -231,18 +240,18 @@ const visible = computed({
   }
 });
 
-const prevImages = computed<{ url: string; id: string }[]>(() => {
-  return props.prevImgs || [];
+const prevImages = computed(() => {
+  return props.imageList || [];
 });
 
 watch(
-  () => [props.previewVisible, props.selectImage],
+  () => [props.previewVisible, props.selectdImage],
   async (newVal) => {
     if (newVal[0]) {
-      currentImage.value = newVal[1] as ImagePreviewOptions<{ url: string; size: number }>['selectImage'];
+      currentImage.value = newVal[1] as ImagePreviewOptions<{ url: string; size: number }>['selectdImage'];
       onComputedImgSize(
-        (newVal[1] as ImagePreviewOptions<{ url: string }>['selectImage'])?.url,
-        (newVal[1] as ImagePreviewOptions<{ url: string; size: number }>['selectImage'])?.size
+        (newVal[1] as ImagePreviewOptions<{ url: string }>['selectdImage'])?.url,
+        (newVal[1] as ImagePreviewOptions<{ url: string; size: number }>['selectdImage'])?.size
       );
     }
     if (!newVal[0]) {
@@ -342,11 +351,7 @@ const onRotate = () => {
 
 // 下载
 const onDownload = () => {
-  if (props?.download) {
-    props.download();
-  } else {
-    props?.onDownloadFile?.(currentImage.value);
-  }
+  props?.download?.(currentImage.value);
 };
 
 // 重置
@@ -357,17 +362,28 @@ const onRefresh = () => {
   imgRef.value!.style.left = '0';
 };
 
+const getCurrentImageIndex = () => {
+  return prevImages.value?.findIndex((i) => {
+    if (i.id) {
+      return i.id === currentImage?.value?.id;
+    } else {
+      return i.url === currentImage?.value?.url;
+    }
+  });
+};
+
 // 前一张
 const onPrev = () => {
   onRefresh();
   let prevIndex;
-  const findIndex = prevImages.value.findIndex((i) => i?.id === currentImage?.value?.id);
+  // const findIndex = prevImages.value.findIndex((i) => i?.id === currentImage?.value?.id);
+  const findIndex = getCurrentImageIndex();
   if (findIndex === 0) {
     prevIndex = prevImages.value.length - 1;
   } else {
     prevIndex = findIndex - 1;
   }
-  currentImage.value = prevImages.value[prevIndex] as ImagePreviewOptions<{ url: string; id: string }>['selectImage'];
+  currentImage.value = prevImages.value[prevIndex] as ImagePreviewOptions<{ url: string; id: string }>['selectdImage'];
   onComputedImgSize(currentImage.value.url, currentImage.value?.size);
 };
 
@@ -375,13 +391,13 @@ const onPrev = () => {
 const onNext = () => {
   onRefresh();
   let nextIndex;
-  const findIndex = prevImages.value?.findIndex((i) => i.id === currentImage?.value?.id);
+  const findIndex = getCurrentImageIndex();
   if (findIndex === prevImages.value?.length - 1) {
     nextIndex = 0;
   } else {
     nextIndex = findIndex + 1;
   }
-  currentImage.value = prevImages.value[nextIndex] as ImagePreviewOptions<{ url: string; id: string }>['selectImage'];
+  currentImage.value = prevImages.value[nextIndex] as ImagePreviewOptions<{ url: string; id: string }>['selectdImage'];
   onComputedImgSize(currentImage.value.url, currentImage.value?.size);
 };
 </script>
