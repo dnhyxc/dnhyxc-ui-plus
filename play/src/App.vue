@@ -22,7 +22,6 @@
   <n-input ref="inputRef" v-model:value="keyword" size="large" placeholder="请输入!!!" @keypress.enter="onKeypress" />
   <ImagePreview
     v-model:previewVisible="previewVisible"
-    dialog-width="800px"
     closeOnClickModal
     :image-list="[
       {

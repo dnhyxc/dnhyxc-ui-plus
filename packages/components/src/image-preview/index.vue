@@ -10,7 +10,7 @@
       v-model="visible"
       :close-on-click-modal="closeOnClickModal || false"
       align-center
-      :width="dialogWidth || '88vw'"
+      :width="dialogWidth || '800px'"
       :style="dialogStyle"
       @close="onClose"
     >
@@ -148,7 +148,8 @@ const props = withDefaults(defineProps<ImagePreviewOptions>(), {
   showZoomOut: true,
   showRotate: true,
   showReset: true,
-  showPrevAndNext: true
+  showPrevAndNext: true,
+  closeOnClickModal: true
 });
 
 // 局部注册自定义指令：v-move
@@ -316,7 +317,7 @@ watch(
 
 // 关闭弹窗时，开启父弹窗
 const onClose = () => {
-  props?.showWaterModal?.();
+  props?.showOtherModal?.();
 };
 
 const onWheel = (e: WheelEvent) => {

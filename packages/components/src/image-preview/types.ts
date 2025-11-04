@@ -30,7 +30,7 @@ export interface ImagePreviewOptions {
   dialogStyle?: string;
   imageTransformInfo?: ImageTransformInfo;
   showPrevAndNext?: boolean;
-  showWaterModal?: () => void;
+  showOtherModal?: () => void;
   imageSize?: string;
   title?: string;
   imageList?: ImageInfo[]; // { id: string; url: string; [key: string]: any }[]

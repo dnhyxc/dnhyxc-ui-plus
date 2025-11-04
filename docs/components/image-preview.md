@@ -147,52 +147,133 @@ const onDownload = (imageInfo: any) => {
 
 ## API
 
-### Emoji Props
+### ImagePreview Props
 
 <script>
 const data = [
   {
-    name: 'visible',
+    name: 'previewVisible',
+    type: 'boolean',
+    default: 'false',
+    description: '是否展示图片预览弹窗',
+  },
+  {
+    name: 'selectdImage',
+    type: `{id: string, url: string}`,
+    default: '',
+    description: '当前选中需要预览的图片',
+  },
+  {
+    name: 'dialogWidth',
+    type: 'string',
+    default: '800px',
+    description: '图片预览弹窗的宽度',
+  },
+  {
+    name: 'dialogStyle',
     type: 'string',
     default: '',
-    description: '是否展示图标',
+    description: '图片预览弹窗的样式',
   },
   {
-    name: 'className',
+    name: 'imageTransformInfo',
+    type: `{scale: number, rotate: number, boundary: boolean, imgWidth: number, imgHeight: number}`,
+    default: '',
+    description: '图片的缩放、旋转、边界控制、图片宽高等信息',
+  },
+  {
+    name: 'showPrevAndNext',
+    type: 'boolean',
+    default: 'true',
+    description: '是否展示上一张和下一张按钮',
+  },
+  {
+    name: 'showWaterModal',
+    type: 'function',
+    default: '',
+    description: '是否在关闭当前弹窗时开启其他弹窗',
+  },
+  {
+    name: 'imageSize',
     type: 'string',
     default: '',
-    description: '组件 bodyClass 类名',
+    description: '图片的大小',
   },
   {
-    name: 'initShowEmojiCount',
-    type: 'number',
-    default: '30',
-    description: '初始化展示表情数量',
+    name: 'title',
+    type: 'string',
+    default: '图片预览',
+    description: '图片预览弹窗的标题',
   },
   {
-    name: 'includeEmoji',
-    type: 'array',
+    name: 'imageList',
+    type: `{url: string, size: number, id: string}`,
     default: '',
-    description: '需要展示的表情',
+    description: '需要预览的图片列表',
   },
   {
-    name: 'excludeEmoji',
-    type: 'array',
-    default: '',
-    description: '不需要展示的表情',
+    name: 'closeOnClickModal',
+    type: 'boolean',
+    default: 'true',
+    description: '是否在点击遮罩层时关闭图片预览弹窗',
   },
   {
-    name: 'col',
-    type: 'number',
-    default: '',
-    description: '每行展示的表情数量',
+    name: 'showZoomIn',
+    type: 'boolean',
+    default: 'true',
+    description: '是否展示放大按钮',
   },
   {
-    name: 'gap',
-    type: 'number',
+    name: 'showZoomOut',
+    type: 'boolean',
+    default: 'true',
+    description: '是否展示缩小按钮',
+  },
+  {
+    name: 'showRotate',
+    type: 'boolean',
+    default: 'true',
+    description: '是否展示旋转按钮',
+  },
+  {
+    name: 'showReset',
+    type: 'boolean',
+    default: 'true',
+    description: '是否展示重置按钮',
+  },
+  {
+    name: 'showDownload',
+    type: 'boolean',
+    default: 'true',
+    description: '是否展示下载按钮',
+  },
+  {
+    name: 'download',
+    type: `(params: {
+      url: string;
+      type?: string;
+      fileName?: string;
+      callback?: (res: boolean) => void;
+      mark?: string;
+    }) => void`,
     default: '',
-    description: '表情之间的间距',
-  }
+    description: '自定义下载图片的方法',
+  },
+  {
+    name: 'getImgSizeFromUrl',
+    type: `(url: string) => Promise<{
+      type: string;
+      size: number;
+    }>`,
+    default: '',
+    description: '获取图片大小方法',
+  },
+  {
+    name: 'changeImgUrlDomain',
+    type: `(url: string) => string`,
+    default: '',
+    description: '修改图片地址域名的方法',
+  },
 ];
 </script>
 
