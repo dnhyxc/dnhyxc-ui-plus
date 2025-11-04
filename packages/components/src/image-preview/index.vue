@@ -22,6 +22,7 @@
           <slot name="actions">
             <div class="icon-list">
               <el-tooltip
+                v-if="showZoomIn"
                 effect="light"
                 :content="isMaxed ? '不能再大了' : '放大'"
                 placement="top"
@@ -36,6 +37,7 @@
                 />
               </el-tooltip>
               <el-tooltip
+                v-if="showZoomOut"
                 effect="light"
                 :content="isMined ? '不能再小了' : '缩小'"
                 placement="top"
@@ -49,11 +51,17 @@
                   @click="() => onScaleMin()"
                 />
               </el-tooltip>
-              <el-tooltip effect="light" content="旋转" placement="top" popper-class="custom-dropdown-styles">
+              <el-tooltip
+                v-if="showRotate"
+                effect="light"
+                content="旋转"
+                placement="top"
+                popper-class="custom-dropdown-styles"
+              >
                 <Icon name="rotate" size="20" color="var(--icon-color)" class-name="icon" @click="onRotate" />
               </el-tooltip>
               <el-tooltip
-                v-if="download"
+                v-if="download || showDownload"
                 effect="light"
                 content="下载"
                 placement="top"
@@ -61,11 +69,17 @@
               >
                 <Icon name="download" size="20" color="var(--icon-color)" class-name="icon" @click="onDownload" />
               </el-tooltip>
-              <el-tooltip effect="light" content="重置" placement="top" popper-class="custom-dropdown-styles">
+              <el-tooltip
+                v-if="showReset"
+                effect="light"
+                content="重置"
+                placement="top"
+                popper-class="custom-dropdown-styles"
+              >
                 <Icon name="reset" size="20" color="var(--icon-color)" class-name="icon" @click="onRefresh" />
               </el-tooltip>
               <el-tooltip
-                v-if="(showPrevAndNext && prevImages.length) || prevImages.length > 1"
+                v-if="showPrevAndNext && prevImages.length > 1"
                 effect="light"
                 content="上一张"
                 placement="top"
@@ -74,7 +88,7 @@
                 <Icon name="left-arrow" size="20" color="var(--icon-color)" class-name="icon" @click="onPrev" />
               </el-tooltip>
               <el-tooltip
-                v-if="(showPrevAndNext && prevImages.length) || prevImages.length > 1"
+                v-if="showPrevAndNext && prevImages.length > 1"
                 effect="light"
                 content="下一张"
                 placement="top"
@@ -127,6 +141,14 @@ const bem = createNamespace('image-preview');
 
 defineOptions({
   name: 'n-image-preview'
+});
+
+const props = withDefaults(defineProps<ImagePreviewOptions>(), {
+  showZoomIn: true,
+  showZoomOut: true,
+  showRotate: true,
+  showReset: true,
+  showPrevAndNext: true
 });
 
 // 局部注册自定义指令：v-move
@@ -196,11 +218,7 @@ const vMove = {
   }
 };
 
-const props = defineProps<ImagePreviewOptions<{ url: string; size?: number; id?: string }>>();
-
-const currentImage = ref<ImagePreviewOptions<{ url: string; size?: number; id?: string }>['selectdImage']>(
-  props.selectdImage
-);
+const currentImage = ref<ImagePreviewOptions['selectdImage']>(props.selectdImage);
 
 const imgRef = ref<HTMLImageElement | null>(null);
 const imageInfo = reactive<{ scale: number; rotate: number; boundary: boolean; imgWidth: number; imgHeight: number }>({
@@ -248,10 +266,10 @@ watch(
   () => [props.previewVisible, props.selectdImage],
   async (newVal) => {
     if (newVal[0]) {
-      currentImage.value = newVal[1] as ImagePreviewOptions<{ url: string; size: number }>['selectdImage'];
+      currentImage.value = newVal[1] as ImagePreviewOptions['selectdImage'];
       onComputedImgSize(
-        (newVal[1] as ImagePreviewOptions<{ url: string }>['selectdImage'])?.url,
-        (newVal[1] as ImagePreviewOptions<{ url: string; size: number }>['selectdImage'])?.size
+        (newVal[1] as ImagePreviewOptions['selectdImage'])?.url,
+        (newVal[1] as ImagePreviewOptions['selectdImage'])?.size
       );
     }
     if (!newVal[0]) {
@@ -351,7 +369,16 @@ const onRotate = () => {
 
 // 下载
 const onDownload = () => {
-  props?.download?.(currentImage.value);
+  if (props?.download) {
+    props?.download?.(currentImage.value);
+  } else {
+    const link = document.createElement('a');
+    link.href = currentImage.value.url;
+    link.download = currentImage.value.url.split('/').pop() || 'download';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
 };
 
 // 重置
@@ -383,7 +410,7 @@ const onPrev = () => {
   } else {
     prevIndex = findIndex - 1;
   }
-  currentImage.value = prevImages.value[prevIndex] as ImagePreviewOptions<{ url: string; id: string }>['selectdImage'];
+  currentImage.value = prevImages.value[prevIndex] as ImagePreviewOptions['selectdImage'];
   onComputedImgSize(currentImage.value.url, currentImage.value?.size);
 };
 
@@ -397,7 +424,7 @@ const onNext = () => {
   } else {
     nextIndex = findIndex + 1;
   }
-  currentImage.value = prevImages.value[nextIndex] as ImagePreviewOptions<{ url: string; id: string }>['selectdImage'];
+  currentImage.value = prevImages.value[nextIndex] as ImagePreviewOptions['selectdImage'];
   onComputedImgSize(currentImage.value.url, currentImage.value?.size);
 };
 </script>

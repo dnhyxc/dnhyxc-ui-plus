@@ -59,15 +59,14 @@ const imageList = [
 <template>
   <ImagePreview
     v-model:previewVisible="previewVisible"
-    show-prev-and-next
     dialog-width="800px"
     closeOnClickModal
     :image-list="imageList"
+    show-download
     :selectd-image="{
       id: '1',
       url: 'https://files.codelife.cc/wallhaven/full/o5/wallhaven-o5jjg5.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
     }"
-    :download="onDownload"
     :getImgSizeFromUrl="getImgSizeFromUrl"
   />
   <n-button type="primary" @click="previewVisible = true">查看图片</n-button>

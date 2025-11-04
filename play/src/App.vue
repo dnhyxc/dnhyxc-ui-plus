@@ -22,7 +22,6 @@
   <n-input ref="inputRef" v-model:value="keyword" size="large" placeholder="请输入!!!" @keypress.enter="onKeypress" />
   <ImagePreview
     v-model:previewVisible="previewVisible"
-    show-prev-and-next
     dialog-width="800px"
     closeOnClickModal
     :image-list="[
@@ -51,7 +50,6 @@
       id: '1',
       url: 'https://files.codelife.cc/wallhaven/full/o5/wallhaven-o5jjg5.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
     }"
-    :download="onDownload"
     :getImgSizeFromUrl="getImgSizeFromUrl"
   />
   <n-button type="primary" @click="previewVisible = true">查看图片</n-button>
@@ -114,15 +112,6 @@ const getImgSizeFromUrl = async (
       size: 0
     };
   }
-};
-
-const onDownload = (imageInfo: any) => {
-  const link = document.createElement('a');
-  link.href = imageInfo.url;
-  link.download = imageInfo.url.split('/').pop() || 'download';
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
 };
 </script>
 

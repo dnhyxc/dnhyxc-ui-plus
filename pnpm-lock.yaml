@@ -180,8 +180,8 @@ importers:
         specifier: 0.0.1-beta.10
         version: 0.0.1-beta.10
       dnhyxc-ui-vue-plus:
-        specifier: 0.0.52
-        version: 0.0.52
+        specifier: 0.0.54
+        version: 0.0.54
       md-editor-v3:
         specifier: ^5.8.2
         version: 5.8.2(vue@3.5.17(typescript@5.7.3))
@@ -2290,8 +2290,8 @@ packages:
   dnhyxc-ui-plus-beta1@0.0.1-beta.10:
     resolution: {integrity: sha512-8+204J4z7IHpsDXoLh3EjVLrDZmlPkahZRIamqRx7CAxyjfwued5XkMoaAK/N4RiS1ZP9civPi59UHCV/gFs7w==}
 
-  dnhyxc-ui-vue-plus@0.0.52:
-    resolution: {integrity: sha512-j4GcozfdKZY9YfqbNVz7HWtprip42bPQOFMMONkirYew1C/3KF5ago7DDnJUPV5d4G5ZLMnDtn7yNqw/TRBOGA==}
+  dnhyxc-ui-vue-plus@0.0.54:
+    resolution: {integrity: sha512-NirqDJBQJc8T06Qa+a1pNcW9ZBKcWjDUdUwvRqauwZeqISX8DuNt+zqDiU+TMineZhPQuWbaO1WLfEOUj54+sQ==}
 
   dom-serializer@2.0.0:
     resolution: {integrity: sha512-wIkAryiqt/nV5EQKqQpo3SToSOV9J0DnbJqwK7Wv/Trc92zIAYZ4FlMu+JPFW1DfGFt81ZTCGgDEabffXeLyJg==}
@@ -7085,7 +7085,7 @@ snapshots:
 
   dnhyxc-ui-plus-beta1@0.0.1-beta.10: {}
 
-  dnhyxc-ui-vue-plus@0.0.52: {}
+  dnhyxc-ui-vue-plus@0.0.54: {}
 
   dom-serializer@2.0.0:
     dependencies:
