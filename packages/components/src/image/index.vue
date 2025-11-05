@@ -117,13 +117,10 @@ const loadImage = (url: string) => {
     isLoaded.value = true;
     hasError.value = false;
     displayUrl.value = url;
-    console.log('图片预加载成功');
   };
 
-  img.onerror = (e) => {
+  img.onerror = () => {
     if (!isLoading.value) return;
-
-    console.error('图片预加载失败:', e);
     isLoading.value = false;
     hasError.value = true;
     displayUrl.value = props.placeholderImg || '';
@@ -147,8 +144,7 @@ const loadImage = (url: string) => {
 };
 
 // 实际图片标签的错误处理
-const onError = (event: Event) => {
-  console.error('图片显示失败:', event);
+const onError = () => {
   hasError.value = true;
   isLoaded.value = false;
 
