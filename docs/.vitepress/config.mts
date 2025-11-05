@@ -50,12 +50,18 @@ export default defineConfig({
       ],
       '/components/': [
         {
-          text: '组件',
+          text: '基本组件',
           items: [
             { text: 'Button 按钮', link: '/components/button' },
             { text: 'Input 文本输入', link: '/components/input' },
-            { text: 'Icon 图标', link: '/components/icon' },
+            { text: 'Icon 图标', link: '/components/icon' }
+          ]
+        },
+        {
+          text: '业务组件',
+          items: [
             { text: 'Emoji 表情', link: '/components/emoji' },
+            { text: 'Image 图片', link: '/components/image' },
             { text: 'ImagePreview 图片预览', link: '/components/image-preview' }
           ]
         }

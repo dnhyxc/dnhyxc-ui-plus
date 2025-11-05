@@ -1,0 +1,56 @@
+.n-image {
+  box-sizing: border-box;
+
+  --image-object-position: top left;
+  --image-hover-object-position: bottom right;
+  --image-empty-bg: #f5f7fa;
+  --image-object-fit: cover;
+  --image-transition: all 0.3s ease-in-out;
+  --image-loading-bg: #f5f7fa;
+  --image-loading-text-color: #ccc;
+  --image-empty-text-color: #ccc;
+  --image-font-size: 14px;
+
+  .image-item {
+    display: block;
+    height: 100%;
+    width: 100%;
+    -webkit-user-drag: none;
+    object-fit: var(--image-object-fit);
+    transition: var(--image-transition);
+    object-position: var(--image-object-position);
+
+    &:hover {
+      object-position: var(--image-hover-object-position);
+    }
+  }
+
+  .image-loading {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--image-loading-bg);
+    color: var(--image-loading-text-color);
+    font-size: var(--image-font-size);
+  }
+
+  .empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+
+    .empty-text {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      width: 100%;
+      background-color: var(--image-empty-bg);
+      color: var(--image-empty-text-color);
+      font-size: var(--image-font-size);
+    }
+  }
+}

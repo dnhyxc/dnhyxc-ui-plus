@@ -8,13 +8,6 @@ interface ImageTransformInfo {
   imgHeight: number;
 }
 
-interface ImageInfo {
-  url: string;
-  size?: number;
-  id?: string;
-  [key: string]: unknown;
-}
-
 interface DownloadParams {
   url: string;
   type?: string;
@@ -24,7 +17,12 @@ interface DownloadParams {
 }
 
 export interface ImagePreviewOptions {
-  selectdImage: ImageInfo;
+  selectdImage: {
+    url: string;
+    size?: number;
+    id?: string;
+    [key: string]: unknown;
+  };
   previewVisible: boolean;
   dialogWidth?: string;
   dialogStyle?: string;
@@ -33,7 +31,12 @@ export interface ImagePreviewOptions {
   showOtherModal?: () => void;
   imageSize?: string;
   title?: string;
-  imageList?: ImageInfo[]; // { id: string; url: string; [key: string]: any }[]
+  imageList?: {
+    url: string;
+    size?: number;
+    id?: string;
+    [key: string]: unknown;
+  }[]; // { id: string; url: string; [key: string]: any }[]
   closeOnClickModal?: boolean;
   showZoomIn?: boolean;
   showZoomOut?: boolean;

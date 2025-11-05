@@ -20,50 +20,124 @@
     <el-tag type="primary">Tag 1</el-tag>
   </div>
   <n-input ref="inputRef" v-model:value="keyword" size="large" placeholder="请输入!!!" @keypress.enter="onKeypress" />
-  <ImagePreview
-    v-model:previewVisible="previewVisible"
-    closeOnClickModal
-    :image-list="[
-      {
-        id: '1',
-        url: 'https://files.codelife.cc/wallhaven/full/o5/wallhaven-o5jjg5.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
-      },
-      {
-        id: '2',
-        url: 'https://files.codelife.cc/wallhaven/full/83/wallhaven-83ywmo.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
-      },
-      {
-        id: '3',
-        url: 'https://files.codelife.cc/wallhaven/full/2e/wallhaven-2eq1gy.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
-      },
-      {
-        id: '4',
-        url: 'https://files.codelife.cc/wallhaven/full/83/wallhaven-83ywmo.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
-      },
-      {
-        id: '5',
-        url: 'https://files.codelife.cc/wallhaven/full/83/wallhaven-83ywmo.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
+  <n-button
+    type="primary"
+    @click="
+      () => {
+        console.log(imgList.value, 'click');
+        onPreview(
+          {
+            id: '1',
+            url: 'https://files.codelife.cc/wallhaven/full/o5/wallhaven-o5jjg5.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
+          },
+          [
+            {
+              id: '1',
+              url: 'https://files.codelife.cc/wallhaven/full/o5/wallhaven-o5jjg5.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
+            },
+            {
+              id: '2',
+              url: 'https://files.codelife.cc/wallhaven/full/83/wallhaven-83ywmo.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
+            },
+            {
+              id: '3',
+              url: 'https://files.codelife.cc/wallhaven/full/2e/wallhaven-2eq1gy.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
+            },
+            {
+              id: '4',
+              url: 'https://files.codelife.cc/wallhaven/full/83/wallhaven-83ywmo.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
+            },
+            {
+              id: '5',
+              url: 'https://files.codelife.cc/wallhaven/full/83/wallhaven-83ywmo.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
+            }
+          ]
+        );
       }
-    ]"
-    :selectd-image="{
-      id: '1',
-      url: 'https://files.codelife.cc/wallhaven/full/o5/wallhaven-o5jjg5.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
-    }"
-    :getImgSizeFromUrl="getImgSizeFromUrl"
-  />
-  <n-button type="primary" @click="previewVisible = true">查看图片</n-button>
+    "
+    >查看图片</n-button
+  >
+  <div class="image-list">
+    <n-image
+      url="https://files.codelife.cc/wallhaven/full/2e/wallhaven-2eq1gy.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp"
+      width="100px"
+      height="auto"
+      radius="8px"
+      placeholderImg="https://files.codelife.cc/wallhaven/full/5g/wallhaven-5g57w1.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp"
+      :on-click="
+        () => {
+          onPreview(
+            {
+              url: 'https://files.codelife.cc/wallhaven/full/2e/wallhaven-2eq1gy.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
+            },
+            []
+          );
+        }
+      "
+    />
+    <n-image
+      url="https://files.codelife2.cc/wallhaven/full/2e/wallhaven-2eq1gy.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp"
+      width="100px"
+      height="100px"
+      radius="8px"
+      errorText="加载失败了"
+      placeholderImg="https://files.codelife.cc/wallhaven/full/5g/wallhaven-5g57w1.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp"
+      :on-click="
+        () => {
+          onPreview(
+            {
+              url: 'https://files.codelife2.cc/wallhaven/full/2e/wallhaven-2eq1gy.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
+            },
+            []
+          );
+        }
+      "
+    />
+    <n-image
+      url="https://files.codelife1.cc/wallhaven/full/83/wallhaven-83ywmo.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp"
+      radius="8px"
+      width="100px"
+      height="100px"
+      loadingText="正在加载中"
+    />
+    <n-image width="100px" height="100px" radius="8px" emptyText="没有图片" />
+    <n-image
+      placeholderImg="https://files.codelife.cc/wallhaven/full/83/wallhaven-83ywmo.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp"
+      width="100px"
+      height="100px"
+      radius="8px"
+      emptyText="没有图片"
+    />
+    <n-image-preview
+      v-model:previewVisible="previewVisible"
+      closeOnClickModal
+      :selectd-image="selectedImage"
+      :imageList="imgList"
+      show-download
+      :getImgSizeFromUrl="getImgSizeFromUrl"
+    />
+  </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 // import { notification, type EmojiName } from '@dnhyxc-ui/components';
-import { notification, type EmojiName, ImagePreview } from 'dnhyxc-ui-vue-plus';
+import { notification, type EmojiName } from 'dnhyxc-ui-vue-plus';
 
 const keyword = ref('');
 const inputRef = ref();
 const checked = ref(true);
 const showEmoji = ref(true);
 const previewVisible = ref(false);
+
+const imgList = ref<any>([]);
+const selectedImage = ref<any>({});
+
+const onPreview = (image: any, imgs: any[]) => {
+  imgList.value = imgs;
+  previewVisible.value = true;
+  selectedImage.value = image;
+};
 
 const onSelect = (key: EmojiName) => {
   console.log(key, 'onSelect');
@@ -121,6 +195,29 @@ const getImgSizeFromUrl = async (
 
   .play-fill-icon {
     cursor: pointer;
+  }
+}
+
+.image-list {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .n-image {
+    // 默认样式，可以通过修改默认样式来修改组件的样式
+    // --image-object-position: top left;
+    // --image-hover-object-position: bottom right;
+    // --image-empty-bg: #f5f7fa;
+    // --image-object-fit: cover;
+    // --image-transition: all 0.3s ease-in-out;
+    // --image-loading-bg: #f5f7fa;
+    // --image-loading-text-color: #ccc;
+    // --image-empty-text-color: #ccc;
+    // --image-font-size: 14px; // 控制 loading、empty、加载失败的文字大小
+
+    --image-loading-text-color: #333;
+    --image-empty-text-color: #333;
+    --image-empty-bg: rgb(226, 222, 222);
   }
 }
 </style>
