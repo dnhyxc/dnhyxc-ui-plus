@@ -149,3 +149,9 @@
 .el-input__inner {
   color: var(--vp-c-text-1);
 }
+
+img,
+video {
+  max-width: initial;
+  height: initial;
+}

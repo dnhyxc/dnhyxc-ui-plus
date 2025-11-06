@@ -100,8 +100,9 @@
       height="100px"
       loadingText="正在加载中"
     />
-    <n-image width="100px" height="100px" radius="8px" emptyText="没有图片" />
+    <n-image url="" width="100px" height="100px" radius="8px" emptyText="没有图片" />
     <n-image
+      url=""
       placeholderImg="https://files.codelife.cc/wallhaven/full/83/wallhaven-83ywmo.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp"
       width="100px"
       height="100px"
@@ -117,12 +118,17 @@
       :getImgSizeFromUrl="getImgSizeFromUrl"
     />
   </div>
+  <n-image-contrast
+    beforeImg="https://files.codelife.cc/wallhaven/full/o5/wallhaven-o5jjg5.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp"
+    afterImg="https://files.codelife.cc/wallhaven/full/2e/wallhaven-2eq1gy.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp"
+  />
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 // import { notification, type EmojiName } from '@dnhyxc-ui/components';
 import { notification, type EmojiName } from 'dnhyxc-ui-vue-plus';
+import Contrast from './Contrast/index.vue';
 
 const keyword = ref('');
 const inputRef = ref();

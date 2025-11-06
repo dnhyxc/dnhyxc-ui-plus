@@ -62,7 +62,8 @@ export default defineConfig({
           items: [
             { text: 'Emoji 表情', link: '/components/emoji' },
             { text: 'Image 图片', link: '/components/image' },
-            { text: 'ImagePreview 图片预览', link: '/components/image-preview' }
+            { text: 'ImagePreview 图片预览', link: '/components/image-preview' },
+            { text: 'ImageContrast 图片对比', link: '/components/image-contrast' }
           ]
         }
       ]
