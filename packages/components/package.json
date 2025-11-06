@@ -6,7 +6,8 @@
   "scripts": {
     "build": "vite build",
     "test": "vitest run",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "test:component": "tsx scripts/vitest/index.ts"
   },
   "keywords": [
     "vue3",
