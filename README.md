@@ -382,9 +382,7 @@ export default {
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import chalk from 'chalk';
-// 在下文中会具体说明
-import { log } from '../../utils/log.ts';
+import { log, greenBright, redBright, yellowBright } from '../../utils/log.ts';
 
 // 通过改写__dirname 为__dirnameNew，解决打包报错
 const __filenameNew = fileURLToPath(import.meta.url);
@@ -395,14 +393,14 @@ const [, , componentName] = process.argv;
 
 if (!componentName) {
   // eslint-disable-next-line no-console
-  console.log(log.warning, chalk.yellowBright('请在终端中输入需要创建的组件名称'));
+  console.log(log.warning, yellowBright('请在终端中输入需要创建的组件名称'));
   process.exit(1);
 }
 
 const createFolder = (dir: string) => {
   if (fs.existsSync(dir)) {
     // eslint-disable-next-line no-console
-    console.log(log.warning, `${chalk.redBright(`${componentName} 文件夹已存在：`)}${chalk.yellowBright(targetDir)}`);
+    console.log(log.warning, `${redBright(`${componentName} 文件夹已存在：`)}${yellowBright(targetDir)}`);
     process.exit(1);
   }
   fs.mkdirSync(dir, { recursive: true });
@@ -411,12 +409,12 @@ const createFolder = (dir: string) => {
 const createFile = (filePath: string, content = '') => {
   if (fs.existsSync(filePath)) {
     // eslint-disable-next-line no-console
-    console.log(log.warning, `${chalk.redBright('文件已存在：')}${chalk.yellowBright(filePath)}`);
+    console.log(log.warning, `${redBright('文件已存在：')}${yellowBright(filePath)}`);
     return;
   }
   fs.writeFileSync(filePath, content, 'utf8');
   // eslint-disable-next-line no-console
-  console.log(log.success, chalk.greenBright(`已创建文件：${filePath}`));
+  console.log(log.success, greenBright(`已创建文件：${filePath}`));
 };
 
 // 创建组件文件夹
@@ -435,7 +433,7 @@ createFolder(styleDir);
 ].forEach((filePath) => createFile(filePath));
 ```
 
-为了能更加优美的在控制台中显示日志，因此在 `packages/components/utils` 文件夹下创建 `log.ts` 文件，内容如下：
+为了能更加优美的在控制台中显示日志，需要在项目根目录下安装 [`chalk`](https://www.npmjs.com/package/chalk)，同时在 `packages/components/utils` 文件夹下创建 `log.ts` 文件，内容如下：
 
 ```ts
 import chalk from 'chalk';
@@ -479,6 +477,58 @@ const isUnicodeSupported = () => {
 };
 
 export const log = isUnicodeSupported() ? main : fallback;
+
+export const greenBright = (text: string) => {
+  return chalk.greenBright(text);
+};
+
+export const yellowBright = (text: string) => {
+  return chalk.yellowBright(text);
+};
+
+export const redBright = (text: string) => {
+  return chalk.redBright(text);
+};
+
+export const blueBright = (text: string) => {
+  return chalk.blueBright(text);
+};
+
+export const cyanBright = (text: string) => {
+  return chalk.cyanBright(text);
+};
+
+export const whiteBright = (text: string) => {
+  return chalk.whiteBright(text);
+};
+
+export const gray = (text: string) => {
+  return chalk.gray(text);
+};
+
+export const white = (text: string) => {
+  return chalk.white(text);
+};
+
+export const red = (text: string) => {
+  return chalk.red(text);
+};
+
+export const blue = (text: string) => {
+  return chalk.blue(text);
+};
+
+export const yellow = (text: string) => {
+  return chalk.yellow(text);
+};
+
+export const green = (text: string) => {
+  return chalk.green(text);
+};
+
+export const cyan = (text: string) => {
+  return chalk.cyan(text);
+};
 ```
 
 之后在项目根目录下的 `package.json` 中增加 `create` 命令，注意，首先需要在项目根目录下安装 `tsx` 脚本，方便在 node 环境中运行 `ts` 文件，内容如下：
