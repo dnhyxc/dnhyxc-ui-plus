@@ -128,7 +128,6 @@
 import { ref } from 'vue';
 // import { notification, type EmojiName } from '@dnhyxc-ui/components';
 import { notification, type EmojiName } from 'dnhyxc-ui-vue-plus';
-import Contrast from './Contrast/index.vue';
 
 const keyword = ref('');
 const inputRef = ref();

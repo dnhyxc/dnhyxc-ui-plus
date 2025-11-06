@@ -9,8 +9,8 @@
 ```vue
 <template>
   <n-image-contrast
-    before-img="../public/before.webp"
-    after-img="../public/after.jpeg"
+    before-img="/before.webp"
+    after-img="/after.jpeg"
     img-height="450px"
     beforeSize="200KB"
     afterSize="35KB"
@@ -18,8 +18,8 @@
   <div class="container">
     <div class="info">自定义 title 展示</div>
     <n-image-contrast
-      before-img="../public/before.webp"
-      after-img="../public/after.jpeg"
+      before-img="/before.webp"
+      after-img="/after.jpeg"
       img-height="450px"
       beforeSize="200KB"
       afterSize="35KB"
@@ -73,8 +73,8 @@
 ```vue
 <template>
   <ImageContrast
-    before-img="../public/before.webp"
-    after-img="../public/after.jpeg"
+    before-img="/before.webp"
+    after-img="/after.jpeg"
     img-height="450px"
     beforeSize="200KB"
     afterSize="35KB"
@@ -82,8 +82,8 @@
   <div class="container">
     <div class="info">自定义 title 展示</div>
     <ImageContrast
-      before-img="../public/before.webp"
-      after-img="../public/after.jpeg"
+      before-img="/before.webp"
+      after-img="/after.jpeg"
       img-height="450px"
       beforeSize="200KB"
       afterSize="35KB"
