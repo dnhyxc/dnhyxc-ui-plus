@@ -14,6 +14,6 @@ try {
   execSync(command, { stdio: 'inherit' });
 } catch (err) {
   // eslint-disable-next-line no-console
-  console.error(`测试失败: ${err.message}`);
+  console.error(`测试失败: ${(err as Error).message}`);
   process.exit(1);
 }
