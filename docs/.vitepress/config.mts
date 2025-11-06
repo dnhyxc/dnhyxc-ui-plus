@@ -41,11 +41,15 @@ export default defineConfig({
     sidebar: {
       '/guide/': [
         {
-          text: '指南',
+          text: '基础',
           items: [
             { text: '安装', link: '/guide/installation' },
             { text: '快速上手', link: '/guide/quick-start' }
           ]
+        },
+        {
+          text: '进阶',
+          items: [{ text: '更改组件默认样式', link: '/guide/change-style' }]
         }
       ],
       '/components/': [
