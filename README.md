@@ -374,7 +374,7 @@ export default {
 
 ### 自动创建新组件文件夹
 
-为了在每次新增组件时，都要手动在 `packages/components/src` 文件夹下创建新组件时，都要对应的创建 `style/index.scss`、`index.ts`、`index.vue`、`types.ts` 文件，因此，我们可以实现一个自动创建的脚本。
+为了在每次新增组件时，都要手动在 `packages/components/src` 文件夹下创建对应的组件文件夹，同时在该文件夹中创建 `style/index.scss`、`index.ts`、`index.vue`、`types.ts` 文件，因此，我们可以实现一个自动创建的脚本。
 
 首先在 `packages/components/scripts` 文件夹下创建 `create/index.ts` 文件，同时在项目根目录下安装 [`chalk`](https://www.npmjs.com/package/chalk) 插件，这样就能优美的现实日志了，内容如下：
 
