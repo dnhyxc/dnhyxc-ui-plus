@@ -9,7 +9,7 @@
     "dev:play": "pnpm -C play dev",
     "vitest": "pnpm -C packages/components test",
     "vitest:coverage": "pnpm -C packages/components coverage",
-    "publish": "pnpm run build && pnpm changeset && pnpm changeset version && pnpm changeset publish && node ./packages/components/scripts/version/index.js",
+    "publish": "pnpm run build && pnpm changeset && pnpm changeset version && pnpm changeset publish && tsx ./packages/components/scripts/version/index.ts",
     "prepare": "husky install",
     "commit": "git-cz",
     "test": "eslint ./packages  --ext ts,vue,js --fix"
@@ -61,6 +61,7 @@
     "rimraf": "^6.0.1",
     "sass": "^1.89.2",
     "sucrase": "^3.35.0",
+    "tsx": "^4.20.6",
     "typescript": "^5.3.3",
     "typescript-eslint": "^8.35.1",
     "unplugin-auto-import": "^19.3.0",

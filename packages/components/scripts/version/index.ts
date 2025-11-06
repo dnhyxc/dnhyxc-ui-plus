@@ -6,7 +6,7 @@ import { writeFileSync, readFileSync } from 'fs';
 const __filenameNew = fileURLToPath(import.meta.url);
 const __dirnameNew = path.dirname(__filenameNew);
 
-export const getPath = (_path) => path.resolve(__dirnameNew, _path);
+export const getPath = (_path: string) => path.resolve(__dirnameNew, _path);
 
 const updateVerison = () => {
   const dnhyxcUIPlusMdPath = getPath('../../../dnhyxc-ui-plus/package.json');
@@ -21,7 +21,7 @@ const updateVerison = () => {
     writeFileSync(componentsPkgPath, JSON.stringify(componentsPkg, null, 2));
     console.log(`✨ @dnhyxc-ui/components package.json version 已更新为 ${dnhyxcUIPlusPkg.version}`);
   } catch (err) {
-    console.error(`package.json 写入错误: ${err.message}`);
+    console.error(`package.json 写入错误: ${(err as Error).message}`);
   }
 };
 
