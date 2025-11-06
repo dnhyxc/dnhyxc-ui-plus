@@ -1,6 +1,7 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { writeFileSync, readFileSync } from 'fs';
+import { log, greenBright, redBright } from '../../utils/log.ts';
 
 // 通过改写__dirname 为__dirnameNew，解决打包报错
 const __filenameNew = fileURLToPath(import.meta.url);
@@ -19,9 +20,12 @@ const updateVerison = () => {
 
   try {
     writeFileSync(componentsPkgPath, JSON.stringify(componentsPkg, null, 2));
-    console.log(`✨ @dnhyxc-ui/components package.json version 已更新为 ${dnhyxcUIPlusPkg.version}`);
+    console.log(
+      log.success,
+      greenBright(`✨ @dnhyxc-ui/components package.json version 已更新为 ${dnhyxcUIPlusPkg.version}`)
+    );
   } catch (err) {
-    console.error(`package.json 写入错误: ${(err as Error).message}`);
+    console.log(log.error, redBright(`package.json 写入错误: ${(err as Error).message}`));
   }
 };
 

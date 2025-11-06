@@ -39,3 +39,55 @@ const isUnicodeSupported = () => {
 };
 
 export const log = isUnicodeSupported() ? main : fallback;
+
+export const greenBright = (text: string) => {
+  return chalk.greenBright(text);
+};
+
+export const yellowBright = (text: string) => {
+  return chalk.yellowBright(text);
+};
+
+export const redBright = (text: string) => {
+  return chalk.redBright(text);
+};
+
+export const blueBright = (text: string) => {
+  return chalk.blueBright(text);
+};
+
+export const cyanBright = (text: string) => {
+  return chalk.cyanBright(text);
+};
+
+export const whiteBright = (text: string) => {
+  return chalk.whiteBright(text);
+};
+
+export const gray = (text: string) => {
+  return chalk.gray(text);
+};
+
+export const white = (text: string) => {
+  return chalk.white(text);
+};
+
+export const red = (text: string) => {
+  return chalk.red(text);
+};
+
+export const blue = (text: string) => {
+  return chalk.blue(text);
+};
+
+export const yellow = (text: string) => {
+  return chalk.yellow(text);
+};
+
+export const green = (text: string) => {
+  return chalk.green(text);
+};
+
+export const cyan = (text: string) => {
+  return chalk.cyan(text);
+};
