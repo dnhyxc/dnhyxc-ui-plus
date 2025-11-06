@@ -13,14 +13,12 @@ export const getPath = (_path: string) => path.resolve(__dirnameNew, _path);
 const [, , componentName] = process.argv;
 
 if (!componentName) {
-  // eslint-disable-next-line no-console
   console.log(log.warning, chalk.yellowBright('请在终端中输入需要创建的组件名称'));
   process.exit(1);
 }
 
 const createFolder = (dir: string) => {
   if (fs.existsSync(dir)) {
-    // eslint-disable-next-line no-console
     console.log(log.warning, `${chalk.redBright(`${componentName} 文件夹已存在：`)}${chalk.yellowBright(targetDir)}`);
     process.exit(1);
   }
@@ -29,12 +27,11 @@ const createFolder = (dir: string) => {
 
 const createFile = (filePath: string, content = '') => {
   if (fs.existsSync(filePath)) {
-    // eslint-disable-next-line no-console
     console.log(log.warning, `${chalk.redBright('文件已存在：')}${chalk.yellowBright(filePath)}`);
     return;
   }
   fs.writeFileSync(filePath, content, 'utf8');
-  // eslint-disable-next-line no-console
+
   console.log(log.success, chalk.greenBright(`已创建文件：${filePath}`));
 };
 
