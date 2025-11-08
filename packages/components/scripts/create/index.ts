@@ -39,6 +39,8 @@ const createFile = (filePath: string, content = '') => {
 // 创建组件文件夹
 const targetDir = path.join(getPath('../../src'), componentName);
 const styleDir = path.join(targetDir, 'style');
+// 组件文档文件目录
+const docFilePath = getPath('../../../../docs/components');
 
 // 创建 style 文件夹
 createFolder(styleDir);
@@ -48,5 +50,7 @@ createFolder(styleDir);
   path.join(styleDir, 'index.scss'),
   path.join(targetDir, 'index.vue'),
   path.join(targetDir, 'index.ts'),
-  path.join(targetDir, 'types.ts')
+  path.join(targetDir, 'types.ts'),
+  // 在根目录 docs 文件夹中创建组件文档
+  path.join(docFilePath, `${componentName}.md`)
 ].forEach((filePath) => createFile(filePath));

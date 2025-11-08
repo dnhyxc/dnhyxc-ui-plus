@@ -5,7 +5,7 @@
  * index.vue
 -->
 <template>
-  <div class="model-wrap">
+  <div :class="bem.b()">
     <el-dialog
       v-model="visible"
       destroy-on-close
@@ -15,6 +15,7 @@
       :title="title"
       :width="width"
       :draggable="draggable"
+      :style="padding ? `padding: ${padding}` : ''"
     >
       <slot name="content"></slot>
       <template v-if="footer" #footer>
@@ -31,23 +32,19 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
+import { createNamespace } from '../../utils';
+import { NModelOptions } from './types';
+import './style/index.scss';
 
-interface IProps {
-  visible: boolean;
-  title?: string;
-  width?: string;
-  footer?: boolean;
-  draggable?: boolean;
-  onClick?: Function | null;
-  center?: boolean;
-  modal?: boolean;
-  size?: string;
-  padding?: string;
-}
+const bem = createNamespace('model');
 
-const props = withDefaults(defineProps<IProps>(), {
+defineOptions({
+  name: 'n-model'
+});
+
+const props = withDefaults(defineProps<NModelOptions>(), {
   title: '',
-  width: '400px',
+  width: 'auto',
   footer: true,
   draggable: true,
   onClick: null,
@@ -73,20 +70,3 @@ const onClick = () => {
   visible.value = false;
 };
 </script>
-
-<style scoped lang="less">
-.model-wrap {
-  :deep {
-    .el-dialog__body {
-      padding: v-bind('`${props.padding}`') !important;
-    }
-  }
-
-  .dialog-footer {
-    .btn {
-      width: 120px;
-      height: 33px;
-    }
-  }
-}
-</style>

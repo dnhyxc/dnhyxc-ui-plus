@@ -58,7 +58,8 @@ export default defineConfig({
           items: [
             { text: 'Button 按钮', link: '/components/button' },
             { text: 'Input 文本输入', link: '/components/input' },
-            { text: 'Icon 图标', link: '/components/icon' }
+            { text: 'Icon 图标', link: '/components/icon' },
+            { text: 'Model 弹窗', link: '/components/model' }
           ]
         },
         {
