@@ -13,7 +13,7 @@
       <div class="content">弹窗内容</div>
     </template>
   </n-model>
-  <n-button @click="visible = true">打开</n-button>
+  <n-button type="primary" @click="visible = true">打开</n-button>
 </template>
 
 <script setup lang="ts">
@@ -29,6 +29,7 @@ const visible = ref(false);
   align-items: center;
   width: 600px;
   height: 300px;
+  padding: 0 !important;
 }
 </style>
 ```
