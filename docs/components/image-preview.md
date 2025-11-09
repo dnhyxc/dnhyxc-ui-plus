@@ -39,8 +39,8 @@
       <div>footer</div>
     </template>
   </n-image-preview>
-  <n-button type="primary" @click="previewVisible1 = true">查看图片</n-button>
-  <n-button type="primary" @click="previewVisible2 = true">查看图片</n-button>
+  <n-button type="primary" @click="previewVisible1 = true">查看图片1</n-button>
+  <n-button type="primary" style="margin-left: 10px" @click="previewVisible2 = true">查看图片2</n-button>
 </template>
 
 <script setup lang="ts">
@@ -85,7 +85,7 @@ const showOtherModel = () => {
 ```vue
 <template>
   <ImagePreview
-    v-model:visible="previewVisible"
+    v-model:visible="previewVisible1"
     width="75vw"
     closeOnClickModal
     :image-list="imageList"
@@ -96,14 +96,31 @@ const showOtherModel = () => {
     }"
     :getImgSizeFromUrl="getImgSizeFromUrl"
   />
-  <n-button type="primary" @click="previewVisible = true">查看图片</n-button>
+  <ImagePreview
+    v-model:visible="previewVisible2"
+    closeOnClickModal
+    :image-list="imageList"
+    :selectd-image="{
+      url: 'https://files.codelife.cc/wallhaven/full/o5/wallhaven-o5jjg5.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
+    }"
+    width="75vw"
+    style="background: rgba(0, 0, 0, 0.5);"
+    :showOtherModel="showOtherModel"
+  >
+    <template #footer>
+      <div>footer</div>
+    </template>
+  </ImagePreview>
+  <Button type="primary" @click="previewVisible1 = true">查看图片1</Button>
+  <Button type="primary" style="margin-left: 10px" @click="previewVisible2 = true">查看图片2</Button>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { ImagePreview } from 'dnhyxc-ui-plus';
+import { ImagePreview, Button } from 'dnhyxc-ui-plus';
 
-const previewVisible = ref(false);
+const previewVisible1 = ref(false);
+const previewVisible2 = ref(false);
 
 const imageList = [
   {

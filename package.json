@@ -3,10 +3,10 @@
   "version": "0.0.1",
   "scripts": {
     "build": "gulp -f packages/components/scripts/build/index.ts",
-    "dev:docs": "pnpm -C docs dev",
+    "docs": "pnpm -C docs dev",
     "build:docs": "pnpm -C docs build",
     "preview:docs": "pnpm -C docs preview",
-    "dev:play": "pnpm -C play dev",
+    "play": "pnpm -C play dev",
     "vitest": "pnpm -C packages/components test",
     "vitest:coverage": "pnpm -C packages/components coverage",
     "vitest:component": "pnpm -C packages/components run test:component",
