@@ -6,23 +6,33 @@
 -->
 <template>
   <div :class="bem.b()">
-    <el-dialog
-      v-model="visible"
-      destroy-on-close
-      :center="center"
-      :modal="modal"
-      align-center
-      :title="title"
-      :width="width"
-      :draggable="draggable"
-      :style="padding ? `padding: ${padding}` : ''"
-    >
+    <el-dialog v-model="visible" destroy-on-close :style="padding ? `padding: ${padding}` : ''" v-bind="props">
+      <template #header="{ close, titleId, titleClass }">
+        <slot name="header" v-bind="{ close, titleId, titleClass }"></slot>
+      </template>
       <slot name="content"></slot>
-      <template v-if="footer" #footer>
+      <template v-if="showFooter" #footer>
         <slot name="footer">
           <span class="dialog-footer">
-            <el-button class="btn" :size="size" @click="visible = false">取消</el-button>
-            <el-button class="btn" :size="size" type="primary" @click="onClick">确定</el-button>
+            <n-button
+              class="btn close-btn"
+              :size="size"
+              :width="footerBtnWidth"
+              :height="footerBtnHeight"
+              @click="visible = false"
+            >
+              {{ cancelText }}
+            </n-button>
+            <n-button
+              class="btn"
+              :size="size"
+              type="primary"
+              :width="footerBtnWidth"
+              :height="footerBtnHeight"
+              @click="onClick"
+            >
+              {{ okText }}
+            </n-button>
           </span>
         </slot>
       </template>
@@ -44,14 +54,20 @@ defineOptions({
 
 const props = withDefaults(defineProps<NModelOptions>(), {
   title: '',
-  width: 'auto',
-  footer: true,
-  draggable: true,
+  width: (props) => (props.alignCenter ? 'auto' : '640px'),
+  showFooter: true,
+  draggable: false,
   onClick: null,
-  center: true,
+  center: false,
   modal: true,
   size: 'default',
-  padding: '10px 20px 20px'
+  padding: '10px 20px 20px',
+  alignCenter: false,
+  showClose: true,
+  footerBtnWidth: 120,
+  footerBtnHeight: 32,
+  cancelText: '取消',
+  okText: '确定'
 });
 
 const emit = defineEmits(['update:visible']);

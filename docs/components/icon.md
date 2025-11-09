@@ -72,6 +72,12 @@ const data = [
     description: '图标颜色',
   },
   {
+    name: 'hoverColor',
+    type: 'string',
+    default: '',
+    description: '图标 hover 颜色',
+  },
+  {
     name: 'width',
     type: 'string',
     default: '',

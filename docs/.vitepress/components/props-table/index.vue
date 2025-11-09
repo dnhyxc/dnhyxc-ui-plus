@@ -2,17 +2,17 @@
   <table>
     <thead>
       <tr>
-        <th style="width: 200px">名称</th>
+        <th style="width: 200px">{{ nameText }}</th>
         <th style="width: 1200px">说明</th>
-        <th style="width: 1000px">类型</th>
-        <th style="width: 300px">默认值</th>
+        <th v-if="showType" style="width: 1000px">类型</th>
+        <th v-if="showDefault" style="width: 300px">默认值</th>
       </tr>
     </thead>
     <tbody>
       <tr v-for="prop in data" :key="prop.name">
         <td>{{ prop.name }}</td>
         <td>{{ prop.description }}</td>
-        <td>
+        <td v-if="showType">
           <code>{{ prop.type }}</code>
           <el-tooltip v-if="prop.typeEnum" placement="top" effect="light" trigger="hover" popper-class="props-tooltip">
             <template #content>
@@ -34,7 +34,7 @@
             />
           </el-tooltip>
         </td>
-        <td>
+        <td v-if="showDefault">
           <code v-if="prop.default">{{ prop.default }}</code>
           <span v-else>-</span>
         </td>
@@ -56,9 +56,16 @@ interface IProps {
     description: string;
     typeEnum?: string[];
   }[];
+  nameText?: string;
+  showType?: boolean;
+  showDefault?: boolean;
 }
 
-defineProps<IProps>();
+withDefaults(defineProps<IProps>(), {
+  nameText: '属性名',
+  showType: true,
+  showDefault: true
+});
 </script>
 
 <style scoped lang="scss">

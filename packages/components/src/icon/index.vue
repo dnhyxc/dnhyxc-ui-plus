@@ -4,6 +4,8 @@
     :class="className"
     v-bind="$attrs"
     :style="`cursor: ${cursor}`"
+    @mouseenter="hoverColor ? onMouseEnter() : null"
+    @mouseleave="hoverColor ? onMouseLeave() : null"
     v-html="getSvg(name, { size, width, height, color })"
   />
 </template>
@@ -27,8 +29,18 @@ const className = [bem.b(), props.className].filter(Boolean).join(' ');
 
 const iconRef = ref<HTMLElement>();
 
+const color = ref(props.color);
+
 defineExpose({
   getSvg,
   iconRef
 });
+
+const onMouseEnter = () => {
+  color.value = props.hoverColor || props.color;
+};
+
+const onMouseLeave = () => {
+  color.value = props.color;
+};
 </script>

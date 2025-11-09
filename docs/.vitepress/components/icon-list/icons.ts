@@ -20,7 +20,8 @@ export const icons = [
       'download',
       'reset',
       'left-arrow',
-      'right-arrow'
+      'right-arrow',
+      'close'
     ]
   },
   {

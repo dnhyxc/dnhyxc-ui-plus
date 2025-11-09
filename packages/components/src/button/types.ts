@@ -4,12 +4,13 @@ import type Button from './index.vue';
 export const buttonProps = {
   size: String as PropType<'large' | 'default' | 'small'>,
   color: String,
+  hoverColor: String,
   disabled: Boolean,
   loading: Boolean,
   link: Boolean,
   type: String as PropType<'primary' | 'success' | 'warning' | 'danger' | 'info' | 'text'>,
-  width: String,
-  height: String,
+  width: Number,
+  height: Number,
   className: String,
   onClick: Function as PropType<(e: MouseEvent) => void>
 } as const;

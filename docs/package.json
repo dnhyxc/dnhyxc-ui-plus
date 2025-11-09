@@ -4,7 +4,7 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "vitepress dev",
+    "dev": "vitepress dev --watch docs",
     "build": "vitepress build",
     "preview": "vitepress preview",
     "release": "npx dnhyxc-ci publish docs",
