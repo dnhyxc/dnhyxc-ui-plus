@@ -1,4 +1,5 @@
 import type NImagePreview from './index.vue';
+import { ModelOptions } from '../model/types';
 
 interface ImageTransformInfo {
   scale: number;
@@ -16,19 +17,17 @@ interface DownloadParams {
   mark?: string;
 }
 
-export interface ImagePreviewOptions {
+export interface ImagePreviewOptions extends ModelOptions {
+  visible: boolean;
   selectdImage: {
     url: string;
     size?: number;
     id?: string;
     [key: string]: unknown;
   };
-  previewVisible: boolean;
-  dialogWidth?: string;
-  dialogStyle?: string;
   imageTransformInfo?: ImageTransformInfo;
   showPrevAndNext?: boolean;
-  showOtherModal?: () => void;
+  showOtherModel?: () => void;
   imageSize?: string;
   title?: string;
   imageList?: {

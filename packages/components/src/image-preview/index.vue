@@ -6,142 +6,147 @@
 -->
 <template>
   <div :class="bem.b()">
-    <el-dialog
-      v-model="visible"
-      :close-on-click-modal="closeOnClickModal || false"
-      align-center
-      :width="dialogWidth || '800px'"
-      :style="dialogStyle"
-      @close="onClose"
-    >
+    <Model v-bind="props" v-model:visible="visible" :close="onClose" :show-footer="!!slots.footer">
       <template #header>
-        <div class="actions">
-          <span class="title">
-            {{ title || '图片预览' }}
-          </span>
-          <slot name="actions">
-            <div class="icon-list">
-              <el-tooltip
-                v-if="showZoomIn"
-                effect="light"
-                :content="isMaxed ? '不能再大了' : '放大'"
-                placement="top"
-                popper-class="custom-dropdown-styles"
-              >
-                <Icon
-                  name="zoom-in"
-                  size="20"
-                  color="var(--icon-color)"
-                  class-name="icon"
-                  @click="() => onScaleMax()"
-                />
-              </el-tooltip>
-              <el-tooltip
-                v-if="showZoomOut"
-                effect="light"
-                :content="isMined ? '不能再小了' : '缩小'"
-                placement="top"
-                popper-class="custom-dropdown-styles"
-              >
-                <Icon
-                  name="zoom-out"
-                  size="20"
-                  color="var(--icon-color)"
-                  class-name="icon"
-                  @click="() => onScaleMin()"
-                />
-              </el-tooltip>
-              <el-tooltip
-                v-if="showRotate"
-                effect="light"
-                content="旋转"
-                placement="top"
-                popper-class="custom-dropdown-styles"
-              >
-                <Icon name="rotate" size="20" color="var(--icon-color)" class-name="icon" @click="onRotate" />
-              </el-tooltip>
-              <el-tooltip
-                v-if="download || showDownload"
-                effect="light"
-                content="下载"
-                placement="top"
-                popper-class="custom-dropdown-styles"
-              >
-                <Icon name="download" size="20" color="var(--icon-color)" class-name="icon" @click="onDownload" />
-              </el-tooltip>
-              <el-tooltip
-                v-if="showReset"
-                effect="light"
-                content="重置"
-                placement="top"
-                popper-class="custom-dropdown-styles"
-              >
-                <Icon name="reset" size="20" color="var(--icon-color)" class-name="icon" @click="onRefresh" />
-              </el-tooltip>
-              <el-tooltip
-                v-if="showPrevAndNext && prevImages.length > 1"
-                effect="light"
-                content="上一张"
-                placement="top"
-                popper-class="custom-dropdown-styles"
-              >
-                <Icon name="left-arrow" size="20" color="var(--icon-color)" class-name="icon" @click="onPrev" />
-              </el-tooltip>
-              <el-tooltip
-                v-if="showPrevAndNext && prevImages.length > 1"
-                effect="light"
-                content="下一张"
-                placement="top"
-                popper-class="custom-dropdown-styles"
-              >
-                <Icon name="right-arrow" size="20" color="var(--icon-color)" class-name="icon" @click="onNext" />
-              </el-tooltip>
-              <span class="info-list">
-                <span v-if="fileSize" class="size info">{{ fileSize?.toFixed(2) }} KB</span>
-                <span v-if="imageSize" class="size info">{{ imageSize }}</span>
-                <slot
-                  v-if="prevImages && prevImages.length"
-                  name="info"
-                  :data="prevImages?.find((i: any) => i.url === currentImage.url)"
-                  class="info"
-                ></slot>
-              </span>
-            </div>
-          </slot>
-        </div>
+        <slot name="header">
+          <div class="actions">
+            <span class="title">
+              {{ title || '图片预览' }}
+            </span>
+            <slot name="actions">
+              <div class="icon-list">
+                <el-tooltip
+                  v-if="showZoomIn"
+                  effect="light"
+                  :content="isMaxed ? '不能再大了' : '放大'"
+                  placement="top"
+                  popper-class="custom-dropdown-styles"
+                >
+                  <Icon
+                    name="zoom-in"
+                    size="20"
+                    color="var(--icon-color)"
+                    class-name="icon"
+                    @click="() => onScaleMax()"
+                  />
+                </el-tooltip>
+                <el-tooltip
+                  v-if="showZoomOut"
+                  effect="light"
+                  :content="isMined ? '不能再小了' : '缩小'"
+                  placement="top"
+                  popper-class="custom-dropdown-styles"
+                >
+                  <Icon
+                    name="zoom-out"
+                    size="20"
+                    color="var(--icon-color)"
+                    class-name="icon"
+                    @click="() => onScaleMin()"
+                  />
+                </el-tooltip>
+                <el-tooltip
+                  v-if="showRotate"
+                  effect="light"
+                  content="旋转"
+                  placement="top"
+                  popper-class="custom-dropdown-styles"
+                >
+                  <Icon name="rotate" size="20" color="var(--icon-color)" class-name="icon" @click="onRotate" />
+                </el-tooltip>
+                <el-tooltip
+                  v-if="download || showDownload"
+                  effect="light"
+                  content="下载"
+                  placement="top"
+                  popper-class="custom-dropdown-styles"
+                >
+                  <Icon name="download" size="20" color="var(--icon-color)" class-name="icon" @click="onDownload" />
+                </el-tooltip>
+                <el-tooltip
+                  v-if="showReset"
+                  effect="light"
+                  content="重置"
+                  placement="top"
+                  popper-class="custom-dropdown-styles"
+                >
+                  <Icon name="reset" size="20" color="var(--icon-color)" class-name="icon" @click="onRefresh" />
+                </el-tooltip>
+                <el-tooltip
+                  v-if="showPrevAndNext && prevImages.length > 1"
+                  effect="light"
+                  content="上一张"
+                  placement="top"
+                  popper-class="custom-dropdown-styles"
+                >
+                  <Icon name="left-arrow" size="20" color="var(--icon-color)" class-name="icon" @click="onPrev" />
+                </el-tooltip>
+                <el-tooltip
+                  v-if="showPrevAndNext && prevImages.length > 1"
+                  effect="light"
+                  content="下一张"
+                  placement="top"
+                  popper-class="custom-dropdown-styles"
+                >
+                  <Icon name="right-arrow" size="20" color="var(--icon-color)" class-name="icon" @click="onNext" />
+                </el-tooltip>
+                <span class="info-list">
+                  <span v-if="fileSize" class="size info">{{ fileSize?.toFixed(2) }} KB</span>
+                  <span v-if="imageSize" class="size info">{{ imageSize }}</span>
+                  <slot
+                    v-if="prevImages && prevImages.length"
+                    name="info"
+                    :data="prevImages?.find((i: any) => i.url === currentImage.url)"
+                    class="info"
+                  ></slot>
+                </span>
+              </div>
+            </slot>
+          </div>
+        </slot>
       </template>
-      <div class="image-preview-wrap">
-        <img
-          ref="imgRef"
-          v-move.imageInfo="imageTransformInfo || imageInfo"
-          :src="currentImage.url"
-          alt=""
-          class="preview-img"
-          :style="{
-            transform: `rotate(${imageTransformInfo?.rotate || imageInfo.rotate}deg) scale(${imageTransformInfo?.scale || imageInfo.scale})`
-          }"
-          @wheel.stop="onWheel"
-        />
-      </div>
-    </el-dialog>
+      <template #content>
+        <slot name="content">
+          <div class="image-preview-wrap">
+            <img
+              ref="imgRef"
+              v-move.imageInfo="imageTransformInfo || imageInfo"
+              :src="currentImage.url"
+              alt=""
+              class="preview-img"
+              :style="{
+                transform: `rotate(${imageTransformInfo?.rotate || imageInfo.rotate}deg) scale(${imageTransformInfo?.scale || imageInfo.scale})`
+              }"
+              @wheel.stop="onWheel"
+            />
+          </div>
+        </slot>
+      </template>
+      <template #footer>
+        <slot name="footer"></slot>
+      </template>
+    </Model>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, ref, watch, nextTick, DirectiveBinding } from 'vue';
-import { ElDialog, ElTooltip } from 'element-plus';
+import { computed, reactive, ref, watch, nextTick, DirectiveBinding, useSlots } from 'vue';
+import { ElTooltip } from 'element-plus';
 import { createNamespace } from '../../utils';
 import { Icon } from '../icon';
+import { Model } from '../model';
 import { ImagePreviewOptions } from './types';
-import 'element-plus/es/components/dialog/style/css';
 import 'element-plus/es/components/tooltip/style/css';
 import './style/index.scss';
 
 const bem = createNamespace('image-preview');
 
 defineOptions({
-  name: 'n-image-preview'
+  name: 'n-image-preview',
+  inheritAttrs: false // 禁止自动继承属性
 });
+
+const slots = useSlots();
 
 const props = withDefaults(defineProps<ImagePreviewOptions>(), {
   showZoomIn: true,
@@ -149,7 +154,8 @@ const props = withDefaults(defineProps<ImagePreviewOptions>(), {
   showRotate: true,
   showReset: true,
   showPrevAndNext: true,
-  closeOnClickModal: true
+  closeOnClickModal: true,
+  showClose: true
 });
 
 // 局部注册自定义指令：v-move
@@ -233,7 +239,7 @@ const isMaxed = ref<boolean>(false);
 const isMined = ref<boolean>(false);
 const fileSize = ref<number | null>(0);
 
-const emit = defineEmits(['update:previewVisible']);
+const emit = defineEmits(['update:visible']);
 
 const onComputedImgSize = async (url: string, size?: number) => {
   if (props?.imageSize) {
@@ -251,10 +257,10 @@ const onComputedImgSize = async (url: string, size?: number) => {
 
 const visible = computed({
   get() {
-    return props.previewVisible;
+    return props.visible;
   },
   async set(visible: boolean) {
-    emit('update:previewVisible', visible);
+    emit('update:visible', visible);
     onRefresh();
   }
 });
@@ -264,7 +270,7 @@ const prevImages = computed(() => {
 });
 
 watch(
-  () => [props.previewVisible, props.selectdImage],
+  () => [open, props.selectdImage],
   async (newVal) => {
     if (newVal[0]) {
       currentImage.value = newVal[1] as ImagePreviewOptions['selectdImage'];
@@ -317,7 +323,7 @@ watch(
 
 // 关闭弹窗时，开启父弹窗
 const onClose = () => {
-  props?.showOtherModal?.();
+  props?.showOtherModel?.();
 };
 
 const onWheel = (e: WheelEvent) => {

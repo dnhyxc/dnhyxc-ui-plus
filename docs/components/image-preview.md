@@ -9,22 +9,46 @@
 ```vue
 <template>
   <n-image-preview
-    v-model:previewVisible="previewVisible"
+    v-model:visible="previewVisible1"
     closeOnClickModal
     :image-list="imageList"
     :selectd-image="{
       url: 'https://files.codelife.cc/wallhaven/full/o5/wallhaven-o5jjg5.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
     }"
-    dialogStyle="background: rgba(0, 0, 0, 0.5);"
+    width="75vw"
+    style="background: rgba(0, 0, 0, 0.5);"
   >
   </n-image-preview>
-  <n-button type="primary" @click="previewVisible = true">查看图片</n-button>
+  <n-model v-model:visible="visible" title="其他弹窗">
+    <template #content>
+      <div>其他的弹窗</div>
+    </template>
+  </n-model>
+  <n-image-preview
+    v-model:visible="previewVisible2"
+    closeOnClickModal
+    :image-list="imageList"
+    :selectd-image="{
+      url: 'https://files.codelife.cc/wallhaven/full/o5/wallhaven-o5jjg5.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
+    }"
+    width="75vw"
+    style="background: rgba(0, 0, 0, 0.5);"
+    :showOtherModel="showOtherModel"
+  >
+    <template #footer>
+      <div>footer</div>
+    </template>
+  </n-image-preview>
+  <n-button type="primary" @click="previewVisible1 = true">查看图片</n-button>
+  <n-button type="primary" @click="previewVisible2 = true">查看图片</n-button>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const previewVisible = ref(false);
+const visible = ref(false);
+const previewVisible1 = ref(false);
+const previewVisible2 = ref(false);
 
 // 不传 id 时，会根据 url 进行匹配，因此需要确保每个 url 都是唯一的
 const imageList = [
@@ -38,6 +62,10 @@ const imageList = [
     url: 'https://files.codelife.cc/wallhaven/full/83/wallhaven-83ywmo.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
   }
 ];
+
+const showOtherModel = () => {
+  visible.value = true;
+};
 </script>
 
 <style lang="scss" scoped>
@@ -57,8 +85,8 @@ const imageList = [
 ```vue
 <template>
   <ImagePreview
-    v-model:previewVisible="previewVisible"
-    dialog-width="800px"
+    v-model:visible="previewVisible"
+    width="75vw"
     closeOnClickModal
     :image-list="imageList"
     show-download
@@ -151,7 +179,7 @@ const onDownload = (imageInfo: any) => {
 <script>
 const data = [
   {
-    name: 'previewVisible',
+    name: 'visible',
     type: 'boolean',
     default: 'false',
     description: '是否展示图片预览弹窗',
@@ -162,14 +190,20 @@ const data = [
     default: '',
     description: '当前选中需要预览的图片',
   },
+    {
+    name: 'imageList',
+    type: `{url: string, size: number, id: string}`,
+    default: '',
+    description: '需要预览的图片列表',
+  },
   {
-    name: 'dialogWidth',
+    name: 'width',
     type: 'string',
     default: '800px',
     description: '图片预览弹窗的宽度',
   },
   {
-    name: 'dialogStyle',
+    name: 'style',
     type: 'string',
     default: '',
     description: '图片预览弹窗的样式',
@@ -187,7 +221,7 @@ const data = [
     description: '是否展示上一张和下一张按钮',
   },
   {
-    name: 'showWaterModal',
+    name: 'showOtherModel',
     type: 'function',
     default: '',
     description: '是否在关闭当前弹窗时开启其他弹窗',
@@ -203,12 +237,6 @@ const data = [
     type: 'string',
     default: '图片预览',
     description: '图片预览弹窗的标题',
-  },
-  {
-    name: 'imageList',
-    type: `{url: string, size: number, id: string}`,
-    default: '',
-    description: '需要预览的图片列表',
   },
   {
     name: 'closeOnClickModal',
@@ -272,8 +300,35 @@ const data = [
     type: `(url: string) => string`,
     default: '',
     description: '修改图片地址域名的方法',
+  }
+];
+
+const slots = [
+  {
+    name: 'header',
+    type: '',
+    default: '',
+    description: '对话框标题的内容；会替换标题部分，但不会移除关闭按钮',
   },
+  {
+    name: 'content',
+    type: '',
+    default: '',
+    description: '对话框的内容',
+  },
+  {
+    name: 'footer',
+    type: '',
+    default: '',
+    description: 'Dialog 按钮操作区的内容',
+  }
 ];
 </script>
 
 <props-table :data="data" />
+
+剩余其他属性请参考 [Model](/components/model) 组件。
+
+### ImageProps Slots
+
+<props-table :data="slots" name-text="插槽名称" :show-type="false" :show-default="false" />

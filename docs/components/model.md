@@ -93,7 +93,7 @@ const visible2 = ref(false);
       <div class="content">弹窗1内容</div>
     </template>
   </Model>
-  <Model v-model:visible="visible2" :show-close="false">
+  <Model v-model:visible="visible2" :show-close="false" draggable>
     <!-- 自定义标题透传的 close, titleId, titleClass 参数-->
     <template #header="{ close, titleId, titleClass }">
       <div class="header">
@@ -187,65 +187,11 @@ const data = [
     default: '',
     description: '弹窗宽度',
   },
-  {
-    name: 'showFooter',
-    type: 'boolean',
-    default: '',
-    description: '是否显示底部',
-  },
-  {
+    {
     name: 'draggable',
     type: 'boolean',
     default: '',
     description: '是否可拖拽',
-  },
-  {
-    name: 'onClick',
-    type: '(() => void) | null',
-    default: '',
-    description: '弹窗确定按钮点击事件',
-  },
-  {
-    name: 'modal',
-    type: 'boolean',
-    default: '',
-    description: '是否显示遮罩层',
-  },
-  {
-    name: 'size',
-    type: 'string',
-    default: '',
-    description: '图标高度',
-  },
-  {
-    name: 'footerBtnWidth',
-    type: 'number',
-    default: '',
-    description: '底部操作按钮宽度',
-  },
-  {
-    name: 'footerBtnHeight',
-    type: 'string',
-    default: '',
-    description: '底部操作按钮高度',
-  },
-  {
-    name: 'cancelText',
-    type: 'string',
-    default: '',
-    description: '取消按钮文案',
-  },
-  {
-    name: 'okText',
-    type: 'string',
-    default: '',
-    description: '确定按钮文案',
-  },
-  {
-    name: 'padding',
-    type: 'string',
-    default: '',
-    description: '弹窗内边距',
   },
   {
     name: 'center',
@@ -266,10 +212,28 @@ const data = [
     description: '是否全屏',
   },
   {
+    name: 'modal',
+    type: 'boolean',
+    default: '',
+    description: '是否显示遮罩层',
+  },
+  {
+    name: 'style',
+    type: 'string',
+    default: '',
+    description: '弹窗自定义样式',
+  },
+  {
     name: 'top',
     type: 'string',
     default: '',
     description: '弹窗 CSS 中的 margin-top 值，默认为 15vh，当设置 alignCenter 为 true 时，top 会不起作用',
+  },
+  {
+    name: 'padding',
+    type: 'string',
+    default: '',
+    description: '弹窗内边距',
   },
   {
     name: 'showClose',
@@ -324,7 +288,55 @@ const data = [
     type: '(done: () => void) => void',
     default: '',
     description: '关闭前的回调，会暂停 Dialog 的关闭。done 用于关闭 Dialog',
-  }
+  },
+  {
+    name: 'size',
+    type: 'string',
+    default: '',
+    description: '图标高度',
+  },
+  {
+    name: 'footerBtnWidth',
+    type: 'number',
+    default: '',
+    description: '底部操作按钮宽度',
+  },
+  {
+    name: 'footerBtnHeight',
+    type: 'string',
+    default: '',
+    description: '底部操作按钮高度',
+  },
+  {
+    name: 'cancelText',
+    type: 'string',
+    default: '',
+    description: '取消按钮文案',
+  },
+  {
+    name: 'okText',
+    type: 'string',
+    default: '',
+    description: '确定按钮文案',
+  },
+  {
+    name: 'showFooter',
+    type: 'boolean',
+    default: '',
+    description: '是否显示底部',
+  },
+  {
+    name: 'onOk',
+    type: '(() => void) | null',
+    default: '',
+    description: '弹窗确定按钮点击事件',
+  },
+  {
+    name: 'onCancel',
+    type: '(() => void) | null',
+    default: '',
+    description: '弹窗取消按钮点击事件',
+  },
 ];
 
 const slots = [

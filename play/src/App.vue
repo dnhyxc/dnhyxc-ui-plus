@@ -22,6 +22,7 @@
   <n-input ref="inputRef" v-model:value="keyword" size="large" placeholder="请输入!!!" @keypress.enter="onKeypress" />
   <n-button
     type="primary"
+    style="margin: 20px 0"
     @click="
       () => {
         console.log(imgList.value, 'click');
@@ -110,11 +111,12 @@
       emptyText="没有图片"
     />
     <n-image-preview
-      v-model:previewVisible="previewVisible"
+      v-model:visible="previewVisible"
       closeOnClickModal
       :selectd-image="selectedImage"
       :imageList="imgList"
       show-download
+      width="70vw"
       :getImgSizeFromUrl="getImgSizeFromUrl"
     />
   </div>
@@ -122,6 +124,33 @@
     beforeImg="https://files.codelife.cc/wallhaven/full/o5/wallhaven-o5jjg5.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp"
     afterImg="https://files.codelife.cc/wallhaven/full/2e/wallhaven-2eq1gy.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp"
   />
+  <n-model v-model:visible="visible1" title="弹窗1" alignCenter>
+    <template #content>
+      <div class="content">弹窗1内容</div>
+    </template>
+  </n-model>
+  <n-model v-model:visible="visible2" :show-close="false" draggable>
+    <!-- 自定义标题透传的 close, titleId, titleClass 参数-->
+    <template #header="{ close, titleId, titleClass }">
+      <div class="header">
+        <div class="title">弹窗2</div>
+        <n-icon name="close" size="18" @click="close" color="#333" cursor="pointer" hoverColor="skyblue" />
+      </div>
+    </template>
+    <template #content>
+      <div class="content">弹窗2内容</div>
+    </template>
+    <template #footer>
+      <div class="footer">
+        <n-button type="primary" @click="visible2 = false">确定</n-button>
+        <n-button class="close-btn" @click="visible2 = false">取消</n-button>
+      </div>
+    </template>
+  </n-model>
+  <div class="button-group">
+    <n-button type="primary" @click="visible1 = true">打开弹窗1</n-button>
+    <n-button type="primary" @click="visible2 = true">打开弹窗2</n-button>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -134,6 +163,8 @@ const inputRef = ref();
 const checked = ref(true);
 const showEmoji = ref(true);
 const previewVisible = ref(false);
+const visible1 = ref(false);
+const visible2 = ref(false);
 
 const imgList = ref<any>([]);
 const selectedImage = ref<any>({});
@@ -207,6 +238,7 @@ const getImgSizeFromUrl = async (
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin: 10px 0;
 
   .n-image {
     // 默认样式，可以通过修改默认样式来修改组件的样式
@@ -223,6 +255,40 @@ const getImgSizeFromUrl = async (
     --image-loading-text-color: #333;
     --image-empty-text-color: #333;
     --image-empty-bg: rgb(226, 222, 222);
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #333;
+}
+
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 600px;
+  height: 300px;
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+
+  .close-btn {
+    margin-left: 10px;
+  }
+}
+
+.button-group {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+
+  .n-button {
+    margin-right: 10px;
   }
 }
 </style>
