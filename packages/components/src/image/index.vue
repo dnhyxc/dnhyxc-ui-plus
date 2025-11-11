@@ -26,14 +26,18 @@
       :class="{ hidden: !loading }"
       :style="`border-radius: ${typeof radius === 'string' ? radius : `${radius}px`}`"
     >
-      <div class="loading">{{ loadingText }}</div>
+      <div class="loading">
+        <slot name="loading">
+          {{ loadingText }}
+        </slot>
+      </div>
     </div>
     <div
       v-if="!loadUrl && !loading"
       class="error"
       :style="`border-radius: ${typeof radius === 'string' ? radius : `${radius}px`}; min-height: ${height === 'auto' ? '186px' : height}`"
     >
-      <div class="loading">{{ errorText }}</div>
+      <div class="error-text">{{ errorText }}</div>
     </div>
   </div>
 </template>
@@ -41,6 +45,7 @@
 <script setup lang="ts">
 import { ref, onMounted, watch, onUnmounted } from 'vue';
 import { ImageOptions } from './types';
+import { Loading } from '../index';
 import { createNamespace } from '../../utils';
 import './style/index.scss';
 

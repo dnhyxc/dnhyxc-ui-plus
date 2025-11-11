@@ -4,9 +4,9 @@
   --image-transition: all 0.3s ease-in-out;
   --image-object-fit: cover;
   --image-error-bg: rgba(0, 0, 0, 0.2);
-  --image-loading-bg: rgba(0, 0, 0, 0.2);
-  --image-loading-text-color: #898989;
-  --image-error-text-color: #898989;
+  --image-loading-bg: rgba(0, 0, 0, 0.5);
+  --image-loading-text-color: #929191;
+  --image-error-text-color: #929191;
   --image-loading-font-size: 16px;
   --image-error-font-size: 14px;
 
@@ -95,6 +95,9 @@
     background-color: var(--image-error-bg);
     color: var(--image-error-text-color);
     font-size: var(--image-error-font-size);
+
+    .error-text {
+    }
   }
 
   .filter-blur {

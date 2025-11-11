@@ -69,7 +69,8 @@ export default defineConfig({
             { text: 'Image 图片', link: '/components/image' },
             { text: 'ImagePreview 图片预览', link: '/components/image-preview' },
             { text: 'ImageContrast 图片对比', link: '/components/image-contrast' },
-            { text: 'Waterfall 瀑布流', link: '/components/waterfall' }
+            { text: 'Waterfall 瀑布流', link: '/components/waterfall' },
+            { text: 'Loading 加载', link: '/components/loading' }
           ]
         }
       ]

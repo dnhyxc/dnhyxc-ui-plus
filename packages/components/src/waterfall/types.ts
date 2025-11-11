@@ -12,12 +12,14 @@ export interface WaterfallOptions {
   pageNo: number; // 页码
   loading: boolean; // 是否加载中
   getImages: (top: number, left: number) => Promise<ImageParams>; // 加载图片
-  parentWidth: string | number; // 父元素宽度
-  parentHeight: string | number; // 父元素高度
+  parentWidth: number | string; // 父元素宽度
+  parentHeight: number | string; // 父元素高度
   className?: string; // 最外层父元素类名
   placeholderImg?: string;
   needPreview?: boolean; // 是否需要预览
   imageRadius?: number | string;
+  noMoreText?: string;
+  emptyText?: string;
   selectedImage?: ImageParams; // 选中的图片
   selectedImageIds?: string[]; // 选中的图片 id
   previewWidth?: string; // 预览图片宽度

@@ -9,7 +9,7 @@
     :class="className"
     :style="`width: ${typeof parentWidth === 'string' ? parentWidth : `${parentWidth}px`}; height: ${typeof parentHeight === 'string' ? parentHeight : `${parentHeight}px`};`"
   >
-    <el-scrollbar ref="scrollRef" wrap-class="scrollbar-wrapper">
+    <el-scrollbar ref="scrollRef" :max-height="parentHeight" wrap-class="scrollbar-wrapper">
       <div
         v-if="isMounted"
         id="waterfall-container"
@@ -41,7 +41,11 @@
             enableLoading
             @click="needPreview ? onPreview(image) : null"
             @load="onImageLoad"
-          />
+          >
+            <template #loading>
+              <Loading dot-size="5px" />
+            </template>
+          </Image>
           <div
             v-if="selectedImageIds?.includes(image.id as string)"
             class="selected"
@@ -54,7 +58,7 @@
           <slot name="actions" v-bind="{ image }">
             <div
               v-if="selectedImageIds"
-              class="image-info"
+              :class="`image-info ${selectedImageIds?.includes(image.id as string) ? 'image-info-selected' : ''} `"
               :style="`border-bottom-left-radius: ${typeof imageRadius === 'string' ? imageRadius : `${imageRadius}px`}; border-bottom-right-radius: ${typeof imageRadius === 'string' ? imageRadius : `${imageRadius}px`}`"
             >
               <div class="title" :title="image.filename as string">
@@ -106,9 +110,21 @@
           </slot>
         </div>
       </div>
-      <div v-if="loading && pageNo > 1" class="no-more">loading...</div>
-      <div v-if="noMore" class="no-more">共 {{ total }} 张，没有更多了～～～</div>
-      <div v-if="showEmpty">空空如也</div>
+      <div v-if="loading && pageNo > 1" class="loading-container">
+        <slot name="loading">
+          <Loading />
+        </slot>
+      </div>
+      <div v-if="noMore" class="no-more-container">
+        <slot name="no-more">
+          <div class="no-more">{{ noMoreText }}</div>
+        </slot>
+      </div>
+      <div v-if="showEmpty" class="empty-container">
+        <slot name="empty">
+          <div class="empty-text">{{ emptyText }}</div>
+        </slot>
+      </div>
       <ImagePreview
         v-model:visible="previewVisible"
         closeOnClickModal
@@ -122,12 +138,12 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref, computed, nextTick, type Ref, watchEffect } from 'vue';
+import { onMounted, onUnmounted, ref, computed, nextTick, type Ref } from 'vue';
 import { ElCheckbox, ElScrollbar } from 'element-plus';
 import { useScroller, useScrollTo, type WrapRef } from '../../hooks';
 import { createNamespace, debounce, handlerDownload } from '../../utils';
 import { ImageParams, WaterfallOptions } from './types';
-import { Image, ImagePreview, Icon } from '../index';
+import { Image, ImagePreview, Icon, Loading } from '../index';
 import LOADING_IMG from './loading.jpeg';
 import 'element-plus/es/components/checkbox/style/css';
 import 'element-plus/es/components/scrollbar/style/css';
@@ -146,7 +162,9 @@ const scrollTo = useScrollTo();
 const props = withDefaults(defineProps<WaterfallOptions>(), {
   parentHeight: '100%',
   imageRadius: 5,
-  previewWidth: '75vh'
+  previewWidth: '75vh',
+  noMoreText: '没有更多了～～～',
+  emptyText: '暂无图片'
 });
 
 const isMounted = ref<boolean>(false);
@@ -165,7 +183,7 @@ const noMore = computed(() => {
   return props.imageList.length >= props.total && props.imageList.length && props.pageNo > 1;
 });
 const disabled = computed(() => props.loading || noMore.value);
-const showEmpty = computed(() => props.loading !== null && !props.loading && !props.imageList.length);
+const showEmpty = computed(() => !props.loading && !props.imageList.length);
 
 onMounted(() => {
   isMounted.value = true;
@@ -229,7 +247,6 @@ const setPositions = () => {
     img.left = left;
     posLeft.value = left || 0;
   }
-
   // 求出最大值
   const max = Math.max(...nextTops);
   // 根据最大值设置容器的高度

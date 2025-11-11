@@ -49,6 +49,7 @@ const visible = ref(false);
 const oldName = ref('');
 
 const initImages = async (top: number, left: number) => {
+  console.log('initImages');
   if (total.value > 100 || loading.value) return;
   loading.value = true;
   pageNo.value = pageNo.value + 1;
@@ -134,8 +135,6 @@ import { Icon } from 'dnhyxc-ui-plus';
 
 :::
 
-<icon-list />
-
 ## API
 
 ### Icon Props
@@ -182,4 +181,4 @@ const data = [
 ];
 </script>
 
-<props-table :data="data" />
+<!-- <props-table :data="data" /> -->

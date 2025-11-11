@@ -1,30 +1,12 @@
 .n-waterfall {
+  width: 100%;
+  position: relative;
   padding: 10px 0;
+  box-sizing: border-box;
 
   :deep {
     .el-dropdown:focus-visible {
       outline: none;
-    }
-  }
-
-  .n-icon {
-    #edit_icon,
-    #download_icon,
-    #remove_icon {
-      scale: 1;
-      transition: all 0.3s;
-    }
-
-    &:hover {
-      #edit_icon,
-      #download_icon,
-      #remove_icon {
-        scale: 1.1;
-        transition: all 0.3s;
-        path {
-          fill: rgb(180, 255, 180);
-        }
-      }
     }
   }
 
@@ -33,8 +15,8 @@
     margin: 0 auto;
     padding: 0 10px 0;
     width: 100%;
+    height: 1000px;
     box-sizing: border-box;
-    height: 100vh;
 
     .image-item {
       position: absolute;
@@ -118,12 +100,55 @@
           }
         }
       }
+
+      .image-info-selected {
+        transform: translateY(0);
+      }
     }
   }
 
-  .no-more {
+  .loading-container,
+  .no-more-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
-    padding: 13px 0 7px;
-    color: #ccc;
+    padding: 10px 0;
+    height: 50px;
+    box-sizing: border-box;
+    color: #929191;
+  }
+
+  .empty-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    z-index: 99;
+  }
+
+  .n-icon {
+    #edit_icon,
+    #download_icon,
+    #remove_icon {
+      scale: 1;
+      transition: all 0.3s;
+    }
+
+    &:hover {
+      #edit_icon,
+      #download_icon,
+      #remove_icon {
+        scale: 1.1;
+        transition: all 0.3s;
+        path {
+          fill: rgb(180, 255, 180);
+        }
+      }
+    }
   }
 }
