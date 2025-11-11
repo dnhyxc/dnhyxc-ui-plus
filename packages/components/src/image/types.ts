@@ -2,15 +2,15 @@ import type NImage from './index.vue';
 
 export interface ImageOptions {
   url: string;
-  width?: string;
-  height?: string;
+  width: string | number;
+  height?: string | number;
   placeholderImg?: string;
   loadingText?: string;
-  emptyText?: string;
   errorText?: string;
   placeholderClassName?: string;
-  radius?: string;
+  radius?: number | string;
   alt?: string;
+  className?: string;
   onClick?: () => void;
   onLoad?: () => void;
 }

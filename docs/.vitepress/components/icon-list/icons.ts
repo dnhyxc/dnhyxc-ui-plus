@@ -17,15 +17,22 @@ export const icons = [
       'zoom-in',
       'zoom-out',
       'rotate',
+      'download-cloud',
       'download',
       'reset',
       'left-arrow',
       'right-arrow',
-      'close'
+      'close',
+      'more',
+      'delete',
+      'edit',
+      'pencil',
+      'check',
+      'remove'
     ]
   },
   {
     name: '业务图标',
-    items: ['sea', 'ai', 'thumbnail', 'in-clip', 'out-clip']
+    items: ['sea', 'ai', 'thumbnail', 'in-clip', 'out-clip', 'selected']
   }
 ];

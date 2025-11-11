@@ -16,6 +16,11 @@
   <n-icon name="out-clip" />
   <n-icon name="info" />
   <n-icon name="zoom-in" />
+  <n-icon name="selected" />
+  <n-icon name="delete" />
+  <n-icon name="edit" />
+  <n-icon name="check" />
+  <n-icon name="remove" />
 </template>
 
 <style lang="scss" scoped>
@@ -57,7 +62,7 @@ const data = [
     type: 'enum',
     default: '',
     description: '图标名称',
-    typeEnum: ['sea', 'ai', 'thumbnail', 'in-clip', 'out-clip', 'wechat-program', 'to-top', 'prev', 'next', 'unfull', 'full', 'pause', 'pause-play', 'pause-play-fill', 'picture-to-picture', 'solid', 'info']
+    typeEnum: ['sea', 'ai', 'thumbnail', 'in-clip', 'out-clip', 'wechat-program', 'to-top', 'prev', 'next', 'unfull', 'full', 'pause', 'pause-play', 'pause-play-fill', 'picture-to-picture', 'solid', 'info', 'more', 'selected', 'delete', 'edit', 'pencil', 'check', 'remove']
   },
   {
     name: 'size',

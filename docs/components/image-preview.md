@@ -12,7 +12,7 @@
     v-model:visible="previewVisible1"
     closeOnClickModal
     :image-list="imageList"
-    :selectd-image="{
+    :selected-image="{
       url: 'https://files.codelife.cc/wallhaven/full/o5/wallhaven-o5jjg5.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
     }"
     width="75vw"
@@ -28,7 +28,7 @@
     v-model:visible="previewVisible2"
     closeOnClickModal
     :image-list="imageList"
-    :selectd-image="{
+    :selected-image="{
       url: 'https://files.codelife.cc/wallhaven/full/o5/wallhaven-o5jjg5.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
     }"
     width="75vw"
@@ -90,7 +90,7 @@ const showOtherModel = () => {
     closeOnClickModal
     :image-list="imageList"
     show-download
-    :selectd-image="{
+    :selected-image="{
       id: '1',
       url: 'https://files.codelife.cc/wallhaven/full/o5/wallhaven-o5jjg5.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
     }"
@@ -100,7 +100,7 @@ const showOtherModel = () => {
     v-model:visible="previewVisible2"
     closeOnClickModal
     :image-list="imageList"
-    :selectd-image="{
+    :selected-image="{
       url: 'https://files.codelife.cc/wallhaven/full/o5/wallhaven-o5jjg5.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
     }"
     width="75vw"

@@ -6,3 +6,4 @@ export * from './image-preview';
 export * from './image';
 export * from './image-contrast';
 export * from './model';
+export * from './waterfall';

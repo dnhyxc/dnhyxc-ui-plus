@@ -48,7 +48,6 @@ const onChange = (value: string) => {
 };
 
 const onSearch = (value: string) => {
-  console.log(value, 'ssssss');
   const newIcons = icons.map((item) => {
     const newItems = item.items.filter((icon) => icon.includes(value));
     return {
@@ -57,7 +56,6 @@ const onSearch = (value: string) => {
     };
   });
   filterIcons.value = newIcons;
-  console.log(newIcons, 'newIcons');
 };
 
 const onCopy = async (icon: string) => {
@@ -65,6 +63,7 @@ const onCopy = async (icon: string) => {
   const iconNode = copyType.value === 'element' ? `<n-icon name="${icon}" />` : svg;
   try {
     await navigator.clipboard.writeText(iconNode);
+    // eslint-disable-next-line no-unused-vars
   } catch (err) {
     ElMessage({
       showClose: true,

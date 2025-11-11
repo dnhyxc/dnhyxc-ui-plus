@@ -19,7 +19,7 @@ interface DownloadParams {
 
 export interface ImagePreviewOptions extends ModelOptions {
   visible: boolean;
-  selectdImage: {
+  selectedImage: {
     url: string;
     size?: number;
     id?: string;

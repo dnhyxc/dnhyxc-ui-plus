@@ -1,17 +1,20 @@
 .n-image {
-  box-sizing: border-box;
-
   --image-object-position: top left;
   --image-hover-object-position: bottom right;
-  --image-empty-bg: #f5f7fa;
-  --image-object-fit: cover;
   --image-transition: all 0.3s ease-in-out;
-  --image-loading-bg: #f5f7fa;
-  --image-loading-text-color: #ccc;
-  --image-empty-text-color: #ccc;
-  --image-font-size: 14px;
+  --image-object-fit: cover;
+  --image-error-bg: rgba(0, 0, 0, 0.2);
+  --image-loading-bg: rgba(0, 0, 0, 0.2);
+  --image-loading-text-color: #898989;
+  --image-error-text-color: #898989;
+  --image-loading-font-size: 16px;
+  --image-error-font-size: 14px;
 
-  .image-item {
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+
+  .image {
     display: block;
     height: 100%;
     width: 100%;
@@ -25,32 +28,76 @@
     }
   }
 
-  .image-loading {
+  .image.loaded {
+    opacity: 1;
+  }
+
+  .filter-blur {
+    filter: blur(10px);
+    transform: scale(1.05);
+  }
+
+  .loading-container {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     background-color: var(--image-loading-bg);
-    color: var(--image-loading-text-color);
-    font-size: var(--image-font-size);
+    transition: opacity 0.5s ease;
+    z-index: 10;
   }
 
-  .empty {
+  .loading-container.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .loading-img {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
     height: 100%;
+    transition: opacity 0.5s ease;
 
-    .empty-text {
+    .loading {
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100%;
       width: 100%;
-      background-color: var(--image-empty-bg);
-      color: var(--image-empty-text-color);
-      font-size: var(--image-font-size);
+      border-radius: 5px;
+      background-color: var(--image-loading-bg);
+      color: var(--image-loading-text-color);
+      font-size: var(--image-loading-font-size);
     }
+  }
+
+  .loading-img.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    background-color: var(--image-error-bg);
+    color: var(--image-error-text-color);
+    font-size: var(--image-error-font-size);
+  }
+
+  .filter-blur {
+    filter: blur(2px);
   }
 }

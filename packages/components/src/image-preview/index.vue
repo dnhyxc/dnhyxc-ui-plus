@@ -132,7 +132,7 @@
 <script setup lang="ts">
 import { computed, reactive, ref, watch, nextTick, DirectiveBinding, useSlots } from 'vue';
 import { ElTooltip } from 'element-plus';
-import { createNamespace } from '../../utils';
+import { createNamespace, handlerDownload } from '../../utils';
 import { Icon } from '../icon';
 import { Model } from '../model';
 import { ImagePreviewOptions } from './types';
@@ -142,8 +142,7 @@ import './style/index.scss';
 const bem = createNamespace('image-preview');
 
 defineOptions({
-  name: 'n-image-preview',
-  inheritAttrs: false // 禁止自动继承属性
+  name: 'n-image-preview'
 });
 
 const slots = useSlots();
@@ -225,7 +224,7 @@ const vMove = {
   }
 };
 
-const currentImage = ref<ImagePreviewOptions['selectdImage']>(props.selectdImage);
+const currentImage = ref<ImagePreviewOptions['selectedImage']>(props.selectedImage);
 
 const imgRef = ref<HTMLImageElement | null>(null);
 const imageInfo = reactive<{ scale: number; rotate: number; boundary: boolean; imgWidth: number; imgHeight: number }>({
@@ -270,13 +269,13 @@ const prevImages = computed(() => {
 });
 
 watch(
-  () => [open, props.selectdImage],
+  () => [open, props.selectedImage],
   async (newVal) => {
     if (newVal[0]) {
-      currentImage.value = newVal[1] as ImagePreviewOptions['selectdImage'];
+      currentImage.value = newVal[1] as ImagePreviewOptions['selectedImage'];
       onComputedImgSize(
-        (newVal[1] as ImagePreviewOptions['selectdImage'])?.url,
-        (newVal[1] as ImagePreviewOptions['selectdImage'])?.size
+        (newVal[1] as ImagePreviewOptions['selectedImage'])?.url,
+        (newVal[1] as ImagePreviewOptions['selectedImage'])?.size
       );
     }
     if (!newVal[0]) {
@@ -379,12 +378,7 @@ const onDownload = () => {
   if (props?.download) {
     props?.download?.(currentImage.value);
   } else {
-    const link = document.createElement('a');
-    link.href = currentImage.value.url;
-    link.download = currentImage.value.url.split('/').pop() || 'download';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    handlerDownload(currentImage.value.url);
   }
 };
 
@@ -417,7 +411,7 @@ const onPrev = () => {
   } else {
     prevIndex = findIndex - 1;
   }
-  currentImage.value = prevImages.value[prevIndex] as ImagePreviewOptions['selectdImage'];
+  currentImage.value = prevImages.value[prevIndex] as ImagePreviewOptions['selectedImage'];
   onComputedImgSize(currentImage.value.url, currentImage.value?.size);
 };
 
@@ -431,7 +425,7 @@ const onNext = () => {
   } else {
     nextIndex = findIndex + 1;
   }
-  currentImage.value = prevImages.value[nextIndex] as ImagePreviewOptions['selectdImage'];
+  currentImage.value = prevImages.value[nextIndex] as ImagePreviewOptions['selectedImage'];
   onComputedImgSize(currentImage.value.url, currentImage.value?.size);
 };
 </script>

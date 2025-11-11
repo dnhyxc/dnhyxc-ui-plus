@@ -6,8 +6,11 @@ export interface IconProps {
   height?: string;
   size?: string;
   color?: string;
+  scale?: number;
+  transitionTime?: string;
   hoverColor?: string;
   className?: string;
+  onClick?: (e: MouseEvent) => void;
   cursor?:
     | 'pointer'
     | 'default'

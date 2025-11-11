@@ -79,8 +79,8 @@ import './style/index.scss';
 const bem = createNamespace('model');
 
 defineOptions({
-  name: 'n-model',
-  inheritAttrs: false // 禁止自动继承属性
+  name: 'n-model'
+  // inheritAttrs: false // 禁止自动继承属性
 });
 
 const props = withDefaults(defineProps<ModelOptions>(), {
