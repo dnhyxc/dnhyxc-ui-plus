@@ -130,7 +130,6 @@ const loadImage = () => {
 
   // 设置过渡图片
   if (props.placeholderImg) {
-    console.log('设置过渡图片', props.placeholderImg);
     loadUrl.value = props.placeholderImg;
   }
 };
