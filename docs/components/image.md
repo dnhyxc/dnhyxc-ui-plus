@@ -50,6 +50,13 @@
       "
     />
     <n-image
+      url="https://files.codelife.cc/wallhaven/full/83/wallhaven-83ywmo.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp"
+      radius="8px"
+      width="100px"
+      height="100px"
+      loadingText="正在加载中"
+    />
+    <n-image
       url="https://files.codelife1.cc/wallhaven/full/83/wallhaven-83ywmo.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp"
       radius="8px"
       width="100px"

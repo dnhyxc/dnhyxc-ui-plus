@@ -17,13 +17,14 @@ export interface WaterfallOptions {
   selectedImageIds?: (number | string)[]; // 选中的图片 id
   previewWidth?: string; // 预览图片宽度
   showSelect?: boolean; // 是否显示选中按钮
+  needSelectedMask?: boolean; // 是否需要选中遮罩
   showDownload?: boolean; // 是否显示下载按钮
   showDelete?: boolean; // 是否显示删除按钮
   showRename?: boolean; // 是否显示重命名按钮
   onSelected?: (image: ImageParams) => void; // 选中图片的回调
   onDownload?: (image: ImageParams) => void; // 下载图片的回调
-  onDelete?: (image: ImageParams) => void; // 下载图片的回调
-  onRename?: (image: ImageParams) => void; // 下载图片的回调
+  onDelete?: (image: ImageParams) => void; // 删除图片回调
+  onRename?: (image: ImageParams) => void; // 重命名回调
 }
 
 declare module 'vue' {

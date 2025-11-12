@@ -24,8 +24,6 @@
           :placeholderImg="placeholderImg || LOADING_IMG"
           :radius="imageRadius"
           height="auto"
-          class="image-wrap"
-          enableLoading
           @click="needPreview ? onPreview(image) : null"
           @load="onImageLoad"
         >
@@ -35,17 +33,11 @@
             </slot>
           </template>
         </Image>
-        <div
-          v-if="selectedImageIds?.includes(image.id as string)"
-          class="selected"
-          :style="{
-            borderRadius: `${typeof imageRadius === 'string' ? imageRadius : `${imageRadius}px`}`
-          }"
-        >
-          <slot name="selected-icon">
+        <slot name="selected-mask" v-bind="{ image }">
+          <div v-if="needSelectedMask && selectedImageIds?.includes(image.id as string)" class="selected">
             <Icon name="selected" size="50px" />
-          </slot>
-        </div>
+          </div>
+        </slot>
         <slot name="actions" v-bind="{ image }">
           <div
             :class="`image-info ${selectedImageIds?.includes(image.id) ? 'image-info-selected' : ''} `"
@@ -132,7 +124,8 @@ defineOptions({
 
 const props = withDefaults(defineProps<WaterfallOptions>(), {
   imageRadius: 5,
-  previewWidth: '75vh'
+  previewWidth: '75vh',
+  needSelectedMask: true
 });
 
 const previewVisible = ref<boolean>(false);

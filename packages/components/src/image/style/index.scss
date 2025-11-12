@@ -74,7 +74,6 @@
       align-items: center;
       height: 100%;
       width: 100%;
-      border-radius: 5px;
       background-color: var(--image-loading-bg);
       color: var(--image-loading-text-color);
       font-size: var(--image-loading-font-size);
@@ -95,9 +94,6 @@
     background-color: var(--image-error-bg);
     color: var(--image-error-text-color);
     font-size: var(--image-error-font-size);
-
-    .error-text {
-    }
   }
 
   .filter-blur {
