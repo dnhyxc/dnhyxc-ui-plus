@@ -1,9 +1,11 @@
 .n-loading {
-  --loading-color: #cfcfcf;
   --loading-dot-color: #6793fb;
   --loading-bg-color-0: #6793fb;
   --loading-bg-color-50: #8caeff;
   --loading-bg-color-100: #6793fb;
+  --loading-shadow-color-0: rgba(178, 212, 252, 0.7);
+  --loading-shadow-color-50: rgba(178, 212, 252, 0);
+  --loading-shadow-color-100: rgba(178, 212, 252, 0.7);
 
   display: flex;
   align-items: center;
@@ -11,12 +13,9 @@
   height: 100%;
   width: 100%;
   padding: 10px 0 12px;
-  color: var(--loading-color);
   box-sizing: border-box;
 
   .dot {
-    // height: 10px;
-    // width: 10px;
     border-radius: 50%;
     background-color: var(--loading-dot-color);
     animation: pulse 1.5s infinite ease-in-out;
@@ -43,18 +42,18 @@
   0% {
     transform: scale(0.8);
     background-color: var(--loading-bg-color-0);
-    box-shadow: 0 0 0 0 rgba(178, 212, 252, 0.7);
+    box-shadow: 0 0 0 0 var(--loading-shadow-color-0);
   }
 
   50% {
     transform: scale(1.1);
     background-color: var(--loading-bg-color-50);
-    box-shadow: 0 0 0 5px rgba(178, 212, 252, 0);
+    box-shadow: 0 0 0 5px var(--loading-shadow-color-0);
   }
 
   100% {
     transform: scale(0.8);
     background-color: var(--loading-bg-color-100);
-    box-shadow: 0 0 0 0 rgba(178, 212, 252, 0.7);
+    box-shadow: 0 0 0 0 var(--loading-shadow-color-100);
   }
 }
