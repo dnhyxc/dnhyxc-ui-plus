@@ -6,6 +6,8 @@ import * as components from './src/index';
 // 导出表情相关类型定义
 export type { EmojiName, EmojiList } from './src/emoji/types';
 
+export type { ImageParams } from './src/waterfall/types';
+
 // 也导出所有单个组件，支持按需引入
 export * from './src/index';
 

@@ -45,7 +45,6 @@
 <script setup lang="ts">
 import { ref, onMounted, watch, onUnmounted } from 'vue';
 import { ImageOptions } from './types';
-import { Loading } from '../index';
 import { createNamespace } from '../../utils';
 import './style/index.scss';
 

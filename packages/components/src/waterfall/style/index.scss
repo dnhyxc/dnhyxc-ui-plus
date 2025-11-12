@@ -1,8 +1,17 @@
+.clickNoSelectText {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  -khtml-user-select: none;
+  user-select: none;
+  /* 禁止图片拖拽 */
+  -webkit-user-drag: none;
+}
+
 .n-waterfall {
-  width: 100%;
   position: relative;
-  padding: 10px 0;
-  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
 
   :deep {
     .el-dropdown:focus-visible {
@@ -11,11 +20,10 @@
   }
 
   #waterfall-container {
-    position: relative;
     margin: 0 auto;
     padding: 0 10px 0;
     width: 100%;
-    height: 1000px;
+    height: 100%;
     box-sizing: border-box;
 
     .image-item {
@@ -58,6 +66,7 @@
         padding: 10px 7px 10px 10px;
         transform: translateY(100%);
         transition: transform 0.3s ease;
+        box-sizing: border-box;
         z-index: 1;
 
         .title {
@@ -65,8 +74,8 @@
           align-items: center;
           width: 100%;
 
-          .img-name {
-            margin-left: 10px;
+          .checkbox {
+            margin-right: 10px;
           }
         }
 
@@ -78,7 +87,6 @@
           cursor: pointer;
 
           .img-name {
-            flex: 1;
             margin-right: 10px;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -90,6 +98,7 @@
             word-break: break-all;
             line-clamp: 1;
             vertical-align: middle;
+            @extend .clickNoSelectText;
           }
 
           .action {

@@ -113,7 +113,7 @@
     <n-image-preview
       v-model:visible="previewVisible"
       closeOnClickModal
-      :selectd-image="selectedImage"
+      :selected-image="selectedImage"
       :imageList="imgList"
       show-download
       width="70vw"
@@ -151,12 +151,16 @@
     <n-button type="primary" @click="visible1 = true">打开弹窗1</n-button>
     <n-button type="primary" @click="visible2 = true">打开弹窗2</n-button>
   </div>
+  <div style="height: 500px">
+    <Waterfall />
+  </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 // import { notification, type EmojiName } from '@dnhyxc-ui/components';
 import { notification, type EmojiName } from 'dnhyxc-ui-vue-plus';
+import Waterfall from './Waterfall.vue';
 
 const keyword = ref('');
 const inputRef = ref();

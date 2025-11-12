@@ -8,27 +8,56 @@
 
 ```vue
 <template>
-  <n-waterfall
-    name="sea"
-    size="28"
-    need-preview
-    :image-list="imageList"
-    :get-images="initImages"
-    :loading="loading"
-    :page-no="pageNo"
-    :total="total"
-    :image-width="330"
-    :parent-height="500"
-    :on-selected="onSelected"
-    :selected-image-ids="selectedImageIds"
-    show-download
-    show-delete
-    show-rename
-    :on-download="onDownload"
-    :on-delete="onDelete"
-    :on-rename="onRename"
-  >
-  </n-waterfall>
+  <div class="waterfall-wrap">
+    <el-scrollbar ref="scrollRef">
+      <div
+        v-infinite-scroll="getImages"
+        :infinite-scroll-delay="300"
+        :infinite-scroll-disabled="disabled"
+        :infinite-scroll-distance="2"
+        class="waterfall-scroll"
+      >
+        <n-waterfall
+          need-preview
+          show-select
+          show-download
+          show-rename
+          show-delete
+          :on-delete="onDelete"
+          :on-rename="onRename"
+          :image-list="imageList"
+          :image-width="330"
+          :on-selected="onSelected"
+          :selected-image-ids="selectedImageIds"
+        >
+          <template #img-loading>
+            <div>loading...</div>
+          </template>
+          <template #selected-icon>
+            <n-icon name="sea" size="20" />
+          </template>
+          <!-- <template #actions="{ image }">
+            <div>{{ image.filename }}</div>
+          </template> -->
+        </n-waterfall>
+      </div>
+      <div class="footer">
+        <div v-if="loading && pageNo > 1" class="loading-container">
+          <slot name="loading">loading...</slot>
+        </div>
+        <div v-if="noMore" class="no-more-container">
+          <slot name="no-more">
+            <div class="no-more">没有更多了</div>
+          </slot>
+        </div>
+        <div v-if="showEmpty" class="empty-container">
+          <slot name="empty">
+            <div class="empty-text">空空如也</div>
+          </slot>
+        </div>
+      </div>
+    </el-scrollbar>
+  </div>
   <n-model v-model:visible="visible" title="修改文件名" alignCenter width="400">
     <template #content>
       <div class="rename-content">{{ oldName }}</div>
@@ -37,7 +66,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted, computed } from 'vue';
+import { type ImageParams } from 'dnhyxc-ui-plus';
+
+export interface WrapRef extends HTMLElement {
+  wrapRef: HTMLElement;
+}
+
+const scrollRef = ref<HTMLElement | null>(null);
+const scrollTop = ref<number>(0);
 const imageList = ref([]);
 const pageNo = ref(0);
 const pageSize = ref(20);
@@ -48,12 +85,33 @@ const selectedImageIds = ref([]);
 const visible = ref(false);
 const oldName = ref('');
 
-const initImages = async (top: number, left: number) => {
-  console.log('initImages');
+const noMore = computed(() => {
+  return imageList.value.length >= total.value && imageList.value.length && pageNo.value > 1;
+});
+const disabled = computed(() => loading.value || noMore.value);
+const showEmpty = computed(() => !loading.value && !imageList.value.length);
+
+onMounted(() => {
+  // 监听滚动条滚动事件
+  (scrollRef.value as WrapRef)?.wrapRef?.addEventListener('scroll', onScroll);
+  getImages();
+});
+
+onUnmounted(() => {
+  // 卸载滚动条滚动事件
+  (scrollRef.value as WrapRef)?.removeEventListener('scroll', onScroll);
+});
+
+const onScroll = (e: Event) => {
+  scrollTop.value = (e.target as HTMLElement).scrollTop;
+  scroll?.(e as MouseEvent);
+};
+
+const getImages = async () => {
   if (total.value > 100 || loading.value) return;
   loading.value = true;
   pageNo.value = pageNo.value + 1;
-  const images = await new Promise((resolve) => {
+  const images: ImageParams[] = await new Promise((resolve) => {
     setTimeout(() => {
       const initialImages = [];
       for (let i = 1; i <= pageSize.value; i++) {
@@ -61,13 +119,10 @@ const initImages = async (top: number, left: number) => {
           id: Math.random(),
           url: `https://picsum.photos/1080/${900 + Math.floor(Math.random() * 300)}?random=${i}`,
           filename: `图片 ${i}`,
-          description: `这是第 ${i} 张图片的描述`,
-          top,
-          left,
-          zIndex: -1
+          description: `这是第 ${i} 张图片的描述`
         });
       }
-      resolve(initialImages);
+      resolve(initialImages as ImageParams[]);
       loading.value = false;
       total.value = 100;
     }, 1000);
@@ -75,29 +130,48 @@ const initImages = async (top: number, left: number) => {
   imageList.value = [...imageList.value, ...images];
 };
 
-const onSelected = (image) => {
+const onSelected = (image: ImageParams) => {
   const findOne = selectedImageIds.value?.some((i) => i === image.id);
   if (findOne) {
     selectedImageIds.value = selectedImageIds.value.filter((i) => i !== image.id);
   } else {
-    selectedImageIds.value = [image.id, ...selectedImageIds.value];
+    selectedImageIds.value = [image.id as string, ...selectedImageIds.value];
   }
 };
 
-const onDelete = (image) => {
+const onDownload = (image: ImageParams) => {
   console.log(image);
-  imageList.value = imageList.value.filter((i) => i.id !== image.id);
 };
 
-const onRename = (image) => {
+const onDelete = (image: ImageParams) => {
+  console.log(image);
+  imageList.value = imageList.value.filter((i: ImageParams) => i.id !== image.id);
+};
+
+const onRename = (image: ImageParams) => {
   visible.value = true;
   oldName.value = image.filename;
 };
 </script>
 
 <style lang="scss" scoped>
-.play-fill-icon {
-  cursor: pointer;
+.waterfall-wrap {
+  height: 500px;
+  overflow: hidden;
+
+  :deep {
+    #waterfall-container {
+      height: 500px;
+    }
+  }
+
+  .footer {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ccc;
+  }
 }
 
 .actions {

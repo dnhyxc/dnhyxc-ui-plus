@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type NImagePreview from './index.vue';
 import { ModelOptions } from '../model/types';
 
@@ -21,9 +22,9 @@ export interface ImagePreviewOptions extends ModelOptions {
   visible: boolean;
   selectedImage: {
     url: string;
-    size?: number;
-    id?: string;
-    [key: string]: unknown;
+    id?: string | number;
+    filename?: string;
+    [key: string]: any;
   };
   imageTransformInfo?: ImageTransformInfo;
   showPrevAndNext?: boolean;
@@ -32,10 +33,10 @@ export interface ImagePreviewOptions extends ModelOptions {
   title?: string;
   imageList?: {
     url: string;
-    size?: number;
-    id?: string;
-    [key: string]: unknown;
-  }[]; // { id: string; url: string; [key: string]: any }[]
+    id?: string | number;
+    filename?: string;
+    [key: string]: any;
+  }[];
   closeOnClickModal?: boolean;
   showZoomIn?: boolean;
   showZoomOut?: boolean;
