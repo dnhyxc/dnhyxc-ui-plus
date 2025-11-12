@@ -170,6 +170,13 @@ const onPreview = (image) => {
       "
     />
     <Image
+      url="https://files.codelife.cc/wallhaven/full/83/wallhaven-83ywmo.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp"
+      radius="8px"
+      width="100px"
+      height="100px"
+      loadingText="正在加载中"
+    />
+    <Image
       url="https://files.codelife1.cc/wallhaven/full/83/wallhaven-83ywmo.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp"
       radius="8px"
       width="100px"
@@ -315,6 +322,15 @@ const data = [
     description: '图片加载完成事件',
   }
 ];
+
+const slots = [{
+  name: 'loading',
+  description: '自定义 loading 文案效果',
+}]
 </script>
 
 <props-table :data="data" />
+
+### Image Slots
+
+<props-table :data="slots" name-text="插槽名称" :show-type="false" :show-default="false"/>
