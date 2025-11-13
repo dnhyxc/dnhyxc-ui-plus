@@ -18,6 +18,8 @@
     dotShadowColor50="skyblue"
     dotShadowColor100="yellow"
   ></n-loading>
+  <n-loading dotBgColor="skyblue" dotShadowColor="rgb(135, 206, 235, 0.3)" :percent="50"></n-loading>
+  <n-loading dotBgColor="yellow" dotShadowColor="rgb(255,255,255, 0.3)" :percent="50"></n-loading>
 </template>
 ```
 
@@ -38,15 +40,16 @@
     dotShadowColor0="green"
     dotShadowColor50="skyblue"
     dotShadowColor100="yellow"
+    dotBgColor="skyblue"
+    dotShadowColor="rgb(135, 206, 235, 0.3)"
   ></Loading>
+  <Loading dotBgColor="skyblue" dotShadowColor="rgb(135, 206, 235, 0.3)" :percent="50"></Loading>
+  <Loading dotBgColor="yellow" dotShadowColor="rgb(255,255,255, 0.3)" :percent="50"></Loading>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 import { Loading } from 'dnhyxc-ui-plus';
-
-const visible1 = ref(false);
-const visible2 = ref(false);
 </script>
 ```
 
@@ -111,6 +114,18 @@ const data = [
     type: 'string',
     default: '',
     description: '点过渡动画 100% 的阴影颜色',
+  },
+  {
+    name: 'dotBgColor',
+    type: 'string',
+    default: '',
+    description: '圆点背景色，改配置会覆盖 dotBgColor0、dotBgColor50、dotBgColor100',
+  },
+  {
+    name: 'dotShadowColor',
+    type: 'string',
+    default: '',
+    description: '圆点阴影色，改配置会覆盖 dotShadowColor0、dotShadowColor50、dotShadowColor100',
   }
 ];
 </script>

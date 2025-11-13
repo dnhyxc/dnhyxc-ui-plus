@@ -10,6 +10,9 @@ export interface LoadingOptions {
   dotShadowColor0?: string;
   dotShadowColor50?: string;
   dotShadowColor100?: string;
+  dotBgColor?: string;
+  dotShadowColor?: string;
+  percent?: number;
 }
 
 declare module 'vue' {

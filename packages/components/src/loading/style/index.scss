@@ -1,10 +1,9 @@
 .n-loading {
-  --loading-dot-color: #6793fb;
   --loading-bg-color-0: #6793fb;
   --loading-bg-color-50: #8caeff;
   --loading-bg-color-100: #6793fb;
   --loading-shadow-color-0: rgba(178, 212, 252, 0.7);
-  --loading-shadow-color-50: rgba(178, 212, 252, 0);
+  --loading-shadow-color-50: rgba(178, 212, 252, 0.2);
   --loading-shadow-color-100: rgba(178, 212, 252, 0.7);
 
   display: flex;
@@ -17,7 +16,6 @@
 
   .dot {
     border-radius: 50%;
-    background-color: var(--loading-dot-color);
     animation: pulse 1.5s infinite ease-in-out;
   }
 
