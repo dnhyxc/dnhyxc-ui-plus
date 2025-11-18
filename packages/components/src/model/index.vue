@@ -31,7 +31,7 @@
       @close="close"
       @opened="opened"
       @closed="closed"
-      @before-close="props.beforeClose"
+      @before-close="beforeClose"
       @open-auto-focus="openAutoFocus"
       @close-auto-focus="closeAutoFocus"
     >

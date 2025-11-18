@@ -8,3 +8,4 @@ export * from './image-contrast';
 export * from './model';
 export * from './waterfall';
 export * from './loading';
+export * from './draft-input';

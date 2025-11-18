@@ -2,6 +2,7 @@ import type NIcon from './index.vue';
 
 export interface IconProps {
   name: string;
+  id?: string;
   width?: string;
   height?: string;
   size?: string;
@@ -24,7 +25,8 @@ export interface IconProps {
     | 'text'
     | 'wait'
     | 'zoom-in'
-    | 'zoom-out';
+    | 'zoom-out'
+    | 'smile';
 }
 
 // 定义这个是为了让组件在业务中使用时，可以有组件所需的类型提示

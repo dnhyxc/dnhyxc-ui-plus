@@ -7,7 +7,7 @@
     @mouseover="hoverColor ? onMouseEnter() : null"
     @mouseleave="hoverColor ? onMouseLeave() : null"
     @click="onClick"
-    v-html="getSvg(name, { size, width, height, color })"
+    v-html="getSvg(name, { size, width, height, color, id })"
   />
 </template>
 <script lang="ts" setup>

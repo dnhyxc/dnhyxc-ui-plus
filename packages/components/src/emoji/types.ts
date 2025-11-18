@@ -5,6 +5,7 @@ export type EmojiName = (typeof EMOJI_NAME)[number];
 export type EmojiList = EmojiName[];
 
 export type EmojiProps = Readonly<{
+  id?: string;
   onSelect?: (value: EmojiName) => void;
   visible?: boolean;
   className?: string;

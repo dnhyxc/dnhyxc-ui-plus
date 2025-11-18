@@ -28,7 +28,9 @@ export const icons = [
       'edit',
       'pencil',
       'check',
-      'remove'
+      'remove',
+      'smile',
+      'folder'
     ]
   },
   {
