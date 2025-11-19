@@ -217,7 +217,6 @@ const getSelectionInfo = (e: KeyboardEvent, content: string) => {
 const onEnter = (e: KeyboardEvent) => {
   if (e.ctrlKey && e.key === 'Enter') {
     keyword.value = getSelectionInfo(e, keyword.value);
-    console.log('onEnter', keyword.value);
   }
 };
 
