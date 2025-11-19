@@ -15,7 +15,6 @@ export interface DraftInputOptions {
   maxFileSize?: number; // 最大文件大小，单位为字节
   onFocus?: (e: FocusEvent) => void;
   onBlur?: (e: FocusEvent) => void;
-  onInput?: (e: InputEvent) => void;
   onChange?: (value: string) => void;
   onSubmit?: (value: string) => void;
   onEnter?: (e: KeyboardEvent) => void;
@@ -35,6 +34,7 @@ export interface DefineExposeOptions {
   keyword: string;
   insertContent: (params: InsertContentParams) => string;
   inputRef: HTMLTextAreaElement | null;
+  setInputValue: (value: string) => void;
 }
 
 declare module 'vue' {

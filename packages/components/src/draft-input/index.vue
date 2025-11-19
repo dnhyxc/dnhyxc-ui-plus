@@ -34,7 +34,7 @@
           :accept="accept"
         >
           <slot name="upload">
-            <Icon name="folder" size="20px" color="#f5f5f5" cursor="pointer" :on-click="showFolder" />
+            <Icon name="folder" size="20px" color="#f5f5f5" cursor="pointer" />
           </slot>
         </el-upload>
       </slot>
@@ -52,6 +52,7 @@
         class="text-area"
         :autofocus="autofocus"
         @focus="onFocus"
+        @blur="onBlur"
         @change="onChange"
         @keypress.exact.enter.native.prevent="onSubmit"
         @keypress.ctrl.enter.native.prevent="onEnter"
@@ -61,7 +62,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, nextTick, type Ref } from 'vue';
+import { ref, onMounted, onUnmounted, type Ref } from 'vue';
 import { ElInput, ElPopover, ElUpload, ElMessage, type UploadProps } from 'element-plus';
 import { Icon, Emoji } from '../index';
 import { createNamespace } from '../../utils';
@@ -122,8 +123,9 @@ const showSmile = () => {
   visible.value = true;
 };
 
+// 插入内容
 const insertContent = ({ keyword, node, username, url, emoji }: InsertContentParams) => {
-  const content = emoji || (username ? `<${username},${url}>` : url);
+  const content = emoji || (username ? `<${username},${url}>` : `<${username || 'IMG'},${url}>`);
   if (keyword.substring(0, node?.selectionStart)) {
     const before = keyword.substring(0, node?.selectionStart);
     const after = keyword.substring(node?.selectionEnd as number, node?.textLength);
@@ -136,8 +138,8 @@ const insertContent = ({ keyword, node, username, url, emoji }: InsertContentPar
   }
 };
 
-const onSelectEmoji = (emoji: string) => {
-  keyword.value = insertContent({ keyword: keyword.value, node: (inputRef?.value as any)?.textarea, emoji });
+// 手动聚焦
+const setFocus = () => {
   if (timer) {
     clearTimeout(timer);
     timer = null;
@@ -145,6 +147,12 @@ const onSelectEmoji = (emoji: string) => {
   timer = setTimeout(() => {
     inputRef.value?.focus();
   });
+};
+
+// 插入表情
+const onSelectEmoji = (emoji: string) => {
+  keyword.value = insertContent({ keyword: keyword.value, node: (inputRef?.value as any)?.textarea, emoji });
+  setFocus();
 };
 
 // 上传校验
@@ -173,15 +181,17 @@ const beforeUpload: UploadProps['beforeUpload'] = (rawFile) => {
 const onUpload = async (event: { file: File }) => {
   const file = event.file;
   const url = (await props?.onUpload?.(file)) || '';
-  console.log('onUpload', url);
+  // 插入图片地址
   keyword.value = insertContent({ keyword: keyword.value, node: (inputRef?.value as any)?.textarea, url });
-};
-const showFolder = () => {
-  console.log('showFolder');
+  setFocus();
 };
 
 const onFocus = (event: FocusEvent) => {
   props?.onFocus?.(event);
+};
+
+const onBlur = (event: FocusEvent) => {
+  props?.onBlur?.(event);
 };
 
 const onChange = (val: string) => {
@@ -211,14 +221,21 @@ const onEnter = (e: KeyboardEvent) => {
   }
 };
 
+const setInputValue = (val: string) => {
+  keyword.value = val;
+};
+
 defineExpose<{
   keyword: string;
   // eslint-disable-next-line no-unused-vars
   insertContent: (params: InsertContentParams) => string;
   inputRef: Ref<HTMLTextAreaElement | null>;
+  // eslint-disable-next-line no-unused-vars
+  setInputValue: (val: string) => void;
 }>({
   keyword: keyword.value,
   insertContent,
-  inputRef
+  inputRef,
+  setInputValue
 });
 </script>

@@ -17,6 +17,8 @@ export * from './src/notification';
 
 export * from './utils';
 
+export * from './src/emoji/constant';
+
 export default {
   install: (app: App) => {
     // app.use(ElementPlus);
