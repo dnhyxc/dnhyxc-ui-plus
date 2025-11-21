@@ -3,17 +3,18 @@
   "version": "0.0.1",
   "scripts": {
     "build": "gulp -f packages/components/scripts/build/index.ts",
-    "dev:docs": "pnpm -C docs dev",
+    "docs": "pnpm -C docs dev",
     "build:docs": "pnpm -C docs build",
     "preview:docs": "pnpm -C docs preview",
-    "dev:play": "pnpm -C play dev",
+    "play": "pnpm -C play dev",
     "vitest": "pnpm -C packages/components test",
     "vitest:coverage": "pnpm -C packages/components coverage",
     "vitest:component": "pnpm -C packages/components run test:component",
-    "publish": "pnpm run build && pnpm changeset && pnpm changeset version && pnpm changeset publish && node ./packages/components/scripts/version/index.js",
+    "publish": "pnpm run build && pnpm changeset && pnpm changeset version && pnpm changeset publish && tsx packages/components/scripts/version/index.ts",
     "prepare": "husky install",
+    "create": "NODE_NO_WARNINGS=1 tsx packages/components/scripts/create/index.ts",
     "commit": "git-cz",
-    "test": "eslint ./packages  --ext ts,vue,js --fix"
+    "test": "eslint ./packages --ext ts,vue,js --fix"
   },
   "config": {
     "commitizen": {
@@ -46,6 +47,7 @@
     "@vitejs/plugin-vue": "^5.2.4",
     "@vitest/coverage-v8": "3.2.4",
     "@vue/test-utils": "^2.4.6",
+    "chalk": "^5.6.2",
     "commitizen": "^4.3.1",
     "cz-customizable": "^7.4.0",
     "eslint": "^9.30.1",
@@ -63,6 +65,7 @@
     "rimraf": "^6.0.1",
     "sass": "^1.89.2",
     "sucrase": "^3.35.0",
+    "tsx": "^4.20.6",
     "typescript": "^5.3.3",
     "typescript-eslint": "^8.35.1",
     "unplugin-auto-import": "^19.3.0",

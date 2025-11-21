@@ -68,12 +68,12 @@
     --vp-home-hero-image-filter: blur(68px);
   }
 
-  .VPDoc .container .content {
-    padding: 0 0 50px !important;
+  #VPContent .VPDoc .container > .content {
+    padding: 0 0 50px;
   }
 
-  .VPDoc .container .aside .content {
-    padding: 0 0 0 16px !important;
+  #VPContent .VPDoc .container .aside > .content {
+    padding: 0 0 0 16px;
   }
 }
 
@@ -148,4 +148,10 @@
 
 .el-input__inner {
   color: var(--vp-c-text-1);
+}
+
+img,
+video {
+  max-width: initial;
+  height: initial;
 }

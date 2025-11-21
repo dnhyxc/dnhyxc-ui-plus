@@ -5,7 +5,7 @@
  * index.vue
 -->
 <template>
-  <div v-if="show" id="EMOJI" :class="className">
+  <div v-if="show" :id="id" :class="className">
     <div id="_EMOJI_" class="emoji-list" :style="styles">
       <div v-for="value in emojiNameList" id="EMOJI_ITEM" :key="value" class="emoji-item" @click="onSelect(value)">
         <img :id="value" :src="EMOJI_MAP[value as keyof typeof EMOJI_MAP]" :alt="value" class="emoji" />
@@ -31,7 +31,8 @@ defineOptions({
 });
 
 const props = withDefaults(defineProps<EmojiProps>(), {
-  visible: true
+  visible: true,
+  id: 'EMOJI_LIST'
 });
 
 const className = [bem.b(), props.className].filter(Boolean).join(' ');

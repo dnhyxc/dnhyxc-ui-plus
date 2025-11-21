@@ -1,0 +1,88 @@
+.n-draft-input {
+  --draft-input-border-color: #ffffff52;
+  --draft-input-border-radius: 0;
+  --draft-input-color: #fff;
+  --draft-input-bg: transparent;
+  --draft-input-smile-icon-hover-color: rgb(180, 255, 180);
+  --draft-input-disabled-color: #a8abb2;
+  --draft-input-disabled-bg: #3f3f3f7a;
+
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: 1px solid var(--draft-input-border-color);
+  border-radius: var(--draft-input-border-radius);
+
+  .actions {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    border-bottom: 1px solid var(--draft-input-border-color);
+    padding: 0 5px;
+
+    #__SMILE_ICON__ {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 15px;
+    }
+
+    .uploader {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .n-icon {
+      &:hover {
+        #smile_icon,
+        #folder_icon {
+          path {
+            fill: var(--draft-input-smile-icon-hover-color);
+          }
+        }
+      }
+    }
+  }
+
+  .el-textarea-wrap {
+    flex: 1;
+    overflow-y: auto;
+
+    .text-area {
+      height: 100%;
+      border: none;
+      padding: 2px 0 5px 0;
+      box-sizing: border-box;
+    }
+
+    .is-disabled {
+      padding: 0;
+    }
+  }
+
+  .el-textarea__inner {
+    box-shadow: none;
+    height: 100% !important;
+    min-height: auto !important;
+    padding: 0 5px;
+    border-radius: initial;
+    background-color: var(--draft-input-bg);
+    box-sizing: border-box;
+    color: var(--draft-input-color);
+
+    &:hover {
+      box-shadow: none;
+    }
+
+    &:focus {
+      box-shadow: none;
+    }
+  }
+
+  .el-textarea.is-disabled .el-textarea__inner {
+    background-color: var(--draft-input-disabled-bg);
+    box-shadow: none;
+    color: var(--draft-input-disabled-color);
+  }
+}

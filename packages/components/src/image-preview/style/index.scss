@@ -1,0 +1,90 @@
+// 公共样式：禁止文本选中和图片拖拽
+.clickNoSelectText {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  -khtml-user-select: none;
+  user-select: none;
+  /* 禁止图片拖拽 */
+  -webkit-user-drag: none;
+}
+
+.n-image-preview {
+  --icon-color: #000;
+  --icon-hover-color: skyblue;
+
+  :deep {
+    .el-dialog__body {
+      padding: 10px 20px 20px;
+    }
+  }
+
+  .image-preview-wrap {
+    position: relative;
+    width: 100%;
+    height: 61.5vh;
+    max-height: 61.5vh;
+    overflow: hidden;
+    @extend .clickNoSelectText;
+
+    .preview-img {
+      // 设置图片展示不变性且完整显示图像
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+      top: 0;
+      left: 0;
+    }
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+
+    .title {
+      font-size: 18px;
+      color: var(--icon-color);
+      margin-right: 20px;
+    }
+
+    .icon-list {
+      display: flex;
+      align-items: center;
+
+      .icon {
+        margin-right: 15px;
+
+        svg {
+          transition: all 0.3s;
+        }
+
+        &:hover {
+          cursor: pointer;
+          svg {
+            scale: 1.2;
+            transition: all 0.3s;
+            path {
+              fill: var(--icon-hover-color) !important;
+            }
+          }
+        }
+      }
+    }
+
+    .info-list {
+      color: var(--icon-color);
+      margin-left: 20px;
+      @extend .clickNoSelectText;
+
+      .info {
+        margin-right: 15px;
+      }
+    }
+
+    .size {
+      padding-left: 12px;
+      font-size: 16px;
+    }
+  }
+}

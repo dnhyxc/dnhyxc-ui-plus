@@ -98,8 +98,11 @@ onUnmounted(() => {
   padding-top: 100px;
 
   .left {
-    padding-top: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     margin-left: 85px;
+    margin-top: -35px;
 
     .title {
       display: flex;

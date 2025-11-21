@@ -1,10 +1,10 @@
-import delPath from './delpath';
 import { series, parallel, src, dest } from 'gulp';
-import { pkgPath, componentPath } from './paths';
 import glupSass from 'gulp-sass';
 import * as dartSass from 'sass';
 import autoprefixer from 'gulp-autoprefixer';
 import cleanCSS from 'gulp-clean-css';
+import { pkgPath, componentPath } from './paths';
+import delPath from './delpath';
 import run from './run';
 
 // 删除 dnhyxc-ui-plus

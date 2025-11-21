@@ -3,8 +3,11 @@
     ref="iconRef"
     :class="className"
     v-bind="$attrs"
-    :style="`cursor: ${cursor}`"
-    v-html="getSvg(name, { size, width, height, color })"
+    :style="`cursor: ${cursor}; scale: ${scale}; transition: ${scale ? `scale ${transitionTime || '0.3s'}` : 'none'}`"
+    @mouseover="hoverColor ? onMouseEnter() : null"
+    @mouseleave="hoverColor ? onMouseLeave() : null"
+    @click="onClick"
+    v-html="getSvg(name, { size, width, height, color, id })"
   />
 </template>
 <script lang="ts" setup>
@@ -27,8 +30,26 @@ const className = [bem.b(), props.className].filter(Boolean).join(' ');
 
 const iconRef = ref<HTMLElement>();
 
+const color = ref(props.color);
+
+const scale = ref(1);
+
 defineExpose({
   getSvg,
   iconRef
 });
+
+const onMouseEnter = () => {
+  color.value = props.hoverColor || props.color;
+  if (props?.scale) {
+    scale.value = props.scale;
+  }
+};
+
+const onMouseLeave = () => {
+  color.value = props.color;
+  if (props?.scale) {
+    scale.value = 1;
+  }
+};
 </script>

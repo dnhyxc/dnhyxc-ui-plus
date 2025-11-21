@@ -1,0 +1,16 @@
+.n-model {
+  --model-btn-width: 120px;
+  --model-btn-height: 33px;
+  --model-btn-font-size: 14px;
+
+  .dialog-footer {
+    .btn {
+      width: 120px;
+      height: 33px;
+      font-size: 14px;
+    }
+    .close-btn {
+      margin-right: 10px;
+    }
+  }
+}

@@ -372,6 +372,179 @@ export default {
 };
 ```
 
+### 自动创建新组件文件夹
+
+为了在每次新增组件时，都要手动在 `packages/components/src` 文件夹下创建对应的组件文件夹，同时在该文件夹中创建 `style/index.scss`、`index.ts`、`index.vue`、`types.ts` 文件，因此，我们可以实现一个自动创建的脚本。
+
+首先在 `packages/components/scripts` 文件夹下创建 `create/index.ts` 文件，同时在项目根目录下安装 [`chalk`](https://www.npmjs.com/package/chalk) 插件，这样就能优美的现实日志了，内容如下：
+
+```ts
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { log, greenBright, redBright, yellowBright } from '../../utils/log.ts';
+
+// 通过改写__dirname 为__dirnameNew，解决打包报错
+const __filenameNew = fileURLToPath(import.meta.url);
+const __dirnameNew = path.dirname(__filenameNew);
+
+export const getPath = (_path: string) => path.resolve(__dirnameNew, _path);
+const [, , componentName] = process.argv;
+
+if (!componentName) {
+  // eslint-disable-next-line no-console
+  console.log(log.warning, yellowBright('请在终端中输入需要创建的组件名称'));
+  process.exit(1);
+}
+
+const createFolder = (dir: string) => {
+  if (fs.existsSync(dir)) {
+    // eslint-disable-next-line no-console
+    console.log(log.warning, `${redBright(`${componentName} 文件夹已存在：`)}${yellowBright(targetDir)}`);
+    process.exit(1);
+  }
+  fs.mkdirSync(dir, { recursive: true });
+};
+
+const createFile = (filePath: string, content = '') => {
+  if (fs.existsSync(filePath)) {
+    // eslint-disable-next-line no-console
+    console.log(log.warning, `${redBright('文件已存在：')}${yellowBright(filePath)}`);
+    return;
+  }
+  fs.writeFileSync(filePath, content, 'utf8');
+  // eslint-disable-next-line no-console
+  console.log(log.success, greenBright(`已创建文件：${filePath}`));
+};
+
+// 创建组件文件夹
+const targetDir = path.join(getPath('../../src'), componentName);
+const styleDir = path.join(targetDir, 'style');
+
+// 创建 style 文件夹
+createFolder(styleDir);
+
+// 批量创建文件
+[
+  path.join(styleDir, 'index.scss'),
+  path.join(targetDir, 'index.vue'),
+  path.join(targetDir, 'index.ts'),
+  path.join(targetDir, 'types.ts')
+].forEach((filePath) => createFile(filePath));
+```
+
+为了能更加优美的在控制台中显示日志，需要在项目根目录下安装 [`chalk`](https://www.npmjs.com/package/chalk)，同时在 `packages/components/utils` 文件夹下创建 `log.ts` 文件，内容如下：
+
+```ts
+import chalk from 'chalk';
+
+const main = {
+  info: chalk.blue('ℹ'),
+  success: chalk.green('✨'),
+  warning: chalk.yellow('⚠️'),
+  error: chalk.red('×'),
+  star: chalk.cyan('✵'),
+  arrow: chalk.yellow('➦')
+};
+
+const fallback = {
+  info: chalk.blue('i'),
+  success: chalk.green('✔'),
+  warning: chalk.yellow('‼'),
+  error: chalk.red('×'),
+  star: chalk.cyan('✵'),
+  arrow: chalk.yellow('->')
+};
+
+const isUnicodeSupported = () => {
+  // 操作系统平台是否为 win32（Windows）
+  if (process.platform !== 'win32') {
+    // 判断 process.env.TERM 是否为 'linux'，
+    return process.env.TERM !== 'linux';
+  }
+
+  return (
+    Boolean(process.env.CI) || // 是否在持续集成环境中
+    Boolean(process.env.WT_SESSION) || // Windows 终端环境（Windows Terminal）中的会话标识
+    Boolean(process.env.TERMINUS_SUBLIME) || // Terminus 插件标识
+    process.env.ConEmuTask === '{cmd::Cmder}' || // ConEmu 和 cmder 终端中的任务标识
+    process.env.TERM_PROGRAM === 'Terminus-Sublime' ||
+    process.env.TERM_PROGRAM === 'vscode' || // 终端程序的标识，可能是 'Terminus-Sublime' 或 'vscode'
+    process.env.TERM === 'xterm-256color' ||
+    process.env.TERM === 'alacritty' || // 终端类型，可能是 'xterm-256color' 或 'alacritty'
+    process.env.TERMINAL_EMULATOR === 'JetBrains-JediTerm' // 终端仿真器的标识，可能是 'JetBrains-JediTerm'
+  );
+};
+
+export const log = isUnicodeSupported() ? main : fallback;
+
+export const greenBright = (text: string) => {
+  return chalk.greenBright(text);
+};
+
+export const yellowBright = (text: string) => {
+  return chalk.yellowBright(text);
+};
+
+export const redBright = (text: string) => {
+  return chalk.redBright(text);
+};
+
+export const blueBright = (text: string) => {
+  return chalk.blueBright(text);
+};
+
+export const cyanBright = (text: string) => {
+  return chalk.cyanBright(text);
+};
+
+export const whiteBright = (text: string) => {
+  return chalk.whiteBright(text);
+};
+
+export const gray = (text: string) => {
+  return chalk.gray(text);
+};
+
+export const white = (text: string) => {
+  return chalk.white(text);
+};
+
+export const red = (text: string) => {
+  return chalk.red(text);
+};
+
+export const blue = (text: string) => {
+  return chalk.blue(text);
+};
+
+export const yellow = (text: string) => {
+  return chalk.yellow(text);
+};
+
+export const green = (text: string) => {
+  return chalk.green(text);
+};
+
+export const cyan = (text: string) => {
+  return chalk.cyan(text);
+};
+```
+
+之后在项目根目录下的 `package.json` 中增加 `create` 命令，注意，首先需要在项目根目录下安装 `tsx` 脚本，方便在 node 环境中运行 `ts` 文件，内容如下：
+
+```json
+{
+  "scripts": {
+    "create": "NODE_NO_WARNINGS=1 tsx packages/components/scripts/create/index.ts"
+  }
+}
+```
+
+配置完成之后，就可以愉快的在项目根目录下运行 `npm run create <组件名称>` 命令来创建新组件了。
+
+> 其中 `NODE_NO_WARNINGS=1` 是为了防止执行 `process.exit(1)` 后在控制台中出现一些警告信息，妨碍 create 脚本运行的提示结果，当然也可以不加 `NODE_NO_WARNINGS=1`，也不会影响命令的执行。
+
 ## 搭建组件预览（测试）环境
 
 在根目录下运行 `create-vite play --template vue-ts` 命令，创建 `play` 组件测试项目。
@@ -987,7 +1160,7 @@ npx changeset init
 
 当项目通过 `pnpm changeset version` 变更 version 之后，将跟新的 version 同步更新到 `@dnhyxc-ui/components`。因为 `dnhyxc-ui-plus` 的 version 是每次打包 `@dnhyxc-ui/components` 之后，同步到 `dnhyxc-ui-plus` 的 `package.json` 中的。因此将 `dnhyxc-ui-plus` 更新后的 version 同步到 `@dnhyxc-ui/components` 之后，就不需要每次发布 `dnhyxc-ui-plus` 包时要手动更新 `@dnhyxc-ui/components` 的 version 了。
 
-在项目更目录下的 `packages/components/scripts` 下新增 `version` 文件夹，并在 `version` 中新增 `index.js` 文件，`index.js` 内容如下：
+在项目更目录下的 `packages/components/scripts` 下新增 `version` 文件夹，并在 `version` 中新增 `index.ts` 文件，`index.ts` 内容如下：
 
 ```js
 import path from 'path';
@@ -998,7 +1171,7 @@ import { writeFileSync, readFileSync } from 'fs';
 const __filenameNew = fileURLToPath(import.meta.url);
 const __dirnameNew = path.dirname(__filenameNew);
 
-export const getPath = (_path) => path.resolve(__dirnameNew, _path);
+export const getPath = (_path: string) => path.resolve(__dirnameNew, _path);
 
 const updateVerison = () => {
   const dnhyxcUIPlusMdPath = getPath('../../../dnhyxc-ui-plus/package.json');
@@ -1013,21 +1186,21 @@ const updateVerison = () => {
     writeFileSync(componentsPkgPath, JSON.stringify(componentsPkg, null, 2));
     console.log(`✨ @dnhyxc-ui/components package.json version 已更新为 ${dnhyxcUIPlusPkg.version}`);
   } catch (err) {
-    console.error(`package.json 写入错误: ${err.message}`);
+    console.error(`package.json 写入错误: ${(err as Error).message}`);
   }
 };
 
 updateVerison();
 ```
 
-脚本配置完毕之后，在根目录下的 `package.json` 中更新 `publish` 脚本，增加 `node ./packages/components/scripts/version/index.js` 命令：
+脚本配置完毕之后，在根目录下的 `package.json` 中更新 `publish` 脚本，增加 `tsx ./packages/components/scripts/version/index.ts` 命令，注意：需要先在项目根目录下安装 `tsx` 模块，方便在 node 环境中运行 ts 文件：
 
 ```json
 {
   // ...
   "scripts": {
     // ...
-    "publish": "pnpm --filter=./packages/components run build && pnpm changeset && pnpm changeset version && pnpm changeset publish && node ./packages/components/scripts/version/index.js"
+    "publish": "pnpm --filter=./packages/components run build && pnpm changeset && pnpm changeset version && pnpm changeset publish && tsx ./packages/components/scripts/version/index.ts"
   }
   // ...
 }
@@ -1207,6 +1380,58 @@ describe('Components Entry Point', () => {
 ```
 
 完成上述配置之后，就可以在项目根目录下运行 `pnpm run vitest` 或者 `pnpm run vitest:coverage` 命令来运行测试用例了。
+
+### 运行指定组件的测试用例
+
+如果只想运行某个组件的测试用例，不全部运行，可以实现一个脚本来方便执行。首先在 `packages/components/scripts` 文件夹下创建一个 `vitest/index.ts` 文件，具体内容如下：
+
+```ts
+import { execSync } from 'node:child_process';
+
+const componentName = process.argv[2];
+
+if (!componentName) {
+  // eslint-disable-next-line no-console
+  console.error('请提供一个组件名称，用法: pnpm test:component <component-name>');
+  process.exit(1);
+}
+
+const command = `vitest run src/${componentName}/__tests__/index.test.ts`;
+
+try {
+  execSync(command, { stdio: 'inherit' });
+} catch (err) {
+  // eslint-disable-next-line no-console
+  console.error(`测试失败: ${(err as Error).message}`);
+  process.exit(1);
+}
+```
+
+接着在 `packages/components/package.json` 文件中添加 `test:component` 命令，注意：需要在项目根目录下安装 `tsx` 模块，使在 node 环境中可以运行 ts 文件。具体内容如下：
+
+```json
+{
+  "scripts": {
+    "build": "vite build",
+    "test": "vitest run",
+    "coverage": "vitest run --coverage",
+    "test:component": "tsx scripts/vitest/index.ts"
+  }
+}
+```
+
+为了方便在项目根目录下运行指定组件的测试用例，需要在根目录下的 `package.json` 文件中添加 `vitest:component` 命令，具体内容如下：
+
+```json
+{
+  "scripts": {
+    // ...
+    "vitest:component": "pnpm -C packages/components run test:component"
+  }
+}
+```
+
+添加完成之后，就可以在项目根目录下运行 `pnpm run vitest:component <component-name>` 来运行指定组件的测试用例了。
 
 ## 配置 eslint
 

@@ -14,6 +14,15 @@
   <n-icon name="pause-play" />
   <n-icon name="pause-play-fill" class-name="play-fill-icon" />
   <n-icon name="out-clip" />
+  <n-icon name="info" />
+  <n-icon name="zoom-in" />
+  <n-icon name="selected" />
+  <n-icon name="delete" />
+  <n-icon name="edit" />
+  <n-icon name="check" />
+  <n-icon name="remove" />
+  <n-icon name="smile" />
+  <n-icon name="folder" />
 </template>
 
 <style lang="scss" scoped>
@@ -55,7 +64,7 @@ const data = [
     type: 'enum',
     default: '',
     description: '图标名称',
-    typeEnum: ['sea', 'ai', 'thumbnail', 'in-clip', 'out-clip', 'wechat-program', 'to-top', 'prev', 'next', 'unfull', 'full', 'pause', 'pause-play', 'pause-play-fill', 'picture-to-picture', 'solid']
+    typeEnum: ['sea', 'ai', 'thumbnail', 'in-clip', 'out-clip', 'wechat-program', 'to-top', 'prev', 'next', 'unfull', 'full', 'pause', 'pause-play', 'pause-play-fill', 'picture-to-picture', 'solid', 'info', 'more', 'selected', 'delete', 'edit', 'pencil', 'check', 'remove', 'smile', 'folder']
   },
   {
     name: 'size',
@@ -68,6 +77,12 @@ const data = [
     type: 'string',
     default: '',
     description: '图标颜色',
+  },
+  {
+    name: 'hoverColor',
+    type: 'string',
+    default: '',
+    description: '图标 hover 颜色',
   },
   {
     name: 'width',

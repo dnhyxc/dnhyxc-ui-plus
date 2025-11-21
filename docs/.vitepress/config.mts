@@ -41,21 +41,37 @@ export default defineConfig({
     sidebar: {
       '/guide/': [
         {
-          text: '指南',
+          text: '基础',
           items: [
             { text: '安装', link: '/guide/installation' },
             { text: '快速上手', link: '/guide/quick-start' }
           ]
+        },
+        {
+          text: '进阶',
+          items: [{ text: '更改组件默认样式', link: '/guide/change-style' }]
         }
       ],
       '/components/': [
         {
-          text: '组件',
+          text: '基本组件',
           items: [
             { text: 'Button 按钮', link: '/components/button' },
             { text: 'Input 文本输入', link: '/components/input' },
             { text: 'Icon 图标', link: '/components/icon' },
-            { text: 'Emoji 表情', link: '/components/emoji' }
+            { text: 'Model 弹窗', link: '/components/model' }
+          ]
+        },
+        {
+          text: '业务组件',
+          items: [
+            { text: 'Emoji 表情', link: '/components/emoji' },
+            { text: 'Image 图片', link: '/components/image' },
+            { text: 'ImagePreview 图片预览', link: '/components/image-preview' },
+            { text: 'ImageContrast 图片对比', link: '/components/image-contrast' },
+            { text: 'Waterfall 瀑布流', link: '/components/waterfall' },
+            { text: 'Loading 加载', link: '/components/loading' },
+            { text: 'draftInput 聊天输入框', link: '/components/draft-input' }
           ]
         }
       ]
