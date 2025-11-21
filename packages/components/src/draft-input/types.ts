@@ -1,13 +1,13 @@
 import type NDraftInput from './index.vue';
 
 export interface DraftInputOptions {
+  height?: string;
+  className?: string;
   autofocus?: boolean;
-  minRows?: number;
   placeholder?: string;
   resize?: 'none' | 'both' | 'horizontal' | 'vertical';
   disabled?: boolean;
   maxlength?: number;
-  borderColor?: string;
   multiple?: boolean; // 是否支持多文件上传
   accept?: string; // 文件类型筛选，如 '.jpg,.png' 或 'image/*'
   fileTypes?: string[];
@@ -19,7 +19,7 @@ export interface DraftInputOptions {
   onSubmit?: (value: string) => void;
   onEnter?: (e: KeyboardEvent) => void;
   onBeforeUpload?: (file: File) => boolean;
-  onUpload?: (file: File) => void;
+  onUpload?: (file: File) => Promise<string>;
 }
 
 export interface InsertContentParams {

@@ -1,4 +1,4 @@
-import { EMOJI_NAME, EMOJI_MAP } from '@dnhyxc-ui/components';
+import { EMOJI_NAME, EMOJI_MAP } from 'dnhyxc-ui-vue-plus';
 
 const ERROR_IMG =
   'https://files.codelife.cc/wallhaven/full/4g/wallhaven-4gj2q4.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp';
@@ -155,10 +155,8 @@ export const replaceEmojis = (content = '') => {
   content = content.replace(/\[[^[^\]]+]/g, (word) => {
     const index = (EMOJI_NAME as readonly string[]).indexOf(word);
     if (index > -1) {
-      return `<img id="__COMMENT_EMOJI__" style="vertical-align: middle;width: 32px;height: 32px" src="${
-        EMOJI_MAP[word as keyof typeof EMOJI_MAP]
-        // EMOJI_HOST + EMOJI_MAP[word as keyof typeof EMOJI_MAP]
-      }" alt="" title="${word}"/>`;
+      const src = `${EMOJI_MAP[word as keyof typeof EMOJI_MAP]}`;
+      return `<img id="__COMMENT_EMOJI__" style="vertical-align: middle;width: 32px;height: 32px" src="${src}" alt="" title="${word}"/>`;
     } else {
       return word;
     }
@@ -168,7 +166,7 @@ export const replaceEmojis = (content = '') => {
 
 // 图片转换
 export const replacePictures = (content = '') => {
-  content = content.replace(/<[^<^>]+>/g, (word) => {
+  content = content.replace(/\[[^<^>]+\]/g, (word) => {
     const index = word.indexOf(',');
     if (index > -1) {
       const arr = word.replace('<', '').replace('>', '').split(',');

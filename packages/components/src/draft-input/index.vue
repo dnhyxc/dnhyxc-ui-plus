@@ -1,14 +1,14 @@
 <template>
-  <div :class="bem.b()">
-    <div class="actions">
-      <slot name="actions">
+  <div :class="`${className}`" :style="`height: ${height};`">
+    <slot name="actions">
+      <div class="actions">
         <el-popover
           id="__SMILE_POPOVER__"
           :visible="visible"
           trigger="click"
           placement="top-start"
           width="auto"
-          effect="dark"
+          popper-style="min-width: max-content"
           popper-class="emoji-popover"
         >
           <Emoji
@@ -21,7 +21,9 @@
           />
           <template #reference>
             <div id="__SMILE_ICON__" @click="showSmile">
-              <Icon name="smile" size="20px" color="#f5f5f5" cursor="pointer" />
+              <slot name="smile-icon">
+                <Icon name="smile" size="20px" color="#f5f5f5" cursor="pointer" />
+              </slot>
             </div>
           </template>
         </el-popover>
@@ -33,20 +35,20 @@
           :http-request="onUpload"
           :accept="accept"
         >
-          <slot name="upload">
+          <slot name="upload-icon">
             <Icon name="folder" size="20px" color="#f5f5f5" cursor="pointer" />
           </slot>
         </el-upload>
-      </slot>
-    </div>
+      </div>
+    </slot>
     <div class="el-textarea-wrap">
       <el-input
         id="TEXTAREA_WRAP"
         ref="inputRef"
         v-model="keyword"
-        :autosize="{ minRows }"
         :maxlength="maxlength"
         :resize="resize"
+        :disabled="disabled"
         type="textarea"
         :placeholder="placeholder"
         class="text-area"
@@ -62,7 +64,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, type Ref } from 'vue';
+import { ref, onMounted, onUnmounted, type Ref, computed } from 'vue';
 import { ElInput, ElPopover, ElUpload, ElMessage, type UploadProps } from 'element-plus';
 import { Icon, Emoji } from '../index';
 import { createNamespace } from '../../utils';
@@ -84,9 +86,9 @@ defineOptions({
 
 const props = withDefaults(defineProps<DraftInputOptions>(), {
   maxlength: 1000,
+  height: '120px',
   resize: 'none',
   autofocus: false,
-  borderColor: 'red',
   uploadInfoMsg: FILE_UPLOAD_MSG,
   maxFileSize: 20,
   fileTypes: () => ['image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'image/webp', 'image/svg+xml'],
@@ -98,6 +100,8 @@ const visible = ref(false);
 const inputRef = ref<HTMLTextAreaElement | null>(null);
 
 let timer: ReturnType<typeof setTimeout> | null = null;
+
+const className = computed(() => `${bem.b()} ${props.className || ''}`);
 
 onMounted(() => {
   window.addEventListener('click', onClickElement);
@@ -113,8 +117,9 @@ onUnmounted(() => {
 
 const onClickElement = (e: MouseEvent) => {
   const target = e.target as HTMLElement;
+  const popover = document.querySelector('.emoji-popover');
   const parentElement = target.parentElement?.parentElement;
-  if (!parentElement?.closest('#__SMILE_ICON__')) {
+  if (!popover?.contains(target) && !parentElement?.closest('#__SMILE_ICON__')) {
     visible.value = false;
   }
 };
@@ -125,7 +130,7 @@ const showSmile = () => {
 
 // 插入内容
 const insertContent = ({ keyword, node, username, url, emoji }: InsertContentParams) => {
-  const content = emoji || (username ? `<${username},${url}>` : `<${username || 'IMG'},${url}>`);
+  const content = emoji || (username ? `[${username},${url}]` : `[${username || 'IMG'},${url}]`);
   if (keyword.substring(0, node?.selectionStart)) {
     const before = keyword.substring(0, node?.selectionStart);
     const after = keyword.substring(node?.selectionEnd as number, node?.textLength);
@@ -153,6 +158,7 @@ const setFocus = () => {
 const onSelectEmoji = (emoji: string) => {
   keyword.value = insertContent({ keyword: keyword.value, node: (inputRef?.value as any)?.textarea, emoji });
   setFocus();
+  visible.value = false;
 };
 
 // 上传校验

@@ -110,9 +110,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, nextTick, onUnmounted, onMounted } from 'vue';
+import { ref, nextTick, onUnmounted } from 'vue';
 // import { ElMessage } from 'element-plus';
-import { type DefineExposeOptions } from '@dnhyxc-ui/components';
+import { type DefineExposeOptions } from 'dnhyxc-ui-vue-plus';
 import { replaceCommentContent } from './utils';
 
 interface Message {
@@ -141,25 +141,12 @@ const setDraftInputRef = (ref: any) => {
   draftInputRef.value = ref;
 };
 
-onMounted(() => {
-  window.addEventListener('click', onClickElement);
-});
-
 onUnmounted(() => {
   if (timer) {
     clearTimeout(timer);
     timer = null;
   }
-  window.removeEventListener('click', onClickElement);
 });
-
-const onClickElement = (e: MouseEvent) => {
-  const target = e.target as HTMLElement;
-  const replyInputEls = document.querySelectorAll('.reply-input');
-  if (replyInputEls?.[0] && !replyInputEls?.[0].contains(target)) {
-    isReply.value = false;
-  }
-};
 const onSubmit = (value: string) => {
   let replyMsg = null;
 
@@ -216,7 +203,7 @@ const beforeUpload = (file: File) => {
 
 const onUpload = async (file: File) => {
   console.log('onUpload-----', file);
-  const img = `https://picsum.photos/1080/${500 + Math.floor(Math.random() * 300)}?random=${(Math.random() * 10).toFixed(0)}`;
+  const img = `https://picsum.photos/1080/${500 + Math.floor(Math.random() * 300)}`;
   const url = await new Promise((resolve) => {
     setTimeout(() => {
       resolve(img);

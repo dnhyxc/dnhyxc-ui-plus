@@ -2,7 +2,10 @@
   --draft-input-border-color: #ffffff52;
   --draft-input-border-radius: 0;
   --draft-input-color: #fff;
+  --draft-input-bg: transparent;
   --draft-input-smile-icon-hover-color: rgb(180, 255, 180);
+  --draft-input-disabled-color: #a8abb2;
+  --draft-input-disabled-bg: #3f3f3f7a;
 
   display: flex;
   flex-direction: column;
@@ -13,7 +16,7 @@
   .actions {
     display: flex;
     align-items: center;
-    height: 36px;
+    height: 40px;
     border-bottom: 1px solid var(--draft-input-border-color);
     padding: 0 5px;
 
@@ -43,13 +46,18 @@
   }
 
   .el-textarea-wrap {
-    height: 100%;
+    flex: 1;
     overflow-y: auto;
 
     .text-area {
       height: 100%;
       border: none;
-      border-radius: 5px;
+      padding: 2px 0 5px 0;
+      box-sizing: border-box;
+    }
+
+    .is-disabled {
+      padding: 0;
     }
   }
 
@@ -59,27 +67,22 @@
     min-height: auto !important;
     padding: 0 5px;
     border-radius: initial;
-    background-color: transparent;
+    background-color: var(--draft-input-bg);
     box-sizing: border-box;
     color: var(--draft-input-color);
+
+    &:hover {
+      box-shadow: none;
+    }
 
     &:focus {
       box-shadow: none;
     }
   }
 
-  .text-area {
-    padding: 2px 0 5px 0;
-    box-sizing: border-box;
+  .el-textarea.is-disabled .el-textarea__inner {
+    background-color: var(--draft-input-disabled-bg);
+    box-shadow: none;
+    color: var(--draft-input-disabled-color);
   }
 }
-
-// .el-popover.el-popper {
-//   background-color: #ccc;
-//   border: 1px solid #ccc;
-// }
-
-// .el-popper.is-light > .el-popper__arrow:before {
-//   background: #ccc;
-//   border: 1px solid #ccc;
-// }
