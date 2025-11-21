@@ -21,7 +21,4 @@ declare module 'vue' {
   export interface GlobalDirectives {
     vInfiniteScroll: typeof import('element-plus/es')['ElInfiniteScroll']
   }
-  export interface GlobalDirectives {
-    vInfiniteScroll: typeof import('element-plus/es')['ElInfiniteScroll']
-  }
 }
