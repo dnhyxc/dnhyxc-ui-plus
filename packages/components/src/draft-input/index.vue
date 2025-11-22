@@ -52,7 +52,7 @@
       popper-style="min-width: max-content; padding: 8px 0 8px 8px;"
     >
       <slot v-if="needAt" name="at-users" v-bind="{ onSelectUser }">
-        <div ref="atListRef" v-if="atUserList?.length" class="input-at-list">
+        <div v-if="atUserList?.length" ref="atListRef" class="input-at-list">
           <el-scrollbar max-height="300px">
             <div v-for="user in atUserList" :key="user.id" class="input-at-item" @click="onSelectUser(user)">
               <div class="input-at-item-info">
