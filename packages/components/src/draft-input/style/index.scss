@@ -86,3 +86,41 @@
     color: var(--draft-input-disabled-color);
   }
 }
+
+.input-at-list {
+  --draft-input-at-user-hover-bg: #ffffff1a;
+  --draft-input-at-user-hover-color: rgb(180, 255, 180);
+
+  width: 300px;
+  height: auto;
+
+  .input-at-item {
+    padding: 2px 8px 2px 0;
+    cursor: pointer;
+
+    .input-at-item-info {
+      display: flex;
+      align-items: center;
+      padding: 4px;
+      border-radius: 5px;
+
+      &:hover {
+        color: var(--draft-input-at-user-hover-color);
+        background-color: var(--draft-input-at-user-hover-bg);
+      }
+
+      .input-at-item-avatar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .input-at-item-username {
+        display: flex;
+        align-items: center;
+        margin-left: 10px;
+        font-size: 16px;
+      }
+    }
+  }
+}

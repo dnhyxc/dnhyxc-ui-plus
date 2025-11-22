@@ -41,38 +41,65 @@
         </el-upload>
       </div>
     </slot>
-    <div class="el-textarea-wrap">
-      <el-input
-        id="TEXTAREA_WRAP"
-        ref="inputRef"
-        v-model="keyword"
-        :maxlength="maxlength"
-        :resize="resize"
-        :disabled="disabled"
-        type="textarea"
-        :placeholder="placeholder"
-        class="text-area"
-        :autofocus="autofocus"
-        @focus="onFocus"
-        @blur="onBlur"
-        @change="onChange"
-        @keypress.exact.enter.native.prevent="onSubmit"
-        @keypress.ctrl.enter.native.prevent="onEnter"
-      />
-    </div>
+    <el-popover
+      :visible="atVisible && needAt"
+      :show-arrow="false"
+      trigger="click"
+      placement="top-start"
+      width="auto"
+      popper-style="min-width: max-content; padding: 8px 0 8px 8px;"
+    >
+      <slot v-if="needAt" name="at-users" v-bind="{ onSelectUser }">
+        <div v-if="atUserList?.length" class="input-at-list">
+          <el-scrollbar max-height="300px">
+            <div v-for="user in atUserList" :key="user.id" class="input-at-item" @click="onSelectUser(user)">
+              <div class="input-at-item-info">
+                <div class="input-at-item-avatar">
+                  <Image :url="user.avatar" width="40px" height="40px" />
+                </div>
+                <div class="input-at-item-username">{{ user.username }}</div>
+              </div>
+            </div>
+          </el-scrollbar>
+        </div>
+      </slot>
+      <template #reference>
+        <div class="el-textarea-wrap">
+          <el-input
+            id="TEXTAREA_WRAP"
+            ref="inputRef"
+            v-model="keyword"
+            :maxlength="maxlength"
+            :resize="resize"
+            :disabled="disabled"
+            type="textarea"
+            :placeholder="placeholder"
+            class="text-area"
+            :autofocus="autofocus"
+            @focus="onFocus"
+            @blur="onBlur"
+            @change="onChange"
+            @input="onInput"
+            @keypress.exact.enter.native.prevent="onSubmit"
+            @keypress.ctrl.enter.native.prevent="onEnter"
+          />
+        </div>
+      </template>
+    </el-popover>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, type Ref, computed } from 'vue';
-import { ElInput, ElPopover, ElUpload, ElMessage, type UploadProps } from 'element-plus';
-import { Icon, Emoji } from '../index';
+import { ElInput, ElPopover, ElUpload, ElMessage, ElScrollbar, type UploadProps } from 'element-plus';
+import { Icon, Emoji, Image } from '../index';
 import { createNamespace } from '../../utils';
-import { DraftInputOptions, InsertContentParams } from './types';
+import { DraftInputOptions, InsertContentParams, AtUserOptions } from './types';
 import 'element-plus/es/components/input/style/css';
 import 'element-plus/es/components/upload/style/css';
 import 'element-plus/es/components/popover/style/css';
 import 'element-plus/es/components/message/style/css';
+import 'element-plus/es/components/scrollbar/style/css';
 import './style/index.scss';
 
 // 上传文件提示
@@ -97,6 +124,7 @@ const props = withDefaults(defineProps<DraftInputOptions>(), {
 
 const keyword = ref('');
 const visible = ref(false);
+const atVisible = ref(false);
 const inputRef = ref<HTMLTextAreaElement | null>(null);
 
 let timer: ReturnType<typeof setTimeout> | null = null;
@@ -122,6 +150,7 @@ const onClickElement = (e: MouseEvent) => {
   if (!popover?.contains(target) && !parentElement?.closest('#__SMILE_ICON__')) {
     visible.value = false;
   }
+  atVisible.value = false;
 };
 
 const showSmile = () => {
@@ -129,17 +158,24 @@ const showSmile = () => {
 };
 
 // 插入内容
-const insertContent = ({ keyword, node, username, url, emoji }: InsertContentParams) => {
-  const content = emoji || (username ? `[${username},${url}]` : `[${username || 'IMG'},${url}]`);
+const insertContent = ({ keyword, node, username, url, emoji, atUser }: InsertContentParams) => {
+  const getResult = (before: string, after: string) => {
+    const hasSpaceBefore = before.endsWith(' ') || before === '';
+    const hasSpaceAfter = after.startsWith(' ') || after === '';
+    const leftSpace = hasSpaceBefore ? '' : ' ';
+    const rightSpace = hasSpaceAfter ? '' : ' ';
+    return before + leftSpace + content + rightSpace + after + (after === '' ? ' ' : '');
+  };
+  const content = emoji ? emoji : atUser ? `@${atUser}` : username ? `[${username},${url}]` : `[IMG,${url}]`;
   if (keyword.substring(0, node?.selectionStart)) {
     const before = keyword.substring(0, node?.selectionStart);
     const after = keyword.substring(node?.selectionEnd as number, node?.textLength);
-    return (before ? `${before} ` : '') + content + (after ? ` ${after}` : after);
+    return getResult(before, after);
   } else {
     // selectionStart 为0时，默认向最后面插入
     const before = keyword.substring(node?.selectionEnd as number, node?.textLength);
     const after = keyword.substring(0, node?.selectionStart);
-    return (before ? `${before} ` : '') + content + (after ? ` ${after}` : after);
+    return getResult(before, after);
   }
 };
 
@@ -198,6 +234,27 @@ const onFocus = (event: FocusEvent) => {
 
 const onBlur = (event: FocusEvent) => {
   props?.onBlur?.(event);
+};
+
+const onSelectUser = (user: AtUserOptions) => {
+  console.log('onSelectUser', user.id);
+  const atIndex = keyword.value.lastIndexOf('@');
+  keyword.value = insertContent({
+    keyword: keyword.value.slice(0, atIndex),
+    node: (inputRef?.value as any)?.textarea,
+    atUser: user.username
+  });
+  props?.onAtUser?.(user);
+  setFocus();
+};
+
+const onInput = (val: string) => {
+  const atIndex = val.lastIndexOf('@');
+  if (atIndex !== -1 && atIndex === val.length - 1) {
+    atVisible.value = true;
+  } else {
+    atVisible.value = false;
+  }
 };
 
 const onChange = (val: string) => {

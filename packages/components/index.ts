@@ -8,7 +8,7 @@ export type { EmojiName, EmojiList } from './src/emoji/types';
 
 export type { ImageParams } from './src/waterfall/types';
 
-export type { DefineExposeOptions, InsertContentParams } from './src/draft-input/types';
+export type * from './src/draft-input/types';
 
 // 也导出所有单个组件，支持按需引入
 export * from './src/index';

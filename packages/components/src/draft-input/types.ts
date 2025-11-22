@@ -1,5 +1,12 @@
 import type NDraftInput from './index.vue';
 
+export interface AtUserOptions {
+  id: string;
+  username: string;
+  avatar: string;
+  [key: string]: unknown;
+}
+
 export interface DraftInputOptions {
   height?: string;
   className?: string;
@@ -13,6 +20,8 @@ export interface DraftInputOptions {
   fileTypes?: string[];
   uploadInfoMsg?: string;
   maxFileSize?: number; // 最大文件大小，单位为字节
+  needAt?: boolean; // 是否需要@用户
+  atUserList?: AtUserOptions[]; // @用户列表
   onFocus?: (e: FocusEvent) => void;
   onBlur?: (e: FocusEvent) => void;
   onChange?: (value: string) => void;
@@ -20,6 +29,7 @@ export interface DraftInputOptions {
   onEnter?: (e: KeyboardEvent) => void;
   onBeforeUpload?: (file: File) => boolean;
   onUpload?: (file: File) => Promise<string>;
+  onAtUser?: (user: AtUserOptions) => void;
 }
 
 export interface InsertContentParams {
@@ -28,6 +38,7 @@ export interface InsertContentParams {
   username?: string; // 用户名称
   url?: string; // 图片地址
   emoji?: string; // 表情内容
+  atUser?: string;
 }
 
 export interface DefineExposeOptions {

@@ -71,7 +71,7 @@ export default defineConfig({
             { text: 'ImageContrast 图片对比', link: '/components/image-contrast' },
             { text: 'Waterfall 瀑布流', link: '/components/waterfall' },
             { text: 'Loading 加载', link: '/components/loading' },
-            { text: 'draftInput 聊天输入框', link: '/components/draft-input' }
+            { text: 'DraftInput 聊天输入框', link: '/components/draft-input' }
           ]
         }
       ]

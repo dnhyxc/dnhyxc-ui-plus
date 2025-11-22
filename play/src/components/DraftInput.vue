@@ -55,6 +55,8 @@
                     <n-draft-input
                       :ref="setDraftInputRef"
                       autofocus
+                      need-at
+                      :at-user-list="atUsers"
                       :min-rows="minRows"
                       :placeholder="replyPlaceholder"
                       resize="none"
@@ -74,6 +76,8 @@
               <n-draft-input
                 :ref="setDraftInputRef"
                 autofocus
+                need-at
+                :at-user-list="atUsers"
                 :min-rows="minRows"
                 :placeholder="replyPlaceholder"
                 resize="none"
@@ -94,6 +98,8 @@
       <n-draft-input
         ref="draftInputRef"
         autofocus
+        need-at
+        :at-user-list="atUsers"
         :min-rows="minRows"
         :placeholder="placeholder"
         resize="none"
@@ -136,6 +142,99 @@ const isReply = ref(false);
 const replyId = ref('');
 
 let timer: ReturnType<typeof setTimeout> | null = null;
+
+const atUsers = [
+  {
+    id: 1,
+    username: 'user_1',
+    avatar:
+      'https://files.codelife.cc/wallhaven/full/o5/wallhaven-o5jjg5.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
+  },
+  {
+    id: 2,
+    username: 'user_2',
+    avatar:
+      'https://files.codelife.cc/wallhaven/full/2e/wallhaven-2eq1gy.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
+  },
+  {
+    id: 3,
+    username: 'user_3',
+    avatar:
+      'https://files.codelife.cc/wallhaven/full/o5/wallhaven-o5jjg5.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
+  },
+  {
+    id: 4,
+    username: 'user_4',
+    avatar:
+      'https://files.codelife.cc/wallhaven/full/o5/wallhaven-o5jjg5.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
+  },
+  {
+    id: 5,
+    username: 'user_5',
+    avatar:
+      'https://files.codelife.cc/wallhaven/full/83/wallhaven-83ywmo.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
+  },
+  {
+    id: 6,
+    username: 'user_6',
+    avatar:
+      'https://files.codelife.cc/wallhaven/full/2e/wallhaven-2eq1gy.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
+  },
+  {
+    id: 7,
+    username: 'user_7',
+    avatar:
+      'https://files.codelife.cc/wallhaven/full/83/wallhaven-83ywmo.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
+  },
+  {
+    id: 8,
+    username: 'user_8',
+    avatar:
+      'https://files.codelife.cc/wallhaven/full/2e/wallhaven-2eq1gy.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
+  },
+  {
+    id: 9,
+    username: 'user_9',
+    avatar:
+      'https://files.codelife.cc/wallhaven/full/83/wallhaven-83ywmo.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
+  },
+  {
+    id: 10,
+    username: 'user_10',
+    avatar:
+      'https://files.codelife.cc/wallhaven/full/2e/wallhaven-2eq1gy.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
+  },
+  {
+    id: 11,
+    username: 'user_11',
+    avatar:
+      'https://files.codelife.cc/wallhaven/full/83/wallhaven-83ywmo.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
+  },
+  {
+    id: 12,
+    username: 'user_12',
+    avatar:
+      'https://files.codelife.cc/wallhaven/full/2e/wallhaven-2eq1gy.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
+  },
+  {
+    id: 13,
+    username: 'user_13',
+    avatar:
+      'https://files.codelife.cc/wallhaven/full/83/wallhaven-83ywmo.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
+  },
+  {
+    id: 14,
+    username: 'user_14',
+    avatar:
+      'https://files.codelife.cc/wallhaven/full/2e/wallhaven-2eq1gy.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
+  },
+  {
+    id: 15,
+    username: 'user_15',
+    avatar:
+      'https://files.codelife.cc/wallhaven/full/2e/wallhaven-2eq1gy.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
+  }
+];
 
 const setDraftInputRef = (ref: any) => {
   draftInputRef.value = ref;

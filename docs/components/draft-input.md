@@ -1,4 +1,4 @@
-# Model 弹窗
+# DraftInput 多功能输入框
 
 ## 使用指南
 
@@ -11,6 +11,7 @@
   <div class="draft-input-demo">
     <n-draft-input
       :ref="draftInputRef"
+      class-name="custom-draft-input"
       autofocus
       :placeholder="placeholder"
       resize="none"
@@ -21,6 +22,24 @@
       @beforeUpload="onBeforeUpload"
       @upload="onUpload"
     />
+    <n-draft-input
+      autofocus
+      class-name="custom-draft-input"
+      :placeholder="placeholder"
+      resize="none"
+      :disabled="disabled"
+      :maxlength="maxlength"
+      @submit="onSubmit"
+      @enter="onEnter"
+      @beforeUpload="onBeforeUpload"
+      @upload="onUpload"
+    >
+      <template #actions>
+        <div class="actions">
+          <n-icon name="in-clip" cursor="pointer" @click="() => console.log('in-clip')" />
+        </div>
+      </template>
+    </n-draft-input>
   </div>
 </template>
 
@@ -61,7 +80,9 @@ const onUpload = async (file: File) => {
 
 <style lang="scss" scoped>
 .draft-input-demo {
-  height: 120px;
+  .custom-draft-input {
+    margin-top: 20px !important;
+  }
 }
 </style>
 ```
@@ -145,7 +166,215 @@ const onUpload = async (file: File) => {
 
 <style lang="scss" scoped>
 .draft-input-demo {
-  // height: 120px;
+  .custom-draft-input {
+    margin-top: 20px !important;
+  }
+
+  .actions {
+    height: 40px;
+  }
+}
+</style>
+```
+
+:::
+
+输入框 @ 功能
+
+:::demo
+
+```vue
+<template>
+  <div class="draft-input-demo">
+    <div>通过传递 atUserList 参数实现</div>
+    <DraftInput
+      class-name="custom-draft-input"
+      autofocus
+      need-at
+      :at-user-list="atUsers"
+      :placeholder="placeholder"
+      resize="none"
+      :disabled="disabled"
+      :maxlength="maxlength"
+      @submit="onSubmit"
+      @enter="onEnter"
+      @beforeUpload="onBeforeUpload"
+      @upload="onUpload"
+      @atUser="onAtUser"
+    />
+    <div class="at-title">通过 at-users 插槽实现</div>
+    <DraftInput
+      class-name="custom-draft-input"
+      autofocus
+      :placeholder="placeholder"
+      resize="none"
+      need-at
+      :disabled="disabled"
+      :maxlength="maxlength"
+      @submit="onSubmit"
+      @enter="onEnter"
+      @beforeUpload="onBeforeUpload"
+      @upload="onUpload"
+      @atUser="onAtUser"
+    >
+      <template #at-users="{ onSelectUser }">
+        <div class="at-list">
+          <el-scrollbar max-height="300px">
+            <div v-for="user in atUsers" :key="user.id" class="at-item" @click="onSelectUser(user)">
+              <div class="at-item-info">
+                <div class="at-item-avatar">
+                  <Image
+                    url="https://files.codelife.cc/wallhaven/full/2e/wallhaven-2eq1gy.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp"
+                    width="40px"
+                    height="40px"
+                  />
+                </div>
+                <div class="at-item-username">{{ user.username }}</div>
+              </div>
+            </div>
+          </el-scrollbar>
+        </div>
+      </template>
+    </DraftInput>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref, onMounted } from 'vue';
+import { DraftInput, Icon, Image, type DefineExposeOptions, type AtUserOptions } from 'dnhyxc-ui-plus';
+
+const minRows = ref(5);
+const placeholder = ref('请输入内容');
+const disabled = ref(false);
+const maxlength = ref(1000);
+const draftInputRef = ref<DefineExposeOptions>();
+const atUsers = [
+  {
+    id: 1,
+    username: 'user_1',
+    avatar:
+      'https://files.codelife.cc/wallhaven/full/o5/wallhaven-o5jjg5.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
+  },
+  {
+    id: 2,
+    username: 'user_2',
+    avatar:
+      'https://files.codelife.cc/wallhaven/full/2e/wallhaven-2eq1gy.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
+  },
+  {
+    id: 3,
+    username: 'user_3',
+    avatar:
+      'https://files.codelife.cc/wallhaven/full/o5/wallhaven-o5jjg5.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
+  },
+  {
+    id: 4,
+    username: 'user_4',
+    avatar:
+      'https://files.codelife.cc/wallhaven/full/o5/wallhaven-o5jjg5.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
+  },
+  {
+    id: 5,
+    username: 'user_5',
+    avatar:
+      'https://files.codelife.cc/wallhaven/full/83/wallhaven-83ywmo.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
+  },
+  {
+    id: 6,
+    username: 'user_6',
+    avatar:
+      'https://files.codelife.cc/wallhaven/full/2e/wallhaven-2eq1gy.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
+  },
+  {
+    id: 7,
+    username: 'user_7',
+    avatar:
+      'https://files.codelife.cc/wallhaven/full/83/wallhaven-83ywmo.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
+  },
+  {
+    id: 8,
+    username: 'user_8',
+    avatar:
+      'https://files.codelife.cc/wallhaven/full/2e/wallhaven-2eq1gy.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
+  },
+  {
+    id: 9,
+    username: 'user_9',
+    avatar:
+      'https://files.codelife.cc/wallhaven/full/83/wallhaven-83ywmo.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
+  },
+  {
+    id: 10,
+    username: 'user_10',
+    avatar:
+      'https://files.codelife.cc/wallhaven/full/2e/wallhaven-2eq1gy.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
+  },
+  {
+    id: 11,
+    username: 'user_11',
+    avatar:
+      'https://files.codelife.cc/wallhaven/full/83/wallhaven-83ywmo.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
+  },
+  {
+    id: 12,
+    username: 'user_12',
+    avatar:
+      'https://files.codelife.cc/wallhaven/full/2e/wallhaven-2eq1gy.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
+  },
+  {
+    id: 13,
+    username: 'user_13',
+    avatar:
+      'https://files.codelife.cc/wallhaven/full/83/wallhaven-83ywmo.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
+  },
+  {
+    id: 14,
+    username: 'user_14',
+    avatar:
+      'https://files.codelife.cc/wallhaven/full/2e/wallhaven-2eq1gy.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
+  },
+  {
+    id: 15,
+    username: 'user_15',
+    avatar:
+      'https://files.codelife.cc/wallhaven/full/2e/wallhaven-2eq1gy.jpg?x-oss-process=image/resize,limit_0,m_fill,w_2560,h_1440/quality,Q_93/format,webp'
+  }
+];
+
+const onSubmit = (value: string) => {
+  console.log('onSubmit', value);
+};
+
+const onEnter = (value: string) => {
+  console.log('onEnter', value);
+};
+
+const onBeforeUpload = (file: File) => {
+  console.log('onBeforeUpload', file);
+  // 这里自行进行文件校验
+  return true;
+};
+
+const onUpload = async (file: File) => {
+  const img = `https://picsum.photos/1080/${500 + Math.floor(Math.random() * 300)}`;
+  const url = await new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(img);
+    }, 100);
+  });
+  return url;
+};
+
+const onAtUser = (user: AtUserOptions) => {
+  console.log('onAtUser', user);
+};
+</script>
+
+<style lang="scss" scoped>
+.draft-input-demo {
+  .at-title {
+    margin-top: 20px;
+  }
 
   .custom-draft-input {
     margin-top: 20px !important;
@@ -153,6 +382,44 @@ const onUpload = async (file: File) => {
 
   .actions {
     height: 40px;
+  }
+}
+
+.at-list {
+  --draft-input-at-user-hover-bg: #ffffff1a;
+  --draft-input-at-user-hover-color: rgb(180, 255, 180);
+
+  width: 300px;
+  height: auto;
+
+  .at-item {
+    padding: 2px 8px 2px 0;
+    cursor: pointer;
+
+    .at-item-info {
+      display: flex;
+      align-items: center;
+      padding: 4px;
+      border-radius: 5px;
+
+      &:hover {
+        color: var(--draft-input-at-user-hover-color);
+        background-color: var(--draft-input-at-user-hover-bg);
+      }
+
+      .at-item-avatar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .at-item-username {
+        display: flex;
+        align-items: center;
+        margin-left: 10px;
+        font-size: 16px;
+      }
+    }
   }
 }
 </style>
