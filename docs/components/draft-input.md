@@ -209,6 +209,7 @@ const onUpload = async (file: File) => {
       :placeholder="placeholder"
       resize="none"
       need-at
+      popEffect="light"
       :disabled="disabled"
       :maxlength="maxlength"
       @submit="onSubmit"
@@ -421,6 +422,11 @@ const onAtUser = (user: AtUserOptions) => {
       }
     }
   }
+}
+
+.input-at-list {
+  --draft-input-at-user-hover-bg: red;
+  --draft-input-at-user-hover-color: green;
 }
 </style>
 ```
@@ -824,7 +830,7 @@ const onReply = (chat: Message, reply: boolean) => {
 
 ## API
 
-### Model Props
+### DraftInput Props
 
 <script>
 const data = [
@@ -902,6 +908,24 @@ const data = [
     description: '文件上传最大文件大小限制',
   },
   {
+    name: 'popEffect',
+    type: 'light | dark',
+    default: 'light',
+    description: '输入框最大长度',
+  },
+  {
+    name: 'atItemHoverColor',
+    type: 'string',
+    default: 'light',
+    description: 'at 列表项 hover 颜色',
+  },
+  {
+    name: 'atItemHoverBgColor',
+    type: 'string',
+    default: 'light',
+    description: 'at 列表项 hover 背景颜色',
+  },
+  {
     name: 'onChange',
     type: '(value: string) => void',
     default: '',
@@ -942,6 +966,12 @@ const data = [
     type: '(file: File) => Promise<string>',
     default: '',
     description: '文件上传成功时触发，需要返回文件地址',
+  },
+  {
+    name: 'onAtUser',
+    type: '(user: AtUserOptions) => void',
+    default: '',
+    description: '点击 at list 中的用户时触发',
   }
 ];
 
@@ -988,6 +1018,14 @@ const cssVars = [
   {
     name:'--draft-input-disabled-bg',
     description: '输入框禁用时背景颜色',
+  },
+  {
+    name:'--draft-input-at-user-hover-color',
+    description: '@用户列表鼠标移入时字体颜色',
+  },
+  {
+    name:'--draft-input-at-user-hover-bg',
+    description: '@用户列表鼠标移入时背景颜色',
   },
 ]
 </script>

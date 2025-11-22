@@ -56,6 +56,7 @@
                       :ref="setDraftInputRef"
                       autofocus
                       need-at
+                      popEffect="dark"
                       :at-user-list="atUsers"
                       :min-rows="minRows"
                       :placeholder="replyPlaceholder"
@@ -77,6 +78,7 @@
                 :ref="setDraftInputRef"
                 autofocus
                 need-at
+                popEffect="dark"
                 :at-user-list="atUsers"
                 :min-rows="minRows"
                 :placeholder="replyPlaceholder"
@@ -99,6 +101,7 @@
         ref="draftInputRef"
         autofocus
         need-at
+        popEffect="dark"
         :at-user-list="atUsers"
         :min-rows="minRows"
         :placeholder="placeholder"

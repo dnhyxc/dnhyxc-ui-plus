@@ -6,6 +6,7 @@
           id="__SMILE_POPOVER__"
           :visible="visible"
           trigger="click"
+          :effect="popEffect"
           placement="top-start"
           width="auto"
           popper-style="min-width: max-content"
@@ -44,13 +45,14 @@
     <el-popover
       :visible="atVisible && needAt"
       :show-arrow="false"
+      :effect="popEffect"
       trigger="click"
       placement="top-start"
       width="auto"
       popper-style="min-width: max-content; padding: 8px 0 8px 8px;"
     >
       <slot v-if="needAt" name="at-users" v-bind="{ onSelectUser }">
-        <div v-if="atUserList?.length" class="input-at-list">
+        <div ref="atListRef" v-if="atUserList?.length" class="input-at-list">
           <el-scrollbar max-height="300px">
             <div v-for="user in atUserList" :key="user.id" class="input-at-item" @click="onSelectUser(user)">
               <div class="input-at-item-info">
@@ -90,7 +92,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, type Ref, computed } from 'vue';
+import { ref, onMounted, onUnmounted, nextTick, type Ref, computed } from 'vue';
 import { ElInput, ElPopover, ElUpload, ElMessage, ElScrollbar, type UploadProps } from 'element-plus';
 import { Icon, Emoji, Image } from '../index';
 import { createNamespace } from '../../utils';
@@ -119,13 +121,15 @@ const props = withDefaults(defineProps<DraftInputOptions>(), {
   uploadInfoMsg: FILE_UPLOAD_MSG,
   maxFileSize: 20,
   fileTypes: () => ['image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'image/webp', 'image/svg+xml'],
-  multiple: true
+  multiple: true,
+  popEffect: 'light'
 });
 
 const keyword = ref('');
 const visible = ref(false);
 const atVisible = ref(false);
 const inputRef = ref<HTMLTextAreaElement | null>(null);
+const atListRef = ref<HTMLDivElement | null>(null);
 
 let timer: ReturnType<typeof setTimeout> | null = null;
 
@@ -133,6 +137,9 @@ const className = computed(() => `${bem.b()} ${props.className || ''}`);
 
 onMounted(() => {
   window.addEventListener('click', onClickElement);
+  nextTick(() => {
+    setCssVar();
+  });
 });
 
 onUnmounted(() => {
@@ -151,6 +158,22 @@ const onClickElement = (e: MouseEvent) => {
     visible.value = false;
   }
   atVisible.value = false;
+};
+
+const changeCssVariable = (variable: string, value: string) => {
+  if (atListRef.value) {
+    atListRef.value.style.setProperty(variable, value);
+  }
+};
+
+const setCssVar = () => {
+  const cssVarMap: Record<string, string> = {
+    '--draft-input-at-user-hover-color': props.atItemHoverColor || '#409eff',
+    '--draft-input-at-user-hover-bg': props.atItemHoverBgColor || '#ffffff1a'
+  };
+  Object.entries(cssVarMap).forEach(([key, val]) => {
+    if (val) changeCssVariable(key, val);
+  });
 };
 
 const showSmile = () => {

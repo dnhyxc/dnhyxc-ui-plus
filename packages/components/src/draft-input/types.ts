@@ -11,6 +11,9 @@ export interface DraftInputOptions {
   height?: string;
   className?: string;
   autofocus?: boolean;
+  popEffect?: 'light' | 'dark';
+  atItemHoverColor?: string;
+  atItemHoverBgColor?: string;
   placeholder?: string;
   resize?: 'none' | 'both' | 'horizontal' | 'vertical';
   disabled?: boolean;
