@@ -11,7 +11,7 @@
   "dependencies": {
     "@dnhyxc-ui/components": "workspace:^",
     "dnhyxc-ui-plus-beta1": "0.0.1-beta.10",
-    "dnhyxc-ui-vue-plus": "0.0.75",
+    "dnhyxc-ui-vue-plus": "0.0.76",
     "md-editor-v3": "^5.8.2",
     "monaco-editor": "^0.43.0",
     "sanitize-html": "^2.17.0",

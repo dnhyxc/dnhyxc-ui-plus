@@ -237,7 +237,6 @@ const onBlur = (event: FocusEvent) => {
 };
 
 const onSelectUser = (user: AtUserOptions) => {
-  console.log('onSelectUser', user.id);
   const atIndex = keyword.value.lastIndexOf('@');
   keyword.value = insertContent({
     keyword: keyword.value.slice(0, atIndex),
