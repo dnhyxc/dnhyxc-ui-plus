@@ -56,6 +56,7 @@
                       :ref="setDraftInputRef"
                       autofocus
                       need-at
+                      height="150px"
                       popEffect="dark"
                       :at-user-list="atUsers"
                       :min-rows="minRows"
@@ -77,6 +78,7 @@
               <n-draft-input
                 :ref="setDraftInputRef"
                 autofocus
+                height="150px"
                 need-at
                 popEffect="dark"
                 :at-user-list="atUsers"
@@ -101,6 +103,7 @@
         ref="draftInputRef"
         autofocus
         need-at
+        height="150px"
         popEffect="dark"
         :at-user-list="atUsers"
         :min-rows="minRows"
@@ -404,9 +407,6 @@ const onReply = (chat: Message, reply: boolean) => {
   }
 
   .draft-input-wrap {
-    height: 150px;
-    min-height: 150px;
-
     .n-draft-input {
       --draft-input-border-color: rgb(229, 255, 209);
       --draft-input-border-radius: 5px;

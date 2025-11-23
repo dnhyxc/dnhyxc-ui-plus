@@ -167,15 +167,50 @@
     <div class="demo-input">
       <DraftInput />
     </div>
+    <div class="context-menu-demo">
+      <n-context-menu class="card-context-menu" :menu="CARD_CONTEXT_MENU" @select="onSelectMenu">
+        <div class="card">
+          <div>这是一篇文章</div>
+          <div>使用右键进行操作</div>
+        </div>
+      </n-context-menu>
+      <ContextMenu class="card-context-menu" :menu="CARD_CONTEXT_MENU" @select="onSelectMenu">
+        <div class="card">
+          <div>这是一篇文章</div>
+          <div>使用右键进行操作</div>
+        </div>
+      </ContextMenu>
+      <ContextMenu class="card-context-menu" :menu="CARD_CONTEXT_MENU" @select="onSelectMenu">
+        <div class="card">
+          <div>这是一篇文章</div>
+          <div>使用右键进行操作</div>
+        </div>
+      </ContextMenu>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 // import { notification, type EmojiName } from '@dnhyxc-ui/components';
-import { notification, type EmojiName } from 'dnhyxc-ui-vue-plus';
+import { notification, ContextMenu, type EmojiName } from 'dnhyxc-ui-vue-plus';
 import Waterfall from './Waterfall.vue';
 import DraftInput from './components/DraftInput.vue';
+
+interface Menu {
+  label: string;
+  value: number;
+}
+
+const CARD_CONTEXT_MENU = [
+  { label: '编辑文章', value: 1 },
+  { label: '文章详情', value: 2 }
+];
+
+// 选中菜单
+const onSelectMenu = (menu: Menu) => {
+  console.log(menu);
+};
 
 const keyword = ref('');
 const inputRef = ref();
@@ -321,6 +356,33 @@ const getImgSizeFromUrl = async (
 
   .n-button {
     margin-right: 10px;
+  }
+}
+
+.context-menu-demo {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+
+  .card-context-menu {
+    flex: 1;
+    &:nth-child(2) {
+      margin-right: 10px;
+      margin-left: 10px;
+    }
+  }
+
+  .card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 150px;
+    border: 1px solid #ffffff52;
+    border-radius: 5px;
   }
 }
 </style>

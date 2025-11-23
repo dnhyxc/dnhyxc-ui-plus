@@ -1,4 +1,4 @@
-import { onMounted, onUnmounted, ref, type Ref } from 'vue';
+import { onMounted, onUnmounted, ref, nextTick, type Ref } from 'vue';
 
 export interface WrapRef extends HTMLElement {
   wrapRef: HTMLElement;
@@ -66,4 +66,77 @@ export const scrollTo = (ref: Ref<HTMLElement>, position: number, time = 20, typ
 
 export const useScrollTo = () => {
   return scrollTo;
+};
+
+export const useContextMenu = (containerRef: Ref<HTMLElement>, noMenu?: boolean) => {
+  if (noMenu)
+    return {
+      showMenu: ref<boolean>(false),
+      x: ref<number>(0),
+      y: ref<number>(0)
+    };
+  const showMenu = ref<boolean>(false);
+  const x = ref<number>(0);
+  const y = ref<number>(0);
+
+  const handleContextMenu = (e: MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    showMenu.value = true;
+    x.value = e.clientX;
+    y.value = e.clientY;
+  };
+
+  const closeMenu = () => {
+    showMenu.value = false;
+  };
+
+  onMounted(() => {
+    nextTick(() => {
+      const div = containerRef.value;
+      div?.addEventListener('contextmenu', handleContextMenu);
+      window.addEventListener('click', closeMenu, true);
+      window.addEventListener('contextmenu', closeMenu, true);
+      window.addEventListener('scroll', closeMenu, true);
+    });
+  });
+
+  onUnmounted(() => {
+    if (showMenu.value) {
+      const div = containerRef.value;
+      div?.removeEventListener('contextmenu', handleContextMenu);
+      window.removeEventListener('click', closeMenu, true);
+      window.removeEventListener('contextmenu', closeMenu, true);
+      window.removeEventListener('scroll', closeMenu, true);
+    }
+  });
+
+  return {
+    showMenu,
+    x,
+    y
+  };
+};
+
+export const useViewPort = () => {
+  const vw = ref<number>(document.documentElement.clientWidth);
+  const vh = ref<number>(document.documentElement.clientHeight);
+
+  const onResize = () => {
+    vw.value = document.documentElement.clientWidth;
+    vh.value = document.documentElement.clientHeight;
+  };
+
+  onMounted(() => {
+    window.addEventListener('resize', onResize);
+  });
+
+  onUnmounted(() => {
+    window.removeEventListener('resize', onResize);
+  });
+
+  return {
+    vw,
+    vh
+  };
 };

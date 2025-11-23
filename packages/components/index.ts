@@ -1,7 +1,5 @@
 import { App } from 'vue';
 import * as components from './src/index';
-// import ElementPlus from 'element-plus';
-// import 'element-plus/dist/index.css';
 
 // 导出表情相关类型定义
 export type { EmojiName, EmojiList } from './src/emoji/types';

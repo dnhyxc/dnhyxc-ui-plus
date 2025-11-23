@@ -2,7 +2,7 @@
   <table>
     <thead>
       <tr>
-        <th style="width: 200px">{{ nameText }}</th>
+        <th :style="`width: ${nameTextWidth}`">{{ nameText }}</th>
         <th style="width: 1200px">说明</th>
         <th v-if="showType" style="width: 1000px">类型</th>
         <th v-if="showDefault" style="width: 300px">默认值</th>
@@ -57,6 +57,7 @@ interface IProps {
     typeEnum?: string[];
   }[];
   nameText?: string;
+  nameTextWidth?: string;
   showType?: boolean;
   showDefault?: boolean;
 }
@@ -64,7 +65,8 @@ interface IProps {
 withDefaults(defineProps<IProps>(), {
   nameText: '属性名',
   showType: true,
-  showDefault: true
+  showDefault: true,
+  nameTextWidth: '200px'
 });
 </script>
 

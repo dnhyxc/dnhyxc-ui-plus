@@ -1034,11 +1034,11 @@ const cssVars = [
 
 ### DraftInput Slots
 
-<props-table :data="slots" name-text="插槽名称" :show-type="false" :show-default="false" />
+<props-table :data="slots" name-text="插槽名称" :show-type="false" :show-default="false" nameTextWidth="255px" />
 
 ### DraftInput CSS Variables
 
-<props-table :data="cssVars" name-text="CSS 变量" :show-type="false" :show-default="false" />
+<props-table :data="cssVars" name-text="CSS 变量" :show-type="false" :show-default="false" nameTextWidth="600px" />
 
 CSS 变量使用说明：
 

@@ -9,3 +9,4 @@ export * from './model';
 export * from './waterfall';
 export * from './loading';
 export * from './draft-input';
+export * from './context-menu';

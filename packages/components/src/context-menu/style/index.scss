@@ -1,0 +1,44 @@
+@use '../../../theme/index.scss' as *;
+
+.n-context-menu {
+  --context-menu-bg-color: var(--n-bg-color-overlay);
+  --context-menu-color: var(--n-text-color-regular);
+  --context-menu-shadow: var(--n-box-shadow-light);
+  --context-menu-hover-color: var(--n-color-primary);
+  --context-menu-hover-bg: var(--n-color-primary-light-9);
+
+  position: fixed;
+  min-width: 100px;
+  background: var(--context-menu-bg-color);
+  border-radius: 5px;
+  text-align: center;
+  box-shadow: var(--context-menu-shadow);
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  -khtml-user-select: none;
+  user-select: none;
+  z-index: 999;
+
+  .menu-list {
+    padding: 5px 0;
+    font-size: 13px;
+    color: var(--context-menu-color);
+    border-radius: 5px;
+    backdrop-filter: blur(3px);
+    background: var(--context-menu-bg-color);
+    box-sizing: border-box;
+
+    .menu-item {
+      padding: 5px;
+      box-sizing: border-box;
+      white-space: nowrap;
+      cursor: pointer;
+
+      &:hover {
+        background: var(--context-menu-hover-bg);
+        color: var(--context-menu-hover-color);
+      }
+    }
+  }
+}
