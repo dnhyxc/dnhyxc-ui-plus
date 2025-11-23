@@ -4,7 +4,7 @@
     :class="className"
     v-bind="$attrs"
     :style="`cursor: ${cursor}; scale: ${scale}; transition: ${scale ? `scale ${transitionTime || '0.3s'}` : 'none'}`"
-    @mouseover="hoverColor ? onMouseEnter() : null"
+    @mouseenter="hoverColor ? onMouseEnter() : null"
     @mouseleave="hoverColor ? onMouseLeave() : null"
     @click="onClick"
     v-html="getSvg(name, { size, width, height, color, id })"

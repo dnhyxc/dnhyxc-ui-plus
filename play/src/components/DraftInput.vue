@@ -306,14 +306,14 @@ const beforeUpload = (file: File) => {
   return true;
 };
 
-const onUpload = async (file: File) => {
+const onUpload = async (file: File): Promise<string> => {
   console.log('onUpload-----', file);
   const img = `https://picsum.photos/1080/${500 + Math.floor(Math.random() * 300)}`;
-  const url = await new Promise((resolve) => {
+  const url = (await new Promise((resolve) => {
     setTimeout(() => {
       resolve(img);
     }, 100);
-  });
+  })) as string;
   return url;
 };
 

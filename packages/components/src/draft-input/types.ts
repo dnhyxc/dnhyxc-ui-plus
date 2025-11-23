@@ -1,7 +1,7 @@
 import type NDraftInput from './index.vue';
 
 export interface AtUserOptions {
-  id: string;
+  id: string | number;
   username: string;
   avatar: string;
   [key: string]: unknown;
